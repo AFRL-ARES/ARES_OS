@@ -1,0 +1,18 @@
+﻿<mah:MetroWindow x:Class="ARESCore.UI.Views.ConsoleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:Ui="clr-namespace:ARESCore.ErrorSupport.UI"
+        mc:Ignorable="d" Closed="ConsoleWindowClosed"
+        Title="ARES Console Window" Height="450" Width="800" Loaded="ConsoleWindowOnLoaded">
+  <Grid>
+    <ScrollViewer Name="ScrollViewer" ScrollChanged="ScrollViewer_ScrollChanged" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+    <avalonedit:TextEditor Name="textEditor" HorizontalScrollBarVisibility="Auto" IsReadOnly="True" FontFamily="Consolas" FontSize="10pt" Foreground="{DynamicResource LabelTextBrush}" VerticalScrollBarVisibility="Disabled" WordWrap="False" Document="{Binding Document}" />
+    </ScrollViewer>
+    <Ui:ErrorHandlingView/>
+  </Grid>
+</mah:MetroWindow>

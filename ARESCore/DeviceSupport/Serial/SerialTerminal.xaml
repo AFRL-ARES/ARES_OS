@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="ARESCore.DeviceSupport.Serial.SerialTerminal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ARESCore.DeviceSupport"
+             xmlns:Mvvm="http://prismlibrary.com/"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:Ports="clr-namespace:System.IO.Ports;assembly=System"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:Converters="clr-namespace:ARESCore.UI.Converters"
+             xmlns:Serial="clr-namespace:ARESCore.DeviceSupport.Serial"
+             Mvvm:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="800" d:DataContext="SerialTerminalViewModel">
+  <UserControl.Resources>
+    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="ParityEnumValues">
+      <ObjectDataProvider.MethodParameters>
+        <x:Type TypeName="Ports:Parity" />
+      </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <Converters:NegateBooleanConverter x:Key="NegateBool" />
+  </UserControl.Resources>
+  <Border BorderThickness="2" BorderBrush="White" Margin="5" Background="{DynamicResource AccentColorBrush3}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <TextBlock Text="Serial Port Terminal" HorizontalAlignment="Center" FontSize="20"></TextBlock>
+      <StackPanel Grid.Row="1" >
+        <DockPanel HorizontalAlignment="Center" IsEnabled="{Binding SettingsEnabled}">
+          <TextBlock Margin="5" Text="Port:" />
+          <ComboBox Margin="5" ItemsSource="{Binding PortNames}" SelectedItem="{Binding SelectedComPort}" />
+          <TextBlock Margin="5" Text="Baud Rate:" />
+          <ComboBox Margin="5" ItemsSource="{Binding BaudRates}" SelectedItem="{Binding SelectedBaudRate}" />
+          <TextBlock Margin="5" Text="Data Bits:" />
+          <ComboBox Margin="5" ItemsSource="{Binding DataBits}" SelectedItem="{Binding SelectedDataBits}" />
+          <TextBlock Margin="5" Text="Parity:" />
+          <ComboBox Margin="5" ItemsSource="{Binding Source={StaticResource ParityEnumValues}}"
+                    SelectedItem="{Binding SelectedParity}" />
+          <TextBlock Margin="5" Text="Stop Bits:" />
+          <ComboBox Margin="5" ItemsSource="{Binding StopBits}" SelectedItem="{Binding SelectedStopBits}" />
+        </DockPanel>
+        <Button Margin="5" Content="Open Port" Style="{StaticResource AccentedSquareButtonStyle}" IsEnabled="{Binding FieldsSelected}" Command="{Binding OpenPortCommand}"/>
+      </StackPanel>
+      <Grid Grid.Row="2" HorizontalAlignment="Stretch" IsEnabled="{Binding PortEnabled}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" Margin="5" mah:TextBoxHelper.Watermark="Enter Test Command Here" Text="{Binding TextToSend}" />
+        <Button Grid.Column="1" Margin="5" Content="Send Test Command"  Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding SendTestCommand}"></Button>
+      </Grid>
+      <Grid Grid.Row="3" HorizontalAlignment="Stretch" IsEnabled="{Binding PortEnabled}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Margin="5" Text="Received Text:" />
+        <TextBlock Grid.Column="1" Margin="5" Text="{Binding ReceivedText}"/>
+      </Grid>
+      
+    </Grid>
+  </Border>
+</UserControl>

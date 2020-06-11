@@ -1,0 +1,35 @@
+﻿<mah:MetroWindow x:Class="ARESCore.Database.Views.DatabaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Views="clr-namespace:ARESCore.Database.Views"
+             xmlns:Mvvm="http://prismlibrary.com/"
+             Mvvm:ViewModelLocator.AutoWireViewModel="True" Loaded="DatabaseViewLoaded"
+             mc:Ignorable="d" Title="Database Viewer" d:DesignHeight="430" d:DesignWidth="675">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <mah:MetroAnimatedSingleRowTabControl Margin="5">
+      <TabItem Header="Filter">
+        <Views:FilterTabView/>
+      </TabItem>
+      <TabItem Header="Edit">
+        <Views:EditTabView/>
+      </TabItem>
+      <TabItem Header="Export">
+        <Views:ExportTabView/>
+      </TabItem>
+    </mah:MetroAnimatedSingleRowTabControl>
+    <DockPanel Grid.Row="1">
+   
+    <StatusBar HorizontalAlignment="Left" Margin="5" />
+    <Button Background="LawnGreen" HorizontalAlignment="Right" Content="Done" Click="ButtonBase_OnClick"/>
+    </DockPanel>
+  </Grid>
+  </mah:MetroWindow>
+

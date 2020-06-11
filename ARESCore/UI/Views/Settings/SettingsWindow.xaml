@@ -1,0 +1,26 @@
+﻿<mah:MetroWindow x:Class="ARESCore.UI.Views.Settings.SettingsWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:ARESCore.UI.Views"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:Settings="clr-namespace:ARESCore.UI.Views.Settings"
+                 xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:Converters="clr-namespace:ARESCore.UI.Converters"
+                 mc:Ignorable="d"
+                 Title="Settings" Height="450" Width="800" ShowMinButton="False" ShowMaxRestoreButton="False" Loaded="SettingsWindowLoaded">
+  <Grid>
+    <TabControl>
+      <TabItem Header="Visual Settings">
+        <Settings:ApplicationStyleView />
+      </TabItem>
+      <TabItem Header="Your User Preferences">
+        <Settings:UserPreferences />
+      </TabItem>
+      <TabItem Header="File/User Management">
+        <Settings:FilesAndUsers />
+      </TabItem>
+    </TabControl>
+  </Grid>
+</mah:MetroWindow>

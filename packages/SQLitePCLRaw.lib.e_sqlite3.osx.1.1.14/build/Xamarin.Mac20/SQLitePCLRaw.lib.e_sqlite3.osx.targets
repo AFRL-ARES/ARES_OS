@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Automatically generated-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="InjectReference_1aa39e66-d3e7-490b-87de-78aced2a289e" BeforeTargets="ResolveAssemblyReferences">
+    <ItemGroup Condition=" '$(OS)' == 'Unix' AND Exists('/Library/Frameworks') ">
+      <NativeReference Include="$(MSBuildThisFileDirectory)..\..\runtimes\osx-x64\native\libe_sqlite3.dylib">
+        <Kind>Dynamic</Kind>
+        <SmartLink>False</SmartLink>
+      </NativeReference>
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
+    <ResolveAssemblyReferencesDependsOn>$(ResolveAssemblyReferencesDependsOn);InjectReference_1aa39e66-d3e7-490b-87de-78aced2a289e</ResolveAssemblyReferencesDependsOn>
+  </PropertyGroup>
+</Project>

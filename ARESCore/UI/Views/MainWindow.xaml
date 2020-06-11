@@ -1,0 +1,195 @@
+﻿<mah:MetroWindow x:Class="ARESCore.UI.Views.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:Regions="http://prismlibrary.com/"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:Serial="clr-namespace:ARESCore.DeviceSupport.Serial"
+                 xmlns:Usb="clr-namespace:ARESCore.DeviceSupport.Usb"
+                 xmlns:ViewModels="clr-namespace:ARESCore.UI.ViewModels"
+                 xmlns:Converters="http://metro.mahapps.com/winfx/xaml/shared"
+                 xmlns:Converters1="clr-namespace:ARESCore.UI.Converters"
+                 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                 xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+                 xmlns:Ui="clr-namespace:ARESCore.TMPDbMigration.UI"
+                 xmlns:Ui1="clr-namespace:ARESCore.ErrorSupport.UI"
+                 xmlns:System="clr-namespace:System;assembly=mscorlib"
+                 Closed="MainWindowClosed"
+                 mc:Ignorable="d"
+                 WindowState="Maximized"
+                 Title="ARES" Height="450" Width="800" Loaded="MainWindowLoaded">
+
+  <mah:MetroWindow.LeftWindowCommands>
+    <mah:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation=" Horizontal">
+          <TextBlock Margin="5,5,0,5" Text="User:" FontSize="14" VerticalAlignment="Center" />
+          <TextBlock Margin="2,5,5,5" Text="{Binding CurrentConfig.User.Username}" FontSize="14" FontWeight="Bold"
+                     VerticalAlignment="Center" />
+          <Rectangle Width="1" Margin="2,7,2,7" Opacity="0.3" Fill="White"
+                     Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=ActualHeight}" />
+          <Button Click="ProjectEditorClick" Name="_panelSelectProject">
+            <StackPanel Orientation="Horizontal">
+              <iconPacks:PackIconMaterial Width="24" Height="24" Kind="BookOpenVariant" VerticalAlignment="Center" />
+              <TextBlock Margin="5,5,0,5" Text="Project:" FontSize="14" VerticalAlignment="Center" />
+              <TextBlock Margin="2,5,5,5" Text="{Binding CurrentConfig.Project.Description}" FontSize="14"
+                         FontWeight="Bold"
+                         VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+        </StackPanel>
+      </StackPanel>
+    </mah:WindowCommands>
+  </mah:MetroWindow.LeftWindowCommands>
+  <mah:MetroWindow.RightWindowCommands>
+    <mah:WindowCommands>
+      <StackPanel Orientation="Horizontal">
+        <Button Click="SettingsButtonClick">
+          <iconPacks:PackIconMaterial Width="20" Height="20" Kind="Settings" VerticalAlignment="Center" />
+        </Button>
+      </StackPanel>
+    </mah:WindowCommands>
+  </mah:MetroWindow.RightWindowCommands>
+  <mah:MetroWindow.DataContext>
+    <ViewModels:MainWindowViewModel />
+  </mah:MetroWindow.DataContext>
+  <mah:MetroWindow.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    <Converters1:NullToBoolConverter x:Key="Null2Bool" />
+    <Storyboard x:Key="Blink">
+      <DoubleAnimation
+        Storyboard.TargetName="_panelSelectProject"
+        Storyboard.TargetProperty="Opacity"
+        From="1.0" To="0.0" Duration="0:0:0.25"
+        AutoReverse="True" RepeatBehavior="Forever" />
+    </Storyboard>
+  </mah:MetroWindow.Resources>
+  <Grid IsEnabled="{Binding CurrentConfig.Project, Converter={StaticResource Null2Bool}}" Name="_mainGrid">
+    <i:Interaction.Triggers>
+      <ei:DataTrigger Binding="{Binding CurrentConfig.Project, Converter={StaticResource Null2Bool}}" Value="True">
+        <ei:ControlStoryboardAction Storyboard="{StaticResource Blink}" ControlStoryboardOption="Stop" />
+      </ei:DataTrigger>
+    </i:Interaction.Triggers>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+
+    <ScrollViewer Margin="2,0,2,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+      <ItemsControl Grid.Row="0" Grid.Column="1" Regions:RegionManager.RegionName="MenuRegion">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemContainerStyle>
+          <Style TargetType="Control">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+          </Style>
+        </ItemsControl.ItemContainerStyle>
+        <UserControl>
+          <Button Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding ShowDeviceConfigCommand}">
+            <StackPanel Orientation="Horizontal">
+              <iconPacks:PackIconMaterial Width="24" Height="24" Kind="CellphoneLink" VerticalAlignment="Center" />
+              <TextBlock Text="Device Configuration" Margin="6,4,4,4" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+        </UserControl>
+        <UserControl>
+          <Button Style="{StaticResource AccentedSquareButtonStyle}" Click="ShowExperimentPlannerCommand">
+            <StackPanel Orientation="Horizontal">
+              <iconPacks:PackIconMaterial Width="24" Height="24" Kind="Beaker" VerticalAlignment="Center" />
+              <TextBlock Text="Experiment Planner" Margin="6,4,4,4" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+        </UserControl>
+        <UserControl>
+          <Button Style="{StaticResource AccentedSquareButtonStyle}" Click="ShowDatabaseViewer">
+            <StackPanel Orientation="Horizontal">
+              <iconPacks:PackIconMaterial Width="24" Height="24" Kind="Database" VerticalAlignment="Center" />
+              <TextBlock Text="Inputsbase Viewer" Margin="6,4,4,4" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+        </UserControl>
+      </ItemsControl>
+    </ScrollViewer>
+
+
+    <ItemsControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"
+                  Regions:RegionManager.RegionName="ContentRegion">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <Grid />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+    </ItemsControl>
+
+
+    <ScrollViewer Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+      <Border BorderThickness="2,0,2,0" BorderBrush="{DynamicResource AccentColorBrush}">
+        <ItemsControl Regions:RegionManager.RegionName="SidebarRegion">
+
+          <ItemsControl.ItemContainerStyle>
+            <Style TargetType="UserControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Mode=OneWay, RelativeSource={RelativeSource PreviousData}, Converter={StaticResource Null2Bool}}" Value="True">
+                  <Setter Property="BorderThickness" Value="0,0,0,2" />
+                  <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </ItemsControl.ItemContainerStyle>
+          <UserControl /> <!-- A dirty cheat to work around DataTriggers for assigning the bottom borders of the first and last elements in the ItemsControl -->
+        </ItemsControl>
+      </Border>
+      <!-- TODO: Use setters for the first and last items' borders to make them look prettier? (Remove first top border, Remove last bottom border) -->
+    </ScrollViewer>
+
+
+    <ItemsControl Grid.Row="2" Regions:RegionManager.RegionName="StatusRegion" />
+    <Ui1:ErrorHandlingView Grid.Row="0" Grid.RowSpan="3" />
+  </Grid>
+  <mah:MetroWindow.Flyouts>
+    <mah:FlyoutsControl Regions:RegionManager.RegionName="FlyoutRegion" Width="1200">
+      <mah:Flyout Theme="Inverse" Header="Device Configuration" CloseCommand="{Binding HideDeviceConfigCommand}"
+                  Position="Top" IsOpen="{Binding DeviceConfigOpen}">
+        <TabControl Margin="0,60,0,0">
+          <TabItem Header="Serial Devices">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+              <StackPanel>
+                <ItemsControl Regions:RegionManager.RegionName="DeviceConfigRegion" />
+                <Serial:SerialTerminal />
+              </StackPanel>
+            </ScrollViewer>
+          </TabItem>
+          <TabItem Header="USB Devices">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+              <StackPanel>
+                <ItemsControl Regions:RegionManager.RegionName="UsbDeviceConfigRegion" />
+                <Usb:UsbDeviceView />
+              </StackPanel>
+            </ScrollViewer>
+          </TabItem>
+          <TabItem Header="Miscellaneous">
+            <ScrollViewer>
+              <ItemsControl Regions:RegionManager.RegionName="MiscConfigRegion" />
+            </ScrollViewer>
+          </TabItem>
+        </TabControl>
+      </mah:Flyout>
+      <mah:Flyout Theme="Inverse" CloseCommand="{Binding HideDeviceViewerCommand}" Header="Device Viewer"
+                  Position="Top" HorizontalAlignment="Center" IsOpen="{Binding DeviceViewerOpen}">
+        <ItemsControl Regions:RegionManager.RegionName="DeviceViewerRegion" />
+      </mah:Flyout>
+    </mah:FlyoutsControl>
+  </mah:MetroWindow.Flyouts>
+</mah:MetroWindow>

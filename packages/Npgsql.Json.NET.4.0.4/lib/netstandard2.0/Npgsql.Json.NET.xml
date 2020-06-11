@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Npgsql.Json.NET</name>
+    </assembly>
+    <members>
+        <member name="T:Npgsql.NpgsqlJsonNetExtensions">
+            <summary>
+            Extension allowing adding the Json.NET plugin to an Npgsql type mapper.
+            </summary>
+        </member>
+        <member name="M:Npgsql.NpgsqlJsonNetExtensions.UseJsonNet(Npgsql.TypeMapping.INpgsqlTypeMapper,System.Type[],System.Type[],Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Sets up JSON.NET mappings for the PostgreSQL json and jsonb types.
+            </summary>
+            <param name="mapper">The type mapper to set up (global or connection-specific)</param>
+            <param name="jsonbClrTypes">A list of CLR types to map to PostgreSQL jsonb (no need to specify NpgsqlDbType.Jsonb)</param>
+            <param name="jsonClrTypes">A list of CLR types to map to PostgreSQL json (no need to specify NpgsqlDbType.Json)</param>
+            <param name="settings">Optional settings to customize JSON serialization</param>
+        </member>
+    </members>
+</doc>

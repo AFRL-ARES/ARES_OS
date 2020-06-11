@@ -1,0 +1,124 @@
+00040 11:05:46.329647  >>>  b'start\n'
+00092 11:05:46.347600  >>>  b'echo:Marlin 1.1.9\n'
+00127 11:05:46.347600  >>>  b'\n'
+00237 11:05:46.349594  >>>  b'echo: Last Updated: Jul 17 201913:04:55 | Author: (James Deneault, AM ARES)\n'
+00298 11:05:46.350592  >>>  b'echo:Compiled: Jul 17 2019\n'
+00382 11:05:46.352587  >>>  b'echo: Free Memory: 2836  PlannerBufferBytes: 1440\n'
+00473 11:05:46.356575  >>>  b'echo:V55 stored settings retrieved (739 bytes; crc 3949)\n'
+00528 11:05:46.357573  >>>  b'echo:  G21    ; (mm)\n'
+00595 11:05:46.364553  >>>  b'echo:  M149 C ; Units in Celsius\n'
+00630 11:05:46.371537  >>>  b'\n'
+00697 11:05:46.390484  >>>  b'echo:Filament settings: Disabled\n'
+00749 11:05:46.391481  >>>  b'echo:  M200 D3.00\n'
+00798 11:05:46.392479  >>>  b'echo:  M200 D0\n'
+00853 11:05:46.392479  >>>  b'echo:Steps per unit:\n'
+00932 11:05:46.394473  >>>  b'echo:  M92 X100.50 Y100.50 Z1600.00 E1600.00\n'
+01000 11:05:46.395471  >>>  b'echo:Maximum feedrates (units/s):\n'
+01075 11:05:46.396468  >>>  b'echo:  M203 X300.00 Y300.00 Z5.00 E40.00\n'
+01147 11:05:46.396468  >>>  b'echo:Maximum Acceleration (units/s2):\n'
+01217 11:05:46.397465  >>>  b'echo:  M201 X9000 Y9000 Z100 E10000\n'
+01329 11:05:46.398462  >>>  b'echo:Acceleration (units/s2): P<print_accel> R<retract_accel> T<travel_accel>\n'
+01400 11:05:46.399459  >>>  b'echo:  M204 P500.00 R3000.00 T500.00\n'
+01567 11:05:46.401456  >>>  b'echo:Advanced: B<min_segment_time_us> S<min_feedrate> T<min_travel_feedrate> X<max_x_jerk> Y<max_y_jerk> Z<max_z_jerk> E<max_e_jerk>\n'
+01657 11:05:46.404447  >>>  b'echo:  M205 B20000 S0.00 T0.00 X8.00 Y8.00 Z0.40 E10.00\n'
+01715 11:05:46.405444  >>>  b'echo:Mesh Bed Leveling:\n'
+01764 11:05:46.406441  >>>  b'echo:  M420 S0\n'
+01827 11:05:46.407439  >>>  b'echo:  G29 S3 X1 Y1 Z0.57000\n'
+01890 11:05:46.408436  >>>  b'echo:  G29 S3 X2 Y1 Z0.63000\n'
+01953 11:05:46.408436  >>>  b'echo:  G29 S3 X3 Y1 Z0.61000\n'
+02016 11:05:46.409433  >>>  b'echo:  G29 S3 X4 Y1 Z0.55000\n'
+02079 11:05:46.411428  >>>  b'echo:  G29 S3 X5 Y1 Z0.47000\n'
+02142 11:05:46.425391  >>>  b'echo:  G29 S3 X6 Y1 Z0.38000\n'
+02205 11:05:46.437359  >>>  b'echo:  G29 S3 X1 Y2 Z0.51000\n'
+02268 11:05:46.438356  >>>  b'echo:  G29 S3 X2 Y2 Z0.60000\n'
+02331 11:05:46.439354  >>>  b'echo:  G29 S3 X3 Y2 Z0.60000\n'
+02394 11:05:46.440351  >>>  b'echo:  G29 S3 X4 Y2 Z0.55000\n'
+02457 11:05:46.441348  >>>  b'echo:  G29 S3 X5 Y2 Z0.49000\n'
+02520 11:05:46.442346  >>>  b'echo:  G29 S3 X6 Y2 Z0.43000\n'
+02583 11:05:46.442346  >>>  b'echo:  G29 S3 X1 Y3 Z0.47000\n'
+02646 11:05:46.443343  >>>  b'echo:  G29 S3 X2 Y3 Z0.58000\n'
+02709 11:05:46.444340  >>>  b'echo:  G29 S3 X3 Y3 Z0.60000\n'
+02772 11:05:46.445339  >>>  b'echo:  G29 S3 X4 Y3 Z0.57000\n'
+02835 11:05:46.447333  >>>  b'echo:  G29 S3 X5 Y3 Z0.54000\n'
+02898 11:05:46.448332  >>>  b'echo:  G29 S3 X6 Y3 Z0.48000\n'
+02961 11:05:46.450323  >>>  b'echo:  G29 S3 X1 Y4 Z0.44000\n'
+03024 11:05:46.461295  >>>  b'echo:  G29 S3 X2 Y4 Z0.56000\n'
+03087 11:05:46.472266  >>>  b'echo:  G29 S3 X3 Y4 Z0.59000\n'
+03150 11:05:46.473263  >>>  b'echo:  G29 S3 X4 Y4 Z0.59000\n'
+03213 11:05:46.474260  >>>  b'echo:  G29 S3 X5 Y4 Z0.56000\n'
+03276 11:05:46.475257  >>>  b'echo:  G29 S3 X6 Y4 Z0.51000\n'
+03339 11:05:46.477252  >>>  b'echo:  G29 S3 X1 Y5 Z0.42000\n'
+03402 11:05:46.478249  >>>  b'echo:  G29 S3 X2 Y5 Z0.56000\n'
+03465 11:05:46.478249  >>>  b'echo:  G29 S3 X3 Y5 Z0.61000\n'
+03528 11:05:46.479247  >>>  b'echo:  G29 S3 X4 Y5 Z0.62000\n'
+03591 11:05:46.480244  >>>  b'echo:  G29 S3 X5 Y5 Z0.60000\n'
+03654 11:05:46.481241  >>>  b'echo:  G29 S3 X6 Y5 Z0.57000\n'
+03721 11:05:46.483236  >>>  b'echo:Material heatup parameters:\n'
+03781 11:05:46.496204  >>>  b'echo:  M145 S0 H20 B20 F0\n'
+03841 11:05:46.508169  >>>  b'echo:  M145 S1 H20 B20 F0\n'
+03894 11:05:46.510164  >>>  b'echo:PID settings:\n'
+03961 11:05:46.511163  >>>  b'echo:  M301 P28.79 I1.91 D108.51\n'
+04030 11:05:46.512163  >>>  b'echo:  M304 P162.00 I17.00 D378.00\n'
+04085 11:05:46.513156  >>>  b'echo:Linear Advance:\n'
+04137 11:05:46.514154  >>>  b'echo:  M900 K0.00\n'
+04206 11:05:46.515150  >>>  b'echo:Filament load/unload lengths:\n'
+04266 11:05:46.515150  >>>  b'echo:  M603 L40.00 U80.00\n'
+04323 11:05:46.516148  No output available at this time
+04367 11:05:46.516148  Commutating motors:
+04420 11:05:46.516148  sendCommand:  M17 wait=False
+04470 11:05:46.516148  Dynamic home = [10, 0, 6]
+04516 11:05:46.516148  Grid home = [0, 0, 0]
+04580 11:05:46.516148  Current offsets = [-68.15, -5.75, 5.63]
+04633 11:05:46.518143  Bound port 5005 for Terminal
+04692 11:05:47.360889  ERROR in VisionUtils.openLightPort
+04865 11:05:47.388814  	Cannot configure port, something went wrong. Original message: PermissionError(13, 'A device attached to the system is not functioning.', None, 31)
+04919 11:05:47.388814  ERROR in VisionUtils.setLight
+04986 11:05:47.400782  	Attempting to use a port that is not open
+05036 11:05:47.400782  Process lights set to 255
+05095 11:05:47.404772  ERROR in VisionUtils.openLightPort
+05268 11:05:47.405769  	Cannot configure port, something went wrong. Original message: PermissionError(13, 'A device attached to the system is not functioning.', None, 31)
+05322 11:05:47.405769  ERROR in VisionUtils.setLight
+05389 11:05:47.405769  	Attempting to use a port that is not open
+05441 11:05:47.405769  Alignment lights set to 255
+05494 11:06:02.313896  sendCommand:  G91 wait=False
+05541 11:06:02.320911  Motion mode = relative
+05588 11:06:02.422605  Running homing routine
+05641 11:06:02.452525  sendCommand:  G28 wait=False
+05695 11:06:02.452525  sendCommand:  M400 wait=False
+05761 11:06:02.452525  sendCommand:  G92 X-59 Y253 Z5 wait=False
+05819 11:06:02.453522  sendCommand:  G0 F6000 wait=False
+05883 11:06:02.454519  sendCommand:  G0 X71.5 Y-221 wait=False
+05937 11:06:02.454519  sendCommand:  M400 wait=False
+06000 11:06:02.455517  sendCommand:  G92 X10 Y0 Z6 wait=False
+06050 11:06:02.455517  Dynamic home = [10, 0, 6]
+06096 11:06:02.455517  Grid home = [0, 0, 0]
+06160 11:06:02.455517  Current offsets = [-68.15, -5.75, 5.63]
+06213 11:06:02.455517  sendCommand:  G90 wait=False
+06260 11:06:02.456514  Motion mode = absolute
+06305 11:06:02.456514  Requesting position:
+06378 11:06:02.457512  >>>  b'echo:Hardcoded Default Settings Loaded\n'
+06415 11:06:02.457512  >>>  b'ok\n'
+06480 11:06:02.458509  >>>  b'echo:Unknown command: "b\'M17"\n'
+06517 11:06:02.458509  >>>  b'ok\n'
+06595 11:06:02.459506  >>>  b'echo:Unknown command: "\'b\'M300 P45 S2500"\n'
+06632 11:06:02.459506  >>>  b'ok\n'
+06699 11:06:02.460504  >>>  b'echo:Unknown command: "\'b\'G91"\n'
+06736 11:06:02.472472  >>>  b'ok\n'
+06803 11:06:02.484440  >>>  b'echo:Unknown command: "\'b\'G28"\n'
+06840 11:06:02.486434  >>>  b'ok\n'
+06908 11:06:02.487433  >>>  b'echo:Unknown command: "\'b\'M400"\n'
+06945 11:06:02.487433  >>>  b'ok\n'
+07025 11:06:02.489426  >>>  b'echo:Unknown command: "\'b\'G92 X-59 Y253 Z5"\n'
+07062 11:06:02.490425  >>>  b'ok\n'
+07134 11:06:02.491421  >>>  b'echo:Unknown command: "\'b\'G0 F6000"\n'
+07171 11:06:02.491421  >>>  b'ok\n'
+07249 11:06:02.492419  >>>  b'echo:Unknown command: "\'b\'G0 X71.5 Y-221"\n'
+07286 11:06:02.492419  >>>  b'ok\n'
+07354 11:06:02.493416  >>>  b'echo:Unknown command: "\'b\'M400"\n'
+07391 11:06:02.499401  >>>  b'ok\n'
+07468 11:06:02.506381  >>>  b'echo:Unknown command: "\'b\'G92 X10 Y0 Z6"\n'
+07505 11:06:02.511371  >>>  b'ok\n'
+07572 11:06:02.519347  >>>  b'echo:Unknown command: "\'b\'G90"\n'
+07609 11:06:02.519347  >>>  b'ok\n'
+07666 11:06:02.519347  No output available at this time
+07720 11:06:02.519347  sendCommand:  M114 wait=False

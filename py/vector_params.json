@@ -1,0 +1,4 @@
+{
+	"used": ["Prime Delay"],
+	"not_used": ["Expt#", "Date", "Time", "Location", "Result Descriptor", "Result Unit", "Nozzle Diameter", "Nozzle Length", "Extrusion Multiplier", "Working Distance", "Prime Rate", "Prime Delay", "Retract Distance", "Retract Rate", "Print Speed", "Coast Factor", "Flex Factor", "Bed Temperature", "Enclosure Temperature", "Substrate", "Analyzer", "Analyzer Parameters", "Analysis Light", "Process Light", "Material", "Initial Volume", "Syringe Date", "Syringe Time", "Volume Used", "Time Elapsed", "Wait Time", "Relative Humidity", "Barometric Pressure"]
+}

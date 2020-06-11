@@ -1,0 +1,171 @@
+﻿<UserControl x:Class="ARESCore.ErrorSupport.UI.ErrorHandlingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ARESCore.ErrorSupport.UI"
+             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:AresCore="clr-namespace:ARESCore"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding Visibility}">
+  <UserControl.Resources>
+    <local:ErrorSeverityToIconConverter x:Key="errorSeverityToIconConverter" />
+    <Storyboard x:Key="Blink">
+      <DoubleAnimation
+        Storyboard.TargetName="_mainErrorIndicator"
+        Storyboard.TargetProperty="Opacity"
+        From="1.0" To="0.0" Duration="0:0:1"
+        AutoReverse="True" RepeatBehavior="Forever" />
+    </Storyboard>
+    <local:SeverityToButtonVisibiltyConverter x:Key="SeverityToButtonVisibilityConverter" />
+  </UserControl.Resources>
+  <UserControl.Background>
+    <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+  </UserControl.Background>
+
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="2*"/>
+      <RowDefinition Height="2*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="3*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Viewbox Grid.Column="1">
+      <IconPacks:PackIconMaterial HorizontalAlignment="Right" VerticalAlignment="Center"
+                                  Foreground="Red" Width="90" Height="90"
+                                  Kind="{Binding CurrentError.Severity, Converter={StaticResource errorSeverityToIconConverter}}" />
+      </Viewbox>
+      <Viewbox Grid.Column="2" HorizontalAlignment="Center">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+          <IconPacks:PackIconMaterial Name="_mainErrorIndicator" VerticalAlignment="Center" Width="90" Height="90"
+                                      Kind="Alert" HorizontalAlignment="Center"
+                                      Foreground="{DynamicResource AccentColorBrush}">
+            <IconPacks:PackIconMaterial.Triggers>
+              <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard Storyboard="{StaticResource Blink}" />
+              </EventTrigger>
+            </IconPacks:PackIconMaterial.Triggers>
+          </IconPacks:PackIconMaterial>
+          <TextBlock Text="An Error Occurred" HorizontalAlignment="Center" FontSize="30" />
+        </StackPanel>
+      </Viewbox>
+      <Viewbox Grid.Column="3">
+      <IconPacks:PackIconMaterial VerticalAlignment="Center" Width="90" Foreground="Red" Height="90"
+                                  Kind="{Binding CurrentError.Severity, Converter={StaticResource errorSeverityToIconConverter}}" />
+      </Viewbox>
+    </Grid>
+
+    <Grid Grid.Row="1">
+      <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center">
+      <StackPanel>
+        <TextBlock Text="{Binding CurrentError.Text}" HorizontalAlignment="Center" Margin="10" FontSize="18" />
+        <IconPacks:PackIconMaterial VerticalAlignment="Center" HorizontalAlignment="Center" Width="90" Height="90"
+                                    Kind="{Binding CurrentError.Icon}" />
+      </StackPanel>
+        </Viewbox>
+    </Grid>
+
+    <Grid Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="15*" />
+        <ColumnDefinition Width="70*" />
+        <ColumnDefinition Width="15*" />
+      </Grid.ColumnDefinitions>
+      
+      <UniformGrid Grid.Column="1" Rows="1">
+          <Button Style="{StaticResource AccentedSquareButtonStyle}" Margin="10"
+              Command="{Binding IgnoreAndContinueCommand}">
+            <Button.Visibility>
+              <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">
+                <Binding Path="CurrentError.Severity" />
+                <Binding>
+                  <Binding.Source>
+                    <System:String>Continue</System:String>
+                  </Binding.Source>
+                </Binding>
+              </MultiBinding>
+            </Button.Visibility>
+
+            <Viewbox>
+              <StackPanel Margin="3">
+                <TextBlock Text="Ignore and" />
+                <TextBlock Text="Continue" HorizontalAlignment="Center" />
+              </StackPanel>
+            </Viewbox>
+          </Button>
+
+        <Button Style="{StaticResource AccentedSquareButtonStyle}"  Margin="10"
+              Command="{Binding RetryCommand}">
+          <Button.Visibility>
+            <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">
+              <Binding Path="CurrentError.Severity" />
+              <Binding>
+                <Binding.Source>
+                  <System:String>Retry</System:String>
+                </Binding.Source>
+              </Binding>
+            </MultiBinding>
+          </Button.Visibility>
+
+          <Viewbox>
+            <TextBlock Text="Retry" Margin="3" />
+          </Viewbox>
+        </Button>
+        <Button Style="{StaticResource AccentedSquareButtonStyle}"  Margin="10"
+             Command="{Binding StopCommand}">
+          <Button.Visibility>
+            <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">
+              <Binding Path="CurrentError.Severity" />
+              <Binding>
+                <Binding.Source>
+                  <System:String>Stop</System:String>
+                </Binding.Source>
+              </Binding>
+            </MultiBinding>
+          </Button.Visibility>
+
+          <Viewbox >
+            <TextBlock Text="Stop" Margin="3" />
+          </Viewbox>
+        </Button>
+        <Button Style="{StaticResource AccentedSquareButtonStyle}"  Margin="10"
+             Command="{Binding EstopCommand}">
+          <Button.Visibility>
+            <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">
+              <Binding Path="CurrentError.Severity" />
+              <Binding>
+                <Binding.Source>
+                  <System:String>Estop</System:String>
+                </Binding.Source>
+              </Binding>
+            </MultiBinding>
+          </Button.Visibility>
+
+          <Viewbox>
+            <StackPanel Margin="3">
+              <TextBlock Text="Emergency" HorizontalAlignment="Center" />
+              <TextBlock Text="Stop" HorizontalAlignment="Center" />
+            </StackPanel>
+          </Viewbox>
+        </Button>
+      </UniformGrid>
+      
+    </Grid>
+
+
+  </Grid>
+
+</UserControl>

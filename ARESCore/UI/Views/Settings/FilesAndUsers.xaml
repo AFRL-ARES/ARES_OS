@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="ARESCore.UI.Views.Settings.FilesAndUsers"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ARESCore.UI.Views.Settings"
+             xmlns:ViewModels="clr-namespace:ARESCore.UI.ViewModels"
+             xmlns:Settings="clr-namespace:ARESCore.UI.ViewModels.Settings"
+             xmlns:Mvvm="http://prismlibrary.com/"
+             xmlns:AresCore="clr-namespace:ARESCore"
+             xmlns:Converters="clr-namespace:ARESCore.UI.Converters"
+             mc:Ignorable="d"
+             Mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+    <Converters:UsersEqualToNegateVisibilityConverter x:Key="UsersEqualToNegateVisConverter" />
+  </UserControl.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
+      <Border BorderBrush="{DynamicResource LabelTextBrush}" BorderThickness="0,0,0,2" HorizontalAlignment="Center">
+        <TextBlock Margin="5" Text="Registered Users" HorizontalAlignment="Center"/>
+      </Border>
+      <DataGrid Margin="5" AutoGenerateColumns="False" HorizontalAlignment="Stretch" SelectionMode="Single" SelectedItem="{Binding SelectedUser}"
+                CanUserSortColumns="True" ItemsSource="{Binding AppConfig.UserList}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="User Name" Binding="{Binding Username}" IsReadOnly="True"/>
+          <DataGridTextColumn Header="Save Directory" Binding="{Binding SaveDirectory}" IsReadOnly="True"/>
+          <DataGridTextColumn Header="Save File Name" Binding="{Binding SaveFileName}" IsReadOnly="True"/>
+          <DataGridTextColumn Header="Last Loaded Date" Binding="{Binding LastLoadedDate}" IsReadOnly="True"/>
+          <DataGridTemplateColumn Header="Delete">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Button Content="Delete" Style="{StaticResource SquareButtonStyle}" Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource FindAncestor, 
+                    AncestorType={x:Type local:FilesAndUsers}}}" CommandParameter="{Binding}">
+                  <Button.Visibility>
+                    <MultiBinding Converter="{StaticResource UsersEqualToNegateVisConverter}">
+                      <Binding Path="DataContext.CurrConfig.User" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:FilesAndUsers}}"/>
+                      <Binding />
+                    </MultiBinding>
+                  </Button.Visibility>
+                </Button>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </StackPanel>
+    <Border Grid.Row="1" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" Margin="4">
+      <StackPanel Orientation="Vertical" Margin="5">
+        <Grid>
+        <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" Margin="5" Text="Application Root:" />
+          <TextBlock VerticalAlignment="Center"  Margin="5"  Grid.Column="1" Text="{Binding AppConfig.ApplicationRootDirectory}" />
+        </Grid>
+        <UniformGrid Rows="1">
+          <TextBlock Margin="5" Text="Application Configuration:" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center" Margin="5" Text="{Binding AppConfig.CurrentAppConfigPath}" />
+            <Button Margin="5" Grid.Column="1" Content="..." Style="{StaticResource SquareButtonStyle}"/>
+          </Grid>
+          <Button Margin="5" Content="Save" Style="{StaticResource AccentedSquareButtonStyle}" />
+        </UniformGrid>
+        <UniformGrid Rows="1">
+          <TextBlock Margin="5" Text="Working Directory:" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center"  Margin="5" Text="{Binding CurrConfig.User.SaveDirectory}" />
+            <Button Margin="5" Grid.Column="1" Content="..."  Style="{StaticResource SquareButtonStyle}"/>
+          </Grid>
+          <Button Margin="5" Content="Save" Style="{StaticResource AccentedSquareButtonStyle}" />
+        </UniformGrid>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

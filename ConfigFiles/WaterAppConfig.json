@@ -1,0 +1,10 @@
+{
+  "MaxWaitTries": 100,
+  "DataBits": 8,
+  "BaudRate": 9600,
+  "Parity": 0,
+  "ReadTimeout": 180,
+  "PortName": "COM8",
+  "StopBits": 1,
+  "ReadBufferSize": 1024
+}

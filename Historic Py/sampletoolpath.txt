@@ -1,0 +1,5 @@
+initTP()
+startDep('X',10)
+depToPoint('Y',10)
+depToPoint('X',0)
+endDep('Y',0)

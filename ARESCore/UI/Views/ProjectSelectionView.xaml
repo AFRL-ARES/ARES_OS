@@ -1,0 +1,55 @@
+﻿<mah:MetroWindow x:Class="ARESCore.UI.Views.ProjectSelectionView"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:ARESCore.UI.Views"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:ViewModels="clr-namespace:ARESCore.UI.ViewModels"
+                 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                 xmlns:InteractionRequest="http://prismlibrary.com/"
+                 xmlns:Ui="clr-namespace:ARESCore.UI"
+                 mc:Ignorable="d" ShowMaxRestoreButton="False" ShowMinButton="False"
+                 Title="Project Selection" Height="200" Width="450" Loaded="ProjectSelectionViewLoaded">
+  <mah:MetroWindow.DataContext>
+    <ViewModels:ProjectSelectionViewModel />
+  </mah:MetroWindow.DataContext>
+  <i:Interaction.Triggers>
+    <InteractionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest}">
+      <Ui:MahAppsPopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+        <Ui:MahAppsPopupWindowAction.WindowContent>
+          <local:AresNotifier />
+        </Ui:MahAppsPopupWindowAction.WindowContent>
+      </Ui:MahAppsPopupWindowAction>
+    </InteractionRequest:InteractionRequestTrigger>
+  </i:Interaction.Triggers>
+  <Grid>
+    <TabControl>
+      <TabItem Header="New Project">
+        <StackPanel Orientation="Vertical" Margin="5">
+          <UniformGrid Rows="1">
+            <TextBox Margin="5" mah:TextBoxHelper.Watermark="Enter project name" Text="{Binding NewProjectName}" />
+            <Button Margin="5" Content="Create New Project" Style="{StaticResource AccentedSquareButtonStyle}"
+                    Command="{Binding CreateNewProjectCommand}" IsEnabled="{Binding NewProjectDefinitionComplete}" />
+          </UniformGrid>
+          <TextBlock Margin="5" Text="Project Working Directory" />
+          <Button Name="tbNewProjDesc" Margin="5" Content="{Binding NewProjectWorkingDirectory}"
+                  Style="{StaticResource SquareButtonStyle}" Click="NewProjectClick" />
+        </StackPanel>
+      </TabItem>
+      <TabItem Header="Existing Projects">
+        <StackPanel Orientation="Vertical">
+          <TextBlock Margin="5" Text="Select project to load" />
+          <UniformGrid Rows="1">
+            <ComboBox Margin="5" DisplayMemberPath="Description" ItemsSource="{Binding Config.ProjectList}" SelectedItem="{Binding SelectedProject}" />
+            <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Load Project" Command="{Binding LoadProjectCommand}"/>
+          </UniformGrid>
+          <TextBlock Margin="5" Text="Working directory" />
+          <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+            <TextBlock Text="{Binding SelectedProject.SaveDirectory}" />
+          </Border>
+        </StackPanel>
+      </TabItem>
+    </TabControl>
+  </Grid>
+</mah:MetroWindow>

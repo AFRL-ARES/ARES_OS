@@ -1,0 +1,31 @@
+09:18:28.969608  b'start\n'
+09:18:28.970604  b'echo:Marlin1.0.2.22\n'
+09:18:28.972625  b'echo: Last Updated: Feb  5 2019 07:53:02 | Author: (James Deneault, AM AReS config)\n'
+09:18:28.972625  b'Compiled: Feb  5 2019\n'
+09:18:28.973624  b'echo: Free Memory: 3065  PlannerBufferBytes: 1232\n'
+09:18:28.974619  b'echo:Stored settings retrieved\n'
+09:18:28.974619  b'echo:Steps per unit:\n'
+09:18:28.975615  b'echo:  M92 X100.50 Y100.50 Z1600.00 E1600.00\n'
+09:18:28.976617  b'echo:Maximum feedrates (mm/s):\n'
+09:18:28.976617  b'echo:  M203 X800.00 Y800.00 Z3.00 E40.00\n'
+09:18:28.977612  b'echo:Maximum Acceleration (mm/s2):\n'
+09:18:28.978616  b'echo:  M201 X9000 Y9000 Z100 E10000\n'
+09:18:28.979605  b'echo:Acceleration: S=acceleration, T=retract acceleration\n'
+09:18:28.980605  b'echo:  M204 S500.00 T0.10\n'
+09:18:28.983594  b'echo:Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)\n'
+09:18:28.984590  b'echo:  M205 S0.00 T0.00 B20000 X8.00 Z0.40 E10.00\n'
+09:18:28.985594  b'echo:Home offset (mm):\n'
+09:18:28.985594  b'echo:  M206 X0.00 Y0.00 Z0.00\n'
+09:18:28.986571  b'echo:PID settings:\n'
+09:18:28.987582  b'echo:   M301 P28.79 I1.91 D108.51\n'
+09:18:28.987582  b'echo:Eqn coefficients:\n'
+09:18:28.989553  b'echo:a: -0.007321 b: -0.000933 d: 2.324063\n'
+09:18:28.989553  No output available at this time
+09:18:28.989553  Commutating motors:
+09:18:28.989553  sendCommand:  M17
+09:18:28.990551  Dynamic home = [10, 0, 6]
+09:18:28.990551  Grid home = [0, 0, 0]
+09:18:28.992545  Opening lights on Serial<id=0x22475939898, open=True>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=False, rtscts=False, dsrdtr=False)
+09:18:30.053299  Lights port opened
+09:18:30.103798  Process lights set to 255
+09:18:30.166592  Alignment lights set to 255
