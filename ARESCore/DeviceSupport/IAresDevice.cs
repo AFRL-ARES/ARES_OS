@@ -16,5 +16,6 @@ namespace ARESCore.DeviceSupport
     string GetSampleScriptEntry();
     int ReadRate { get; set; }
     string Validate();
+    bool Connected { get; }
   }
 }

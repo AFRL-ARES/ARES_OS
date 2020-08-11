@@ -212,6 +212,8 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.Impl
     }
 
     public int ReadRate { get; set; }
+    public bool Connected { get; }
+
     public string Validate()
     {
       return string.Empty;

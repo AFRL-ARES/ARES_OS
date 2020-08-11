@@ -18,13 +18,13 @@ namespace ARESCore.TMPDbMigration.UI.ViewModels
     private async void MigrateStuff()
     {
       _migrator = AresKernel._kernel.Get<ICollectionMigrator>();
-      var msPath = $"D:\\ARES\\Misc\\Reference DB Entries\\machinestates.json";
+      var msPath = $"C:\\ARES\\Reference DB Entries\\machinestates.json";
       await _migrator.MigrateFile(msPath, false);
-      var expPath = $"D:\\ARES\\Misc\\Reference DB Entries\\experiments.json";
+      var expPath = $"C:\\ARES\\Reference DB Entries\\experiments.json";
       await _migrator.MigrateFile(expPath, false);
-      var dataPath = $"D:\\ARES\\Misc\\Reference DB Entries\\data.json";
+      var dataPath = $"C:\\ARES\\Reference DB Entries\\data.json";
       await _migrator.MigrateFile(dataPath, false);
-      var planningPath = $"D:\\ARES\\Misc\\Reference DB Entries\\planning.json";
+      var planningPath = $"C:\\ARES\\Reference DB Entries\\planning.json";
       await _migrator.MigrateFile(planningPath, false);
     }
 

@@ -129,6 +129,8 @@ namespace AresAdditiveDevicesPlugin.UEyeCamera.Impl
     }
 
     public int ReadRate { get; set; }
+    public bool Connected { get; }
+
     public string Validate()
     {
       return !this.Any() ? "Camera Repository is empty" : string.Empty;
