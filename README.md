@@ -3,4 +3,7 @@ Is an autonomous research software to create systems to perform experimentation 
 The solution consist of 4 projects, ARESCore, AresDevicePlugin, AresAnalysisPlugin, AresPlanningPlugin. The Plugins are customized to the 
 research resources while ARESCore provides the structured interface and closed loop testing capabilities.
 
-Included within the repository is the Device, Analysis, and Planning plugins for the Additive research system.
+Included within the repository is the Device, Analysis, and Planning plugins for the Additive research system. The Additive research system uses a 3D printer 
+as the device.
+
+
