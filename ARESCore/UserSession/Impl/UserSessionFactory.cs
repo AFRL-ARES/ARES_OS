@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ARESCore.UI;
+﻿using ARESCore.UI;
 using Newtonsoft.Json;
 using Ninject;
+using System;
+using System.IO;
 
 namespace ARESCore.UserSession.Impl
 {
-  public class UserSessionFactory:IUserSessionFactory
+  public class UserSessionFactory : IUserSessionFactory
   {
-    public IUserSession CreateSession( string sessionPath )
+    public IUserSession CreateSession(string sessionPath)
     {
-      if ( File.Exists( sessionPath ) )
+      if (File.Exists(sessionPath))
       {
         try
         {
-          string sessionJson = File.ReadAllText( sessionPath );
-         return JsonConvert.DeserializeObject<IUserSession>( sessionJson);
+          string sessionJson = File.ReadAllText(sessionPath);
+          return JsonConvert.DeserializeObject<IUserSession>(sessionJson);
         }
-        catch ( Exception ex )
+        catch (Exception ex)
         {
-          AresKernel._kernel.Get<IAresConsole>().WriteLine( ex.Message );
+          AresKernel._kernel.Get<IAresConsole>().WriteLine(ex.Message);
           return null;
         }
       }

@@ -7,7 +7,22 @@ namespace AresAdditiveDevicesPlugin.PythonInterop.Configuration
 {
   public class ConfigurationWriter : IConfigurationWriter
   {
-    private readonly string _configPath = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.GetDirectories().First(dirInfo => dirInfo.Name.ToLower().StartsWith("py")).GetFiles().First(fileInfo => fileInfo.Name.ToLower().StartsWith("pythonprocessconfig")).FullName;
+    private readonly string _configPath;
+    public ConfigurationWriter()
+    {
+      var cPath = Directory.GetCurrentDirectory();
+      var cDirInfo = new DirectoryInfo(cPath);
+      var root = cDirInfo.Parent.Parent.Parent;
+      var pyPath = root.GetDirectories().FirstOrDefault(dirInfo => dirInfo.Name.ToLower().StartsWith("py"));
+      if (pyPath == null)
+        _configPath = "ThisIsABadPathOnPurpose";
+      else
+      {
+        var ppcPath = pyPath.GetFiles().FirstOrDefault(fileInfo => fileInfo.Name.ToLower().StartsWith("pythonprocessconfig"));
+        _configPath = ppcPath == null ? "ThisIsABadPathOnPurpose" : ppcPath.FullName;
+      }
+    }
+
     public void Write(IPythonProcess process)
     {
       string processName = process.ComponentName;

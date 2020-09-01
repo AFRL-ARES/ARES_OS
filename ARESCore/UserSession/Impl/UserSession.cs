@@ -1,15 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using ARESCore.DisposePatternHelpers;
+﻿using ARESCore.DisposePatternHelpers;
 using ARESCore.UI;
 using Newtonsoft.Json;
 using Ninject;
 using ReactiveUI;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace ARESCore.UserSession.Impl
 {
-  internal class UserSession: BasicReactiveObjectDisposable, IUserSession
+  internal class UserSession : BasicReactiveObjectDisposable, IUserSession
   {
     private string _username = "DefaultUserName";
     private string _saveDirectory;
@@ -19,7 +19,7 @@ namespace ARESCore.UserSession.Impl
     public string Username
     {
       get => _username;
-      set => this.RaiseAndSetIfChanged(ref _username , value);
+      set => this.RaiseAndSetIfChanged(ref _username, value);
     }
 
     [JsonProperty]
@@ -35,27 +35,27 @@ namespace ARESCore.UserSession.Impl
       get => _fileNameAndPath;
       set => this.RaiseAndSetIfChanged(ref _fileNameAndPath, value);
     }
-    
+
     public UserSession()
-      {
-        SaveDirectory = Path.GetDirectoryName( Assembly.GetExecutingAssembly().CodeBase ).Replace( "file:\\", "" ) + "\\" + Username + "\\";
-        FileNameAndPath = SaveDirectory + Username + "_UserSession.json";
-      }
+    {
+      SaveDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace("file:\\", "") + "\\" + Username + "\\";
+      FileNameAndPath = SaveDirectory + Username + "_UserSession.json";
+    }
 
     public bool SaveSession()
+    {
+      try
       {
-        try
-        {
-          string sessionJson = JsonConvert.SerializeObject( this, Formatting.Indented );
-          File.WriteAllText( this.FileNameAndPath, sessionJson );
-        }
-        catch ( Exception ex )
-        {
-          AresKernel._kernel.Get<IAresConsole>().WriteLine( ex.Message );
-          return false;
-        }
-
-        return true;
+        string sessionJson = JsonConvert.SerializeObject(this, Formatting.Indented);
+        File.WriteAllText(this.FileNameAndPath, sessionJson);
       }
+      catch (Exception ex)
+      {
+        AresKernel._kernel.Get<IAresConsole>().WriteLine(ex.Message);
+        return false;
+      }
+
+      return true;
     }
   }
+}

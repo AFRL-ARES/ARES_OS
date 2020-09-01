@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using ARESCore.Commands;
-using ARESCore.Database.Tables;
+﻿using ARESCore.Commands;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.ErrorSupport.Impl;
 using ARESCore.ErrorSupport.Impl.RetryInfos;
@@ -16,6 +10,11 @@ using Castle.Core.Internal;
 using DynamicData.Binding;
 using Ninject;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace ARESCore.Experiment.Scripting.Impl
 {
@@ -27,51 +26,51 @@ namespace ARESCore.Experiment.Scripting.Impl
     private bool _isComplete;
     private bool _terminated = false;
 
-    public ScriptExecutor( IAresCommandRegistry commandRegistry, ICampaignExecutionSummary campaignExecutionSummary )
+    public ScriptExecutor(IAresCommandRegistry commandRegistry, ICampaignExecutionSummary campaignExecutionSummary)
     {
       _commandRegistry = commandRegistry;
       _campaignExecutionSummary = campaignExecutionSummary;
     }
 
-    public async Task Run( string script, IPlannedExperimentInputs inputs )
+    public async Task Run(string script, IPlannedExperimentInputs inputs)
     {
       _terminated = false;
-      var templines = CmdLines( script );
+      var templines = CmdLines(script);
       var lines = templines;
       var currExperimentResult = _campaignExecutionSummary.ExperimentExecutionSummaries.Last();
 
       // get all planner values
-      for ( int i = 0; i < templines.Count; i++ )
+      for (int i = 0; i < templines.Count; i++)
       {
-        if ( templines[i].Contains( "VAL_" ) )
+        if (templines[i].Contains("VAL_"))
         {
-          var startidx = templines[i].IndexOf( "VAL_" );
-          var substr = templines[i].Substring( startidx ).Split( ' ' )[0];
+          var startidx = templines[i].IndexOf("VAL_");
+          var substr = templines[i].Substring(startidx).Split(' ')[0];
           double targval = inputs.Inputs[substr];
-          lines[i] = templines[i].Replace( substr, targval.ToString() );
+          lines[i] = templines[i].Replace(substr, targval.ToString());
         }
       }
 
       int j = 0;
-      while ( j < lines.Count && !_terminated )
+      while (j < lines.Count && !_terminated)
       {
-        var lineTokens = lines[j].Split( ' ' );
+        var lineTokens = lines[j].Split(' ');
         var cmd = lineTokens[0];
-        var command = _commandRegistry.FirstOrDefault( c => c.ScriptName != null && c.ScriptName.Equals( cmd ) );
+        var command = _commandRegistry.FirstOrDefault(c => c.ScriptName != null && c.ScriptName.Equals(cmd));
 
-        if ( command.CloserCmd.IsNullOrEmpty() )
+        if (command.CloserCmd.IsNullOrEmpty())
         {
           List<string> revisedTokens = new List<string>();
-          for ( int k = 1; k < lineTokens.Length; k++ )
+          for (int k = 1; k < lineTokens.Length; k++)
           {
-            revisedTokens.Add( lineTokens[k] );
+            revisedTokens.Add(lineTokens[k]);
           }
-          var strayCommandSub = command.Subscribe( c => c.Error, c => OnFail( command, revisedTokens, null ) );
+          var strayCommandSub = command.Subscribe(c => c.Error, c => OnFail(command, revisedTokens, null));
           try
           {
-            await command.Execute( revisedTokens.ToArray() );
+            await command.Execute(revisedTokens.ToArray());
           }
-          catch ( Exception )
+          catch (Exception)
           {
             // Already handled?
           }
@@ -84,57 +83,53 @@ namespace ARESCore.Experiment.Scripting.Impl
         {
 
           var subList = new List<string>();
-          while ( !lines[j].StartsWith( command.CloserCmd ) && j < lines.Count )
+          while (!lines[j].StartsWith(command.CloserCmd) && j < lines.Count)
           {
-            subList.Add( lines[j] );
+            subList.Add(lines[j]);
             j++;
           }
-          subList.Add( lines[j] );
+          subList.Add(lines[j]);
           var stepResult = AresKernel._kernel.Get<IStepExecutionSummary>();
-          currExperimentResult.StepExecutionSummaries.Add( stepResult );
+          currExperimentResult.StepExecutionSummaries.Add(stepResult);
           try
           {
-            if ( _terminated )
+            if (_terminated)
             {
               IsComplete = true;
               return;
             }
-            await ExecuteStep( (IAresScriptCommand)command, subList, stepResult );
+            await ExecuteStep((IAresScriptCommand)command, subList, stepResult);
             do
-              await Task.Delay( 500 );
-            while ( _retryInfos.Any() && !_terminated );
+              await Task.Delay(500);
+            while (_retryInfos.Any() && !_terminated);
           }
-          catch ( Exception e )
+          catch (Exception)
           {
-          }
-          finally
-          {
-
           }
         }
         j++;
       }
-      if ( !_retryInfos.Any() )
+      if (!_retryInfos.Any())
       {
         IsComplete = true;
       }
     }
 
-    private async Task ExecuteStep( IAresScriptCommand command, List<string> subList, IStepExecutionSummary stepExecutionSummary )
+    private async Task ExecuteStep(IAresScriptCommand command, List<string> subList, IStepExecutionSummary stepExecutionSummary)
     {
       var shouldContinue = false;
-      var stepErrorSub = command.Subscribe( c => c.Error, c => OnFail( command, subList, stepExecutionSummary ) );
+      var stepErrorSub = command.Subscribe(c => c.Error, c => OnFail(command, subList, stepExecutionSummary));
       // The CompletionUpdated function is actually required for getting the reference to the boolean. Booo
-      command.WhenPropertyChanged( c => c.IsComplete, false ).Take( 1 ).Subscribe( completion => CompletionUpdated( ref shouldContinue, completion.Value ) );
+      command.WhenPropertyChanged(c => c.IsComplete, false).Take(1).Subscribe(completion => CompletionUpdated(ref shouldContinue, completion.Value));
       try
       {
-        await command.Execute( subList.ToArray() );
-        while ( !shouldContinue && !_terminated )
+        await command.Execute(subList.ToArray());
+        while (!shouldContinue && !_terminated)
         {
-          await Task.Delay( 500 );
+          await Task.Delay(500);
         }
       }
-      catch ( Exception )
+      catch (Exception)
       {
         // Already handled?
       }
@@ -144,59 +139,58 @@ namespace ARESCore.Experiment.Scripting.Impl
       }
     }
 
-    private void CompletionUpdated( ref bool shouldContinue, bool completionValue )
+    private void CompletionUpdated(ref bool shouldContinue, bool completionValue)
     {
       shouldContinue = completionValue;
     }
 
-    private void OnFail( IAresCommand command, List<string> subList, IStepExecutionSummary stepExecutionSummary )
+    private void OnFail(IAresCommand command, List<string> subList, IStepExecutionSummary stepExecutionSummary)
     {
       var retryInfo = new StepRetryInfo { Step = command, SubList = subList, StepResult = stepExecutionSummary };
-      _retryInfos.Add( retryInfo );
+      _retryInfos.Add(retryInfo);
 
-      CreateAndAddErrorBundle( this, command );
+      CreateAndAddErrorBundle(this, command);
     }
 
-    public bool Validate( string script, IPlannedExperimentInputs inputs )
+    public bool Validate(string script, IPlannedExperimentInputs inputs)
     {
-      var lines = CmdLines( script );
+      var lines = CmdLines(script);
 
       // get all planner values
-      for ( int i = 0; i < lines.Count; i++ )
+      for (int i = 0; i < lines.Count; i++)
       {
-        if ( lines[i].Contains( "VAL_" ) )
+        if (lines[i].Contains("VAL_"))
         {
-          var startidx = lines[i].IndexOf( "VAL_" );
-          var substr = lines[i].Substring( startidx ).Split( ' ' )[0];
-          double targval;
-          bool found = inputs != null && inputs.Inputs.TryGetValue( substr, out targval );
-          if ( !found )
+          var startidx = lines[i].IndexOf("VAL_");
+          var substr = lines[i].Substring(startidx).Split(' ')[0];
+          bool found = inputs != null && inputs.Inputs.TryGetValue(substr, out _);
+          if (!found)
           {
-            AresKernel._kernel.Get<IAresConsole>().WriteLine( "Script Validation failed. " + substr + " is not provided in the plan." );
+            AresKernel._kernel.Get<IAresConsole>().WriteLine("Script Validation failed. " + substr + " is not provided in the plan.");
             return false;
           }
         }
       }
-      for ( int i = 0; i < lines.Count; i++ )
+      for (int i = 0; i < lines.Count; i++)
       {
-        var lineTokens = lines[i].Split( ' ' );
+        var lineTokens = lines[i].Split(' ');
         var cmd = lineTokens[0];
-        var command = _commandRegistry.FirstOrDefault( c => c.ScriptName != null && c.ScriptName.Equals( cmd ) );
-        if ( command == null )
+        var command = _commandRegistry.FirstOrDefault(c => c.ScriptName != null && c.ScriptName.Equals(cmd));
+        if (command == null)
         {
           return false;
         }
 
-        if ( !command.CloserCmd.IsNullOrEmpty() )
+        if (!command.CloserCmd.IsNullOrEmpty())
         {
           var j = i + 1;
-          while ( !lines[j].StartsWith( command.CloserCmd ) && j < lines.Count )
+          while (!lines[j].StartsWith(command.CloserCmd) && j < lines.Count)
           {
             j++;
           }
-          if ( j == lines.Count )
+          if (j == lines.Count)
           {
-            AresKernel._kernel.Get<IAresConsole>().WriteLine( "Script Validation failed. The command \"" + lines[i] + "\" (line " + ( i + 1 ) + " ) is never closed." );
+            AresKernel._kernel.Get<IAresConsole>().WriteLine("Script Validation failed. The command \"" + lines[i] + "\" (line " + (i + 1) + " ) is never closed.");
             return false;
           }
         }
@@ -204,21 +198,21 @@ namespace ARESCore.Experiment.Scripting.Impl
       return true;
     }
 
-    private List<string> CmdLines( string scriptText )
+    private List<string> CmdLines(string scriptText)
     {
-      scriptText = scriptText.Replace( "\r", "" );
-      var lines = scriptText.Split( '\n' ).ToList();
+      scriptText = scriptText.Replace("\r", "");
+      var lines = scriptText.Split('\n').ToList();
 
-      lines.RemoveAll( s => s.Trim() == string.Empty );
-      lines.RemoveAll( s => s.Trim().StartsWith( "//" ) );
+      lines.RemoveAll(s => s.Trim() == string.Empty);
+      lines.RemoveAll(s => s.Trim().StartsWith("//"));
 
-      for ( int i = 0; i < lines.Count; i++ )
+      for (int i = 0; i < lines.Count; i++)
       {
         lines[i] = lines[i].Trim();
-        var index = lines[i].IndexOf( "//" );
-        if ( index > 0 )
+        var index = lines[i].IndexOf("//");
+        if (index > 0)
         {
-          lines[i] = lines[i].Substring( 0, index );
+          lines[i] = lines[i].Substring(0, index);
           lines[i] = lines[i].Trim();
         }
       }
@@ -236,10 +230,10 @@ namespace ARESCore.Experiment.Scripting.Impl
       }
     }
 
-    public override async Task Handle( ErrorResponse response )
+    public override async Task Handle(ErrorResponse response)
     {
-      await base.Handle( response );
-      if ( !_retryInfos.Any() )
+      await base.Handle(response);
+      if (!_retryInfos.Any())
       {
         IsComplete = true;
       }
@@ -259,17 +253,17 @@ namespace ARESCore.Experiment.Scripting.Impl
       try
       {
         retryInfo.StepResult.CommandExecutionSummaries.Clear();
-        await ExecuteStep( (IAresScriptCommand)retryInfo.Step, retryInfo.SubList, retryInfo.StepResult );
+        await ExecuteStep((IAresScriptCommand)retryInfo.Step, retryInfo.SubList, retryInfo.StepResult);
       }
-      catch ( Exception e )
+      catch (Exception)
       {
       }
-      _retryInfos.RemoveAt( 0 );
+      _retryInfos.RemoveAt(0);
     }
 
     protected override Task HandleIgnoreAndContinue()
     {
-      _retryInfos.RemoveAt( 0 );
+      _retryInfos.RemoveAt(0);
       return Task.CompletedTask;
     }
   }

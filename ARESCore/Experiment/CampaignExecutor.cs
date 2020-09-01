@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using ARESCore.DisposePatternHelpers;
+﻿using ARESCore.DisposePatternHelpers;
 using ARESCore.ErrorSupport;
 using ARESCore.ErrorSupport.Impl;
 using ARESCore.ErrorSupport.Impl.RetryInfos;
@@ -19,6 +13,12 @@ using DynamicData.Binding;
 using MoreLinq;
 using Ninject;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace ARESCore.Experiment
 {
@@ -112,7 +112,7 @@ namespace ARESCore.Experiment
       var campaignsDir = omnibusRepo.GetDirectories()
         .FirstOrDefault(dir => dir.Name.Equals("Campaigns", StringComparison.CurrentCultureIgnoreCase))
         ?? Directory.CreateDirectory(omnibusRepo.FullName);
-      var campaignsLocation = 
+      var campaignsLocation =
         $@"{campaignsDir.FullName}";
 
       _newCampaignPath = $@"{campaignsLocation}\{timeStamp}";
@@ -224,7 +224,7 @@ namespace ARESCore.Experiment
         }
 
       }
-      catch (Exception e)
+      catch (Exception)
       {
       }
     }
@@ -304,7 +304,7 @@ namespace ARESCore.Experiment
         while (!_shouldContinue && _experimentRetryInfos.Any() && !_terminated); // IgnoreAndContinue causes a bug here
         expExecutionSummary.Status = ExecutionStatus.DONE;
       }
-      catch (Exception e)
+      catch (Exception)
       {
       }
       finally
@@ -452,7 +452,7 @@ namespace ARESCore.Experiment
       {
         await RunExperiment(expRetryInfo.Inputs, expRetryInfo.ExperimentResult);
       }
-      catch (Exception e)
+      catch (Exception)
       {
 
       }

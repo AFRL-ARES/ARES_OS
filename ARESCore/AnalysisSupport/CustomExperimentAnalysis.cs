@@ -1,37 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Controls;
-using ARESCore.Database.Filtering.Impl;
+﻿using ARESCore.Database.Filtering.Impl;
 using ARESCore.Database.Tables;
-using ARESCore.DataHub;
 using ARESCore.DisposePatternHelpers;
-using CommonServiceLocator;
 using Ninject;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace ARESCore.AnalysisSupport
 {
   public class CustomExperimentAnalysis : BasicReactiveObjectDisposable, IAresAnalyzer
   {
-    private readonly IDataHub _hub = ServiceLocator.Current.GetInstance<IDataHub>();
-    private readonly DataEntity _DataEntity;
-    private List<Point> _calibPoints = new List<Point>();
-    private readonly List<KeyValuePair<Color, Point>> _aOIBandsPoints = new List<KeyValuePair<Color, Point>>();
     private bool _isSelected;
-    private readonly IDisposable _runningSubscription = null;
     public List<string> Headers { get; set; } = new List<string>();
     public UserControl AnalysisDbFilter { get; set; } = new CustomAnalysisDbFilter();
-
-    public List<Point> CalibDataPoints
-    {
-      get => _calibPoints;
-      set => this.RaiseAndSetIfChanged(ref _calibPoints, value);
-    }
-    public void CalculateFit(List<DataEntity> spectralDocuments, List<MachineStateEntity> machineDocuments)
-    {
-      // do nothing
-    }
 
     public string GetPostProcessOverview(IAresAnalyzer referenceProcess)
     {

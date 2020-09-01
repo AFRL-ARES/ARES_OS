@@ -33,7 +33,6 @@ namespace ARESDevicesPlugin
 
     private void RegisterConfigViews()
     {
-      //TODO: Finish breaking up config views into App and User configs
       RegisterAppConfigViews();
       RegisterUserConfigViews();
     }

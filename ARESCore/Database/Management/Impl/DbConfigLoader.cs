@@ -23,7 +23,7 @@ namespace ARESCore.Database.Management.Impl
       else
       {
         cfg.Ip = "127.0.0.1";
-        cfg.Port = 5432;
+        cfg.Port = 5433;
         config.Ip = cfg.Ip;
         config.Port = cfg.Port;
         Save();

@@ -85,6 +85,8 @@ namespace AresAdditiveDevicesPlugin.Processing.Components.Base
     {
 
       var defaultLocation = @"../../../Analyzers/";
+      if (!Directory.Exists(defaultLocation))
+        return;
       var jComponentFileNames = Directory.GetFiles(defaultLocation).Where(fileName => fileName.EndsWith("json"));
       foreach (var jComponentFileName in jComponentFileNames)
       {

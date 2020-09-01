@@ -1,4 +1,10 @@
-﻿using System;
+﻿using ARESCore.DeviceSupport.Usb;
+using ARESCore.Experiment;
+using ARESCore.Experiment.Results;
+using CommonServiceLocator;
+using MoreLinq;
+using ReactiveUI;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -7,12 +13,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using ARESCore.DeviceSupport.Usb;
-using ARESCore.Experiment;
-using ARESCore.Experiment.Results;
-using CommonServiceLocator;
-using MoreLinq;
-using ReactiveUI;
 using uEye.Defines;
 using uEye.Types;
 
@@ -250,7 +250,9 @@ namespace AresAdditiveDevicesPlugin.UEyeCamera.Impl
       set
       {
         this.RaiseAndSetIfChanged(ref _selectedCamera, value);
+#if !DISCONNECTED
         InitHardware();
+#endif
       }
     }
 

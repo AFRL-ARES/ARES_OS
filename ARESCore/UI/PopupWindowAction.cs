@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Interop;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using Prism.Interactivity;
 using Prism.Interactivity.InteractionRequest;
+using System;
+using System.Windows;
+using System.Windows.Interop;
 
 namespace ARESCore.UI
 {
@@ -19,36 +15,35 @@ namespace ARESCore.UI
     public static readonly DependencyProperty SuppressUserClosingProperty =
       DependencyProperty.Register(
         "SuppressUserClosing",
-        typeof( bool ),
-        typeof( MahAppsPopupWindowAction ),
-        new PropertyMetadata( null ) );
+        typeof(bool),
+        typeof(MahAppsPopupWindowAction),
+        new PropertyMetadata(null));
 
     public bool SuppressUserClosing
     {
-      get { return (bool)GetValue( SuppressUserClosingProperty ); }
-      set { SetValue( SuppressUserClosingProperty, value ); }
+      get { return (bool)GetValue(SuppressUserClosingProperty); }
+      set { SetValue(SuppressUserClosingProperty, value); }
     }
 
     protected MetroWindow metroWindow
     {
       get
       {
-        var mWindow = Window.GetWindow( AssociatedObject ) as MetroWindow;
-        if ( mWindow == null )
+        if (!(Window.GetWindow(AssociatedObject) is MetroWindow mWindow))
         {
-          throw new InvalidOperationException( "Context is not inside a MetroWindow." );
+          throw new InvalidOperationException("Context is not inside a MetroWindow.");
         }
         return mWindow;
       }
     }
 
-    private IntPtr UserClosingWndProc( IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled )
+    private IntPtr UserClosingWndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
-      switch ( msg )
+      switch (msg)
       {
         case WM_SYSCOMMAND:
           int command = wParam.ToInt32() & 0xfff0;
-          if ( command == SC_CLOSE )
+          if (command == SC_CLOSE)
             handled = true;
           break;
         default:
@@ -57,34 +52,34 @@ namespace ARESCore.UI
       return IntPtr.Zero;
     }
 
-    protected override Window GetWindow( INotification notification )
+    protected override Window GetWindow(INotification notification)
     {
-      var mwin = base.GetWindow( notification );
+      var mwin = base.GetWindow(notification);
 
       metroWindow.ShowOverlay();
 
       HwndSource hwndSource = null;
-      if ( SuppressUserClosing )
+      if (SuppressUserClosing)
       {
         RoutedEventHandler loadedHandler = null;
-        loadedHandler = ( o, e ) =>
+        loadedHandler = (o, e) =>
         {
           mwin.Loaded -= loadedHandler;
 
-          hwndSource = HwndSource.FromHwnd( new WindowInteropHelper( mwin ).Handle );
-          hwndSource.AddHook( UserClosingWndProc );
+          hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(mwin).Handle);
+          hwndSource.AddHook(UserClosingWndProc);
         };
         mwin.Loaded += loadedHandler;
       }
 
       EventHandler closeWindowHandler = null;
       closeWindowHandler =
-        ( o, e ) =>
+        (o, e) =>
         {
           mwin.Closed -= closeWindowHandler;
-          if ( hwndSource != null )
+          if (hwndSource != null)
           {
-            hwndSource.RemoveHook( UserClosingWndProc );
+            hwndSource.RemoveHook(UserClosingWndProc);
             hwndSource.Dispose();
           }
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using AresAdditiveDevicesPlugin.Extensions;
+﻿using AresAdditiveDevicesPlugin.Extensions;
 using AresAdditiveDevicesPlugin.PythonInterop;
 using AresAdditiveDevicesPlugin.PythonStageController.Commands;
 using AresAdditiveDevicesPlugin.Terminal;
@@ -15,6 +8,13 @@ using ARESCore.Registries;
 using CommonServiceLocator;
 using Prism.Ioc;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace AresAdditiveDevicesPlugin.PythonStageController.Impl
 {
@@ -42,7 +42,9 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.Impl
     {
       ExperimentGrid = experimentGrid;
       var currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-      var configDir = currentDir.Parent.Parent.Parent.GetDirectories().First(dirInfo => dirInfo.Name.ToLower().StartsWith("py"));
+      var configDir = currentDir.Parent.Parent.Parent.GetDirectories().FirstOrDefault(dirInfo => dirInfo.Name.ToLower().StartsWith("py"));
+      if (configDir == null)
+        return;
       var files = configDir.GetFiles();
 
       var pythonPath = files.First(fileInfo => fileInfo.Name.ToLower().StartsWith("pythoncommandconfig")).FullName;
@@ -60,6 +62,8 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.Impl
     }
     public async void Init()
     {
+      if (_config == null)
+        return;
       var split = _config.InitCommand.Split('.');
       if (split.Length != 2)
       {
@@ -219,6 +223,7 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.Impl
       return string.Empty;
     }
 
+ 
 
     public async Task StepX(double dist)
     {

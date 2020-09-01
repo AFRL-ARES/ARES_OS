@@ -137,6 +137,8 @@ namespace ARESDevicesPlugin.Laser
       return "Verdi V6 Laser is not Connected";
     }
 
+    public bool Connected { get; }
+
     protected override Task HandleEStop()
     {
       return HandleStop();

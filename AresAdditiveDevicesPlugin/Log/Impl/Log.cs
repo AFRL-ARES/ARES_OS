@@ -22,19 +22,24 @@ namespace AresAdditiveDevicesPlugin.Log.Impl
     public Log(IAresConsole console)
     {
       _console = console;
-      FileSystemWatcher fsw = new FileSystemWatcher(@"..\..\..\py\logs\")
+      var path = @"..\..\..\py\logs\";
+      if (Directory.Exists(path))
       {
-        NotifyFilter = NotifyFilters.FileName
-      };
-      fsw.Created += LogFileCreated;
-      fsw.EnableRaisingEvents = true;
+        FileSystemWatcher fsw = new FileSystemWatcher(path)
+        {
+          NotifyFilter = NotifyFilters.FileName
+        };
+        fsw.Created += LogFileCreated;
+        fsw.EnableRaisingEvents = true;
 
-      var directory = new DirectoryInfo(@"..\..\..\py\logs\");
-      var logFile = directory.GetFiles()
-        .OrderByDescending(f => f.LastWriteTime)
-        .First();
-      _fileToWatch = logFile.Name;
-      StartWatching();
+
+        var directory = new DirectoryInfo(path);
+        var logFile = directory.GetFiles()
+          .OrderByDescending(f => f.LastWriteTime)
+          .First();
+        _fileToWatch = logFile.Name;
+        StartWatching();
+      }
     }
 
     private void LogFileCreated(object sender, FileSystemEventArgs e)

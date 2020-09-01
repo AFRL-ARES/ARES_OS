@@ -1,24 +1,49 @@
-﻿<mah:MetroWindow x:Class="ARESCore.UI.Views.IPAddressPortView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ARESCore.UI.Views"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:mvvm="http://prismlibrary.com/"
-        mvvm:ViewModelLocator.AutoWireViewModel="True"
-        mc:Ignorable="d"
-        Title="Inputsbase Connection Config" Height="125" Width="335">
+﻿<mah:MetroWindow
+    x:Class="ARESCore.UI.Views.IPAddressPortView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ARESCore.UI.Views"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="http://prismlibrary.com/"
+    Title="Database Connection Config"
+    Width="335"
+    Height="150"
+    mvvm:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
     <StackPanel>
+        <TextBlock Text="Enter the database connection information. If you do not have a database installed, click " TextWrapping="Wrap">
+            <Hyperlink NavigateUri="https://www.postgresql.org/download/">Here.</Hyperlink>
+        </TextBlock>
         <StackPanel Orientation="Horizontal">
-        <TextBlock Text="Ip Address:" Margin="2,4,1,4" FontSize="15"></TextBlock>
-        <TextBox Text="{Binding Config.Ip, Mode=TwoWay}" Margin="0,4,4,4"></TextBox>
-        <TextBlock Text="Port: " Margin="10,4,1,4" FontSize="15"></TextBlock>
-        <TextBox Text="{Binding Config.Port, Mode=TwoWay}" Margin="0,4,4,4"></TextBox>
+            <TextBlock
+                Margin="2,4,1,4"
+                FontSize="15"
+                Text="Ip Address:" />
+            <TextBox Margin="0,4,4,4" Text="{Binding Config.Ip, Mode=TwoWay}" />
+            <TextBlock
+                Margin="10,4,1,4"
+                FontSize="15"
+                Text="Port: " />
+            <TextBox Margin="0,4,4,4" Text="{Binding Config.Port, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Content="Save Settings" Command="{Binding SaveCommand}" Margin="4" Style="{StaticResource MetroCircleButtonStyle}" Width="100" HorizontalAlignment="Left"></Button>
-            <Button Content="Ok" Margin="4" Style="{StaticResource MetroCircleButtonStyle}" Width="60" Height="40" HorizontalAlignment="Right" Click="OkClicked"></Button>
+            <Button
+                Width="100"
+                Margin="4"
+                HorizontalAlignment="Left"
+                Command="{Binding SaveCommand}"
+                Content="Save Settings"
+                Style="{StaticResource MetroCircleButtonStyle}" />
+            <Button
+                Width="60"
+                Height="40"
+                Margin="4"
+                HorizontalAlignment="Right"
+                Click="OkClicked"
+                Content="Ok"
+                Style="{StaticResource MetroCircleButtonStyle}" />
         </StackPanel>
     </StackPanel>
 </mah:MetroWindow>

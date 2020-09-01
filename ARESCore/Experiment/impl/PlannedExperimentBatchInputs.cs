@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ARESCore.DisposePatternHelpers;
+using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ARESCore.DisposePatternHelpers;
-using ReactiveUI;
 
 namespace ARESCore.Experiment.impl
 {
@@ -123,25 +123,25 @@ namespace ARESCore.Experiment.impl
       List<List<double>> data = new List<List<double>>();
       dataFileLines.ForEach(expDataLine =>
      {
-        // Tokenize the line and check the validity of it
-        expNum += 1;
+       // Tokenize the line and check the validity of it
+       expNum += 1;
        List<string> expLineTokens = TokenizeLine(expDataLine);
        if (expLineTokens == null || expLineTokens.Count != firstLineTokens.Count)
          throw new Exception("Experiment " + expNum + " does not have enough tokens in line!");
 
-        // Parse the tokens to double and check the validities
-        int tokenNum = 0; // 1 based index
-        List<double> expData = new List<double>();
+       // Parse the tokens to double and check the validities
+       int tokenNum = 0; // 1 based index
+       List<double> expData = new List<double>();
        expLineTokens.ForEach(dataToken =>
        {
          tokenNum += 1;
          if (dataToken == null || dataToken.Trim().Equals(""))
            throw new Exception("Experiment " + expNum + ", column " + tokenNum + " data is null or empty!");
 
-         double dataVal = default(double);
+         double dataVal;
          try
          { dataVal = Convert.ToDouble(dataToken); }
-         catch (Exception ex)
+         catch (Exception)
          {
            throw new Exception("Experiment " + expNum + ", column " + tokenNum + " data cannot be parsed to a double!");
          }
@@ -149,12 +149,12 @@ namespace ARESCore.Experiment.impl
          if (double.IsInfinity(dataVal) || double.IsNaN(dataVal))
            throw new Exception("Experiment " + expNum + ", column " + tokenNum + " data cannot be NaN or an Infinity!");
 
-          // This token is good data
-          expData.Add(dataVal);
+         // This token is good data
+         expData.Add(dataVal);
        });
 
-        // This line is a good experiment
-        data.Add(expData);
+       // This line is a good experiment
+       data.Add(expData);
      });
       var descs = firstLineTokens;
 

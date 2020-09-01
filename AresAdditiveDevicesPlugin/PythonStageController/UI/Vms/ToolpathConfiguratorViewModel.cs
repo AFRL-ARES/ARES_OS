@@ -1,10 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Reactive;
-using System.Threading.Tasks;
-using AresAdditiveDevicesPlugin.Experiment;
+﻿using AresAdditiveDevicesPlugin.Experiment;
 using AresAdditiveDevicesPlugin.Experiment.Impl;
 using AresAdditiveDevicesPlugin.Extensions;
 using AresAdditiveDevicesPlugin.PythonInterop.Configuration;
@@ -13,6 +7,12 @@ using ARESCore.DisposePatternHelpers;
 using CommonServiceLocator;
 using Newtonsoft.Json;
 using ReactiveUI;
+using System;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Reactive;
+using System.Threading.Tasks;
 
 namespace AresAdditiveDevicesPlugin.PythonStageController.UI.Vms
 {
@@ -50,6 +50,9 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.UI.Vms
 
     public ToolpathConfiguratorViewModel(IStageController stageController)
     {
+#if DISCONNECTED
+      return;
+#endif
       _paramterLimitsCfgs = JsonConvert.DeserializeObject<ParameterLimitConfigurations>(File.ReadAllText(@"..\..\..\py\ParameterLimits.json"));
       _pyConfig = File.ReadAllText(@"..\..\..\py\PythonCommandConfig.json").DeserializeObject<PythonCommandConfig>();
       _stageController = stageController;

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AresAdditiveDevicesPlugin.UEyeCamera.Commands;
+﻿using AresAdditiveDevicesPlugin.UEyeCamera.Commands;
 using ARESCore.DeviceSupport;
 using ARESCore.Registries;
 using CommonServiceLocator;
 using DynamicData.Binding;
 using Newtonsoft.Json;
 using Prism.Ioc;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AresAdditiveDevicesPlugin.UEyeCamera.Impl
 {
@@ -20,10 +20,12 @@ namespace AresAdditiveDevicesPlugin.UEyeCamera.Impl
 
     public UEyeCameraRepo()
     {
+#if !DISCONNECTED
       uEye.Info.Camera.EventNewDevice += CameraDeviceListChanged;
       uEye.Info.Camera.EventDeviceRemoved += CameraDeviceListChanged;
 
       CameraDeviceListChanged(this, null);
+#endif
     }
 
     private void CameraDeviceListChanged(object sender, EventArgs eventArgs)
@@ -48,14 +50,14 @@ namespace AresAdditiveDevicesPlugin.UEyeCamera.Impl
         if (_camConfig.ProcessCamerasSerialNumbers.Contains(item.SerialNo))
         {
           camera.SelectedCamera.CameraType = CameraType.Process;
-                    camera.SelectedCamera.IsAnalysisCamera = false;
+          camera.SelectedCamera.IsAnalysisCamera = false;
         }
         if (_camConfig.AnalysisCamerasSerialNumbers.Contains(item.SerialNo))
         {
           camera.SelectedCamera.CameraType = CameraType.Analysis;
-                    camera.SelectedCamera.IsAnalysisCamera = true;
+          camera.SelectedCamera.IsAnalysisCamera = true;
         }
-        
+
         Add(camera);
       }
     }
@@ -135,5 +137,6 @@ namespace AresAdditiveDevicesPlugin.UEyeCamera.Impl
     {
       return !this.Any() ? "Camera Repository is empty" : string.Empty;
     }
+
   }
 }

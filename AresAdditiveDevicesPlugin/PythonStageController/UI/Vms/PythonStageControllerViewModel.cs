@@ -1,14 +1,11 @@
-﻿using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Reactive;
-using System.Threading.Tasks;
-using AresAdditiveDevicesPlugin.Extensions;
-using AresAdditiveDevicesPlugin.PythonStageController.Impl;
+﻿using AresAdditiveDevicesPlugin.PythonStageController.Impl;
 using ARESCore.DeviceSupport;
 using ARESCore.DisposePatternHelpers;
 using DynamicData.Binding;
 using ReactiveUI;
+using System.Configuration;
+using System.Reactive;
+using System.Threading.Tasks;
 
 namespace AresAdditiveDevicesPlugin.PythonStageController.UI.Vms
 {
@@ -35,6 +32,7 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.UI.Vms
 
     public PythonStageControllerViewModel(IAresDevice[] devices)
     {
+#if !DISCONNECTED
       _pyConfig = File.ReadAllText(@"..\..\..\py\PythonCommandConfig.json").DeserializeObject<PythonCommandConfig>();
       //      StageController = stageController;
       StageController = (IStageController)devices
@@ -73,6 +71,7 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.UI.Vms
               ErrorVisible = true;
             }*/
       MotionSetting = StageControllerMotionSetting.Slow;
+#endif
     }
 
     private async Task SelectAlignmentTool()

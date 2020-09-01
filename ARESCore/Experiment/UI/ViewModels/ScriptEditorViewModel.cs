@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ARESCore.Commands;
+﻿using ARESCore.Commands;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.Experiment.Scripting;
 using ARESCore.Registries;
-using ICSharpCode.AvalonEdit.Document;
 using Ninject;
 using ReactiveUI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ARESCore.Experiment.UI.ViewModels
 {
@@ -15,8 +14,7 @@ namespace ARESCore.Experiment.UI.ViewModels
     private readonly IAresCommandRegistry _commandRepo;
     private string _lineNumbers;
     private bool _hasError;
-    private TextDocument _document;
-    private ICampaign _campaign;
+    private readonly ICampaign _campaign;
 
     public ScriptEditorViewModel()
     {
@@ -33,12 +31,12 @@ namespace ARESCore.Experiment.UI.ViewModels
     {
       MainScriptCommands.Clear();
       DeviceScriptCommands.Clear();
-      foreach ( var command in _commandRepo )
+      foreach (var command in _commandRepo)
       {
-        if ( command is IAresScriptCommand )
-          MainScriptCommands.Add( command );
+        if (command is IAresScriptCommand)
+          MainScriptCommands.Add(command);
         else
-          DeviceScriptCommands.Add( command );
+          DeviceScriptCommands.Add(command);
       }
     }
 
@@ -47,74 +45,74 @@ namespace ARESCore.Experiment.UI.ViewModels
       get => _hasError;
       set
       {
-        this.RaiseAndSetIfChanged( ref _hasError, value );
-        _campaign.CanRunMask = (byte)( _hasError ? _campaign.CanRunMask & (byte)CampaignCanRunMask.InvalidExperimentScript : _campaign.CanRunMask | (byte)CampaignCanRunMask.ValidExperimentScript );
+        this.RaiseAndSetIfChanged(ref _hasError, value);
+        _campaign.CanRunMask = (byte)(_hasError ? _campaign.CanRunMask & (byte)CampaignCanRunMask.InvalidExperimentScript : _campaign.CanRunMask | (byte)CampaignCanRunMask.ValidExperimentScript);
       }
     }
 
-    public void LiveParse( string textEditorText )
+    public void LiveParse(string textEditorText)
     {
-      string text = textEditorText.Replace( "\r", "" );
-      string[] lines = text.Split( '\n' );
+      string text = textEditorText.Replace("\r", "");
+      string[] lines = text.Split('\n');
       LineNumbers = "";
 
-      for ( int i = 0; i < lines.Length; i++ )
+      for (int i = 0; i < lines.Length; i++)
       {
         var line = lines[i].Trim(); // remove all leading and trailing whitespace
-        if ( line.StartsWith( "//" ) || line.Length == 0 )
+        if (line.StartsWith("//") || line.Length == 0)
         {
-          LineNumbers += ( i + 1 ) + "\r\n";
+          LineNumbers += (i + 1) + "\r\n";
           continue;
         }
-        var lineTokens = line.Split( ' ' );
+        var lineTokens = line.Split(' ');
         var cmd = lineTokens[0];
-        var command = MainScriptCommands.FirstOrDefault( c => c.ScriptName != null && c.ScriptName.Equals( cmd ) );
-        if ( command == null )
-          command = DeviceScriptCommands.FirstOrDefault( c => c.ScriptName != null && c.ScriptName.Equals( cmd ) );
-        if ( command == null )
+        var command = MainScriptCommands.FirstOrDefault(c => c.ScriptName != null && c.ScriptName.Equals(cmd));
+        if (command == null)
+          command = DeviceScriptCommands.FirstOrDefault(c => c.ScriptName != null && c.ScriptName.Equals(cmd));
+        if (command == null)
         {
           LineNumbers += "ERROR\r\n";
           continue;
         }
-        if ( command.ArgCountEnforced )
+        if (command.ArgCountEnforced)
         {
-          if ( lineTokens.Length < command.ArgCount + 1 )
+          if (lineTokens.Length < command.ArgCount + 1)
           {
             LineNumbers += "ERROR\r\n";
             continue;
           }
 
-          if ( ValidateCommand( command, lineTokens ) )
+          if (ValidateCommand(command, lineTokens))
           {
-            LineNumbers += ( i + 1 ) + "\r\n";
+            LineNumbers += (i + 1) + "\r\n";
             continue;
           }
-          if ( command.IsPlannable && lineTokens.Length == 2 && lineTokens[1].Equals( command.PlanValueString ) )
+          if (command.IsPlannable && lineTokens.Length == 2 && lineTokens[1].Equals(command.PlanValueString))
           {
-            LineNumbers += ( i + 1 ) + "\r\n";
+            LineNumbers += (i + 1) + "\r\n";
             continue;
           }
           LineNumbers += "ERROR\r\n";
           continue;
         }
-        LineNumbers += ( i + 1 ) + "\r\n";
+        LineNumbers += (i + 1) + "\r\n";
       }
     }
 
-    private bool ValidateCommand( IAresCommand cmd, string[] lineTokens )
+    private bool ValidateCommand(IAresCommand cmd, string[] lineTokens)
     {
       List<string> revisedTokens = new List<string>();
       bool ignore = false;
-      for ( int i = 1; i < lineTokens.Length; i++ )
+      for (int i = 1; i < lineTokens.Length; i++)
       {
-        if ( lineTokens[i].StartsWith( "//" ) )
+        if (lineTokens[i].StartsWith("//"))
         {
           ignore = true;
         }
-        if ( !ignore )
-          revisedTokens.Add( lineTokens[i] );
+        if (!ignore)
+          revisedTokens.Add(lineTokens[i]);
       }
-      if ( !cmd.Validate( revisedTokens.ToArray() ) )
+      if (!cmd.Validate(revisedTokens.ToArray()))
       {
         return false;
       }
@@ -124,7 +122,7 @@ namespace ARESCore.Experiment.UI.ViewModels
     public string LineNumbers
     {
       get { return _lineNumbers; }
-      set { this.RaiseAndSetIfChanged( ref _lineNumbers, value ); }
+      set { this.RaiseAndSetIfChanged(ref _lineNumbers, value); }
     }
 
   }

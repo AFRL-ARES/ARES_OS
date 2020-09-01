@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using ARESCore.Commands;
+﻿using ARESCore.Commands;
 using ARESCore.ErrorSupport.Impl;
 using ARESCore.ErrorSupport.Impl.RetryInfos;
 using ARESCore.Experiment.Results;
@@ -13,6 +8,11 @@ using ARESCore.UserSession;
 using DynamicData.Binding;
 using NationalInstruments.Restricted;
 using Ninject;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace ARESCore.Experiment.Scripting.Commands
 {
@@ -35,7 +35,7 @@ namespace ARESCore.Experiment.Scripting.Commands
                                                  "**All commands within a step are completed sequentially before the next step proceeds**";
 
     private bool _terminated;
-    public StepStartSequentialCommand( ICampaignExecutionSummary campaignExecutionSummary, ICurrentConfig currentConfig, IAresCommandRegistry commandRegistry )
+    public StepStartSequentialCommand(ICampaignExecutionSummary campaignExecutionSummary, ICurrentConfig currentConfig, IAresCommandRegistry commandRegistry)
 
     {
       _campaignExecutionSummary = campaignExecutionSummary;
@@ -43,54 +43,54 @@ namespace ARESCore.Experiment.Scripting.Commands
       _commandRegistry = commandRegistry;
     }
 
-    public override bool Validate( string[] args )
+    public override bool Validate(string[] args)
     {
       return args.Length > 0;
     }
 
-    public override async Task Execute( string[] lines )
+    public override async Task Execute(string[] lines)
     {
       _terminated = false;
       var currExp = _campaignExecutionSummary.ExperimentExecutionSummaries.Last();
       var currStep = currExp.StepExecutionSummaries.Last();
-      currStep.StepName = lines[0].Substring( ScriptName.Length );
-      var innerCommands = new List<string>( lines );
-      innerCommands.RemoveAt( 0 );
-      innerCommands.Remove( innerCommands.Last() );
+      currStep.StepName = lines[0].Substring(ScriptName.Length);
+      var innerCommands = new List<string>(lines);
+      innerCommands.RemoveAt(0);
+      innerCommands.Remove(innerCommands.Last());
       currStep.ExecutionDuration = TimeSpan.Zero;
       // start timer
-      var prec = TimeSpan.FromSeconds( _currentConfig.TimerPrecision );
-      var timerObservable = Observable.Interval( prec )
-        .Subscribe( _ => currStep.ExecutionDuration = currStep.ExecutionDuration.Add( prec ) );
-      for ( var index = 0; index < innerCommands.Count; index++ )
+      var prec = TimeSpan.FromSeconds(_currentConfig.TimerPrecision);
+      var timerObservable = Observable.Interval(prec)
+        .Subscribe(_ => currStep.ExecutionDuration = currStep.ExecutionDuration.Add(prec));
+      for (var index = 0; index < innerCommands.Count; index++)
       {
-        if ( _terminated )
+        if (_terminated)
         {
           return;
         }
         var commandStr = innerCommands[index];
-        var lineTokens = commandStr.Split( ' ' );
+        var lineTokens = commandStr.Split(' ');
         var cmd = lineTokens[0];
-        var command = _commandRegistry.FirstOrDefault( c => c.ScriptName != null && c.ScriptName.Equals( cmd ) );
+        var command = _commandRegistry.FirstOrDefault(c => c.ScriptName != null && c.ScriptName.Equals(cmd));
         List<string> revisedTokens = new List<string>();
-        for ( int k = 1; k < lineTokens.Length; k++ )
+        for (int k = 1; k < lineTokens.Length; k++)
         {
-          revisedTokens.Add( lineTokens[k] );
+          revisedTokens.Add(lineTokens[k]);
         }
         var cmdResult = AresKernel._kernel.Get<ICommandExecutionSummary>();
         cmdResult.Command = cmd;
         cmdResult.Status = ExecutionStatus.EXECUTING;
-        cmdResult.Value = string.Join( " ", revisedTokens );
-        currStep.CommandExecutionSummaries.Add( cmdResult );
+        cmdResult.Value = string.Join(" ", revisedTokens);
+        currStep.CommandExecutionSummaries.Add(cmdResult);
         try
         {
 
-          await RunTask( command, revisedTokens, cmdResult );
+          await RunTask(command, revisedTokens, cmdResult);
           do
-            await Task.Delay( 500 );
-          while ( _retryInfos.Any() );
+            await Task.Delay(500);
+          while (_retryInfos.Any());
         }
-        catch ( Exception e )
+        catch (Exception)
         {
         }
         finally
@@ -98,27 +98,27 @@ namespace ARESCore.Experiment.Scripting.Commands
           timerObservable.Dispose();
         }
       }
-      if ( _retryInfos.IsEmpty() )
+      if (_retryInfos.IsEmpty())
       {
         IsComplete = true;
       }
 
     }
 
-    private async Task RunTask( IAresCommand command, List<string> revisedTokens, ICommandExecutionSummary cmdExecutionSummary )
+    private async Task RunTask(IAresCommand command, List<string> revisedTokens, ICommandExecutionSummary cmdExecutionSummary)
     {
-      var cmdErrorSub = command.WhenPropertyChanged( cmd => cmd.Error, false ).Take( 1 ).Subscribe( error => OnFail( command, revisedTokens, cmdExecutionSummary ) );
-      var prec = TimeSpan.FromSeconds( _currentConfig.TimerPrecision );
+      var cmdErrorSub = command.WhenPropertyChanged(cmd => cmd.Error, false).Take(1).Subscribe(error => OnFail(command, revisedTokens, cmdExecutionSummary));
+      var prec = TimeSpan.FromSeconds(_currentConfig.TimerPrecision);
       cmdExecutionSummary.ExecutionDuration = TimeSpan.Zero;
-      var taskTimer = Observable.Interval( prec ).Subscribe( r => cmdExecutionSummary.ExecutionDuration = cmdExecutionSummary.ExecutionDuration.Add( prec ) );
+      var taskTimer = Observable.Interval(prec).Subscribe(r => cmdExecutionSummary.ExecutionDuration = cmdExecutionSummary.ExecutionDuration.Add(prec));
       Random rand = new Random();
-      await Task.Delay( TimeSpan.FromSeconds( rand.Next() % 3 ) );
+      await Task.Delay(TimeSpan.FromSeconds(rand.Next() % 3));
       try
       {
-        await command.Execute( revisedTokens.ToArray() );
+        await command.Execute(revisedTokens.ToArray());
         cmdExecutionSummary.Status = ExecutionStatus.DONE;
       }
-      catch ( Exception e )
+      catch (Exception)
       {
         cmdExecutionSummary.Status = ExecutionStatus.ERROR;
       }
@@ -129,10 +129,10 @@ namespace ARESCore.Experiment.Scripting.Commands
       }
     }
 
-    public override async Task Handle( ErrorResponse response )
+    public override async Task Handle(ErrorResponse response)
     {
-      await base.Handle( response );
-      if ( !_retryInfos.Any() )
+      await base.Handle(response);
+      if (!_retryInfos.Any())
       {
         IsComplete = _retryInfos.IsEmpty();
       }
@@ -143,18 +143,18 @@ namespace ARESCore.Experiment.Scripting.Commands
       try
       {
         var retryInfo = _retryInfos.FirstOrDefault();
-        await RunTask( retryInfo.Command, retryInfo.RevisedTokens, retryInfo.CommandExecutionSummary );
+        await RunTask(retryInfo.Command, retryInfo.RevisedTokens, retryInfo.CommandExecutionSummary);
       }
-      catch ( Exception e )
+      catch (Exception)
       {
 
       }
-      _retryInfos.RemoveAt( 0 );
+      _retryInfos.RemoveAt(0);
     }
 
     protected override Task HandleIgnoreAndContinue()
     {
-      _retryInfos.RemoveAt( 0 );
+      _retryInfos.RemoveAt(0);
       return Task.CompletedTask;
     }
 
@@ -167,11 +167,11 @@ namespace ARESCore.Experiment.Scripting.Commands
       return Task.CompletedTask;
     }
 
-    private void OnFail( IAresCommand command, List<string> revisedTokens, ICommandExecutionSummary cmdExecutionSummary )
+    private void OnFail(IAresCommand command, List<string> revisedTokens, ICommandExecutionSummary cmdExecutionSummary)
     {
       var retryInfo = new CommandRetryInfo { Command = command, RevisedTokens = revisedTokens, CommandExecutionSummary = cmdExecutionSummary };
-      _retryInfos.Add( retryInfo );
-      CreateAndAddErrorBundle( this, command );
+      _retryInfos.Add(retryInfo);
+      CreateAndAddErrorBundle(this, command);
     }
   }
 }

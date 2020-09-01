@@ -4,8 +4,6 @@ namespace ARESCore.UI
 {
   public interface IAresConsole
   {
-    //    string Text { get; set; }
-
     void WriteLine(string text);
 
     void Write(string text);

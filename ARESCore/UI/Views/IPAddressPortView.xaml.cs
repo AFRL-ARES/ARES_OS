@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using ARESCore.UI.Helpers;
+﻿using ARESCore.UI.Helpers;
 using MahApps.Metro.Controls;
+using System.Windows;
 
 namespace ARESCore.UI.Views
 {
@@ -15,7 +15,7 @@ namespace ARESCore.UI.Views
       WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
 
-    private void OkClicked( object sender, RoutedEventArgs e )
+    private void OkClicked(object sender, RoutedEventArgs e)
     {
       DialogResult = true;
       this.Close();

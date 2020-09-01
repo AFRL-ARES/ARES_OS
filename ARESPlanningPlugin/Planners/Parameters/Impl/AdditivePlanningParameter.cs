@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace AresAdditivePlanningPlugin.Planners.Parameters.Impl
 {
-  public class AdditivePlanningParameter : BasicReactiveObjectDisposable, IAdditivePlanningParameter
+  public class AdditivePlanningParameter : BasicReactiveObjectDisposable, IPlanningParameter
   {
     private double _value;
     private bool _isPlanned;
