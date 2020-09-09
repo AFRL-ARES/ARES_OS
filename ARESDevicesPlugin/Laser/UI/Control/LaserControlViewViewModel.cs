@@ -1,71 +1,64 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using ARESCore.DisposePatternHelpers;
-using DynamicData.Binding;
 using ReactiveUI;
+using Unit = System.Reactive.Unit;
 
-namespace ARESDevicesPlugin.Laser.UI.Control
+namespace AresCNTDevicesPlugin.Laser.UI.Control
 {
-  public class LaserControlViewViewModel : BasicReactiveObjectDisposable
-  {
-    private IVerdiV6Laser _laser;
-    private VerdiV6LaserState _targetState;
-    private VerdiV6LaserState _currentState;
+   public class LaserControlViewViewModel : BasicReactiveObjectDisposable
+   {
+      private IVerdiV6Laser _laser;
     private double _selectedPowerPreset;
+    private double _reqPower;
 
-    public LaserControlViewViewModel(IVerdiV6Laser laser)
-    {
-      Laser = laser;
-      TargetState = new VerdiV6LaserState();
-      TargetState.WhenAnyPropertyChanged().Subscribe(t => PushTargetState());
-      CurrentState = (VerdiV6LaserState)Laser.CurrentState;
-      SelectedPowerPreset = 0.01;
-      Laser.CurrentState.WhenAnyPropertyChanged().Subscribe(c => CurrentState = (VerdiV6LaserState)c);
-
-    }
+      public LaserControlViewViewModel(IVerdiV6Laser laser)
+      {
+         Laser = laser;
+      SelectedPowerPreset = Laser.Power;
+      RequestedPower = Laser.Power;
+      
+         ToggleShutterCommand = ReactiveCommand.Create(() => Laser.SetShutter(!Laser.Shutter));
+      }
 
     public double SelectedPowerPreset
     {
-      get { return _selectedPowerPreset; }
+      get => _selectedPowerPreset;
       set
       {
+        if (value != Laser.Power)
+        {
+          Laser.SetPower(value);
+          _reqPower = Laser.Power;
+        }
         this.RaiseAndSetIfChanged(ref _selectedPowerPreset, value);
-        TargetState.LaserPower = value;
       }
     }
 
-    private void PushTargetState()
-    {
-      Laser.TargetState = TargetState;
-    }
-
-    public VerdiV6LaserState TargetState
-    {
-      get => _targetState;
-      set
+    public double RequestedPower
       {
-        this.RaiseAndSetIfChanged(ref _targetState, value);
+         get => _reqPower;
+         set
+         {
+            if (value != Laser.Power)
+            {
+               Laser.SetPower(value);
+               _selectedPowerPreset = Laser.Power;
+            }
+            this.RaiseAndSetIfChanged(ref _reqPower, value);
+         }
       }
-    }
-
-    public VerdiV6LaserState CurrentState
-    {
-      get => _currentState;
-      set
-      {
-        this.RaiseAndSetIfChanged(ref _currentState, value);
-      }
-    }
-
 
     public ObservableCollection<double> PowerPresets { get; set; } = new ObservableCollection<double>
-    { 0.01, 0.05, 0.10, 0.20, 0.50, 0.60, 0.70, 0.80, 0.90, 1.00, 1.10, 1.20, 1.30, 1.40, 1.50, 1.60, 1.70, 1.80, 1.90, 2.00 };
+      { 0.01, 0.05, 0.10, 0.20, 0.50, 0.60, 0.70, 0.80, 0.90, 1.00, 1.10, 1.20, 1.30, 1.40, 1.50, 1.60, 1.70, 1.80, 1.90, 2.00 };
 
 
     public IVerdiV6Laser Laser
-    {
-      get { return _laser; }
-      set { this.RaiseAndSetIfChanged(ref _laser, value); }
-    }
-  }
+      {
+         get => _laser;
+         set => this.RaiseAndSetIfChanged(ref _laser, value);
+      }
+
+      public ReactiveCommand<Unit, Task> ToggleShutterCommand { get; }
+   }
 }

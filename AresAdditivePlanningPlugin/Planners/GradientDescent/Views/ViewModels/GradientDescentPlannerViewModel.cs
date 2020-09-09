@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using System.Reactive;
-using AresAdditivePlanningPlugin.Planners.Parameters;
+﻿using AresAdditivePlanningPlugin.Planners.Parameters;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.PlanningSupport;
+using CommonServiceLocator;
 using MoreLinq;
 using ReactiveUI;
+using System.Linq;
+using System.Reactive;
 
 namespace AresAdditivePlanningPlugin.Planners.GradientDescent.Views.ViewModels
 {
@@ -12,8 +13,9 @@ namespace AresAdditivePlanningPlugin.Planners.GradientDescent.Views.ViewModels
   {
     private GradientDescentPlanner _planner;
 
-    public GradientDescentPlannerViewModel(IAresPlanner[] planners)
+    public GradientDescentPlannerViewModel()
     {
+      var planners = ServiceLocator.Current.GetAllInstances<IAresPlanner>();
       Planner = (GradientDescentPlanner)planners.First(planner => planner is GradientDescentPlanner);
       TogglePlannedCommand = ReactiveCommand.Create<IAdditivePlanningParameter>(TogglePlanned);
     }

@@ -1,7 +1,7 @@
 ﻿using ARESCore.AnalysisSupport;
 using System.Windows.Controls;
 
-namespace AresFCAnalysisPlugin.Management
+namespace AresAnalysisPlugin.Management
 {
   interface IAnalyzerSetterResolver
   {

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AresAdditivePlanningPlugin.Planners.Views
+namespace AresPlanningPlugin.Planners.Views
 {
   /// <summary>
   /// Interaction logic for SimplePlannerView.xaml

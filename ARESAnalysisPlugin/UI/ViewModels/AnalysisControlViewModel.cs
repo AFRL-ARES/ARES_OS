@@ -2,14 +2,14 @@
 using ARESCore.DisposePatternHelpers;
 using ARESCore.Registries;
 using ARESCore.UI;
-using AresFCAnalysisPlugin.Management;
+using AresAnalysisPlugin.Management;
 using CommonServiceLocator;
 using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Windows.Controls;
 
-namespace AresFCAnalysisPlugin.UI.ViewModels
+namespace AresAnalysisPlugin.UI.ViewModels
 {
   class AnalysisControlViewModel : BasicReactiveObjectDisposable
   {

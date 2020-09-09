@@ -1,7 +1,10 @@
-﻿using ARESCore.Configurations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ARESCore.Configurations;
 using ARESCore.UserSession;
 
-namespace ARESDevicesPlugin.Laser.Config
+namespace AresCNTDevicesPlugin.Laser.Config
 {
   public interface ILaserUserDeviceConfig : IUserDeviceConfig
   {

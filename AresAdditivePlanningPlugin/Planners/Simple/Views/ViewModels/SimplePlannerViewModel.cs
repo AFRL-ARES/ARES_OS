@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using System.Reactive;
-using AresAdditiveDevicesPlugin.Experiment;
+﻿using AresAdditiveDevicesPlugin.Experiment;
 using AresAdditivePlanningPlugin.Planners.Parameters;
 using ARESCore.Database.Filtering;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.PlanningSupport;
+using CommonServiceLocator;
 using ReactiveUI;
+using System.Linq;
+using System.Reactive;
 
 namespace AresAdditivePlanningPlugin.Planners.Views.ViewModels
 {
@@ -14,9 +15,10 @@ namespace AresAdditivePlanningPlugin.Planners.Views.ViewModels
     private SimplePlanner _planner;
     //    private IExperimentParameters _experimentParameters;
 
-    public SimplePlannerViewModel(IAresPlanner[] planners, IDbFilterManager filterManager, IToolpathParameters toolpathParameters)
+    public SimplePlannerViewModel(IDbFilterManager filterManager, IToolpathParameters toolpathParameters)
     {
-      Planner = (SimplePlanner)planners.FirstOrDefault(planner => planner is SimplePlanner);
+      var planners = ServiceLocator.Current.GetAllInstances<IAresPlanner>();
+      Planner = (SimplePlanner)planners.First(planner => planner is SimplePlanner);
       //      ExperimentParameters = new ExperimentParameters();
       //      ExperimentParameters.AddRange(toolpathParameters.Select(toolpathParam => new ExperimentParameter(toolpathParam.Value)));
 

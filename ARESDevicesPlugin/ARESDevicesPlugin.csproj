@@ -356,12 +356,18 @@
   <ItemGroup>
     <Compile Include="ARESDevicesModule.cs" />
     <Compile Include="Data\FcScriptData.cs" />
+    <Compile Include="Laser\Commands\LaserGetPowerCommand.cs" />
+    <Compile Include="Laser\Commands\LaserGetShutterCommand.cs" />
+    <Compile Include="Laser\Commands\LaserSetPowerCommand.cs" />
+    <Compile Include="Laser\Commands\LaserSetShutterCommand.cs" />
     <Compile Include="Laser\Config\ILaserAppConfig.cs" />
     <Compile Include="Laser\Config\ILaserConfigManager.cs" />
     <Compile Include="Laser\Config\ILaserUserDeviceConfig.cs" />
     <Compile Include="Laser\Config\LaserAppConfig.cs" />
     <Compile Include="Laser\Config\LaserConfigManager.cs" />
     <Compile Include="Laser\Config\LaserUserDeviceConfig.cs" />
+    <Compile Include="Laser\Database\LaserDbEntity.cs" />
+    <Compile Include="Laser\Database\LaserDbRepository.cs" />
     <Compile Include="Laser\UI\Config\LaserAppConfigViewModel.cs" />
     <Compile Include="Laser\UI\Config\LaserUserConfigView.xaml.cs">
       <DependentUpon>LaserUserConfigView.xaml</DependentUpon>
@@ -378,7 +384,6 @@
     </Compile>
     <Compile Include="Laser\UI\Control\LaserControlViewViewModel.cs" />
     <Compile Include="Laser\VerdiV6Laser.cs" />
-    <Compile Include="Laser\VerdiV6LaserState.cs" />
     <Compile Include="PluginUserControl.xaml.cs">
       <DependentUpon>PluginUserControl.xaml</DependentUpon>
     </Compile>

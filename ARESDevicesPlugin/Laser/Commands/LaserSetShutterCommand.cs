@@ -5,7 +5,7 @@ using ARESCore.DeviceSupport;
 using ARESCore.ErrorSupport.Impl;
 using CommonServiceLocator;
 
-namespace ARESDevicesPlugin.Laser.Commands
+namespace AresCNTDevicesPlugin.Laser.Commands
 {
   public class LaserSetShutterCommand : AresDeviceCommand<bool>
   {

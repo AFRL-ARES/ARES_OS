@@ -1,20 +1,20 @@
 {
-  "ApplicationRootDirectory": "C:\\ARES\\ARESOmnibus\\ConfigFiles\\",
-  "CurrentAppConfigPath": "C:\\ARES\\ARESOmnibus\\ConfigFiles\\ARESConfig.json",
+  "ApplicationRootDirectory": "D:\\ARES\\ARES Shared\\ConfigFiles\\",
+  "CurrentAppConfigPath": "D:\\ARES\\ARES Shared\\ConfigFiles\\ARESConfig.json",
   "UserList": [
     {
       "Username": "bnichols",
       "SaveFileName": "C:\\ARES\\Data\\bnichols\\bnichols_UserSession.json",
       "SaveDirectory": "C:\\ARES\\Data\\bnichols",
-      "LastLoadedDate": "2020-05-29T13:57:06.1478757-04:00"
+      "LastLoadedDate": "2020-09-09T13:46:23.9083544-04:00"
     }
   ],
   "ProjectList": [
     {
       "Creator": "bnichols",
       "Description": "test",
-      "LastLoadedDate": "2020-02-05T12:41:38.7988294-05:00",
-      "SaveDirectory": "C:\\ARES\\Data\\bnichols"
+      "LastLoadedDate": "2020-09-08T20:50:19.7092295-04:00",
+      "SaveDirectory": "C:\\ARES\\Data"
     }
   ]
 }

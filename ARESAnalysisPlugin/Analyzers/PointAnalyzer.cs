@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace AresFCAnalysisPlugin.Analyzers
+namespace AresAnalysisPlugin.Analyzers
 {
   class PointAnalyzer : BasicReactiveObjectDisposable, IAresAnalyzer
   {

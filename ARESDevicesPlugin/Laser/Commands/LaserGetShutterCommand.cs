@@ -4,7 +4,7 @@ using ARESCore.DeviceSupport;
 using ARESCore.ErrorSupport.Impl;
 using CommonServiceLocator;
 
-namespace ARESDevicesPlugin.Laser.Commands
+namespace AresCNTDevicesPlugin.Laser.Commands
 {
    public class LaserGetShutterCommand : AresDeviceCommand<bool>
    {
@@ -30,6 +30,7 @@ namespace ARESDevicesPlugin.Laser.Commands
 
          try
          {
+            laser.GetShutter();
             Value = laser.Shutter;
          }
          catch (Exception e)

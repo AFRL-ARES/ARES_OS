@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace AresFCAnalysisPlugin
+namespace AresAnalysisPlugin
 {
   /// <summary>
   /// Interaction logic for AnalysisControl.xaml

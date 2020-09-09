@@ -1,6 +1,6 @@
 ﻿using ARESCore.Configurations;
 
-namespace ARESDevicesPlugin.Laser.Config
+namespace AresCNTDevicesPlugin.Laser.Config
 {
   public interface ILaserAppConfig: ISerialPortConfig, IAppDeviceConfig
   {

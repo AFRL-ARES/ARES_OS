@@ -1,11 +1,14 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.UserSession;
 using CommonServiceLocator;
 using Newtonsoft.Json;
 using ReactiveUI;
 
-namespace ARESDevicesPlugin.Laser.Config
+namespace AresCNTDevicesPlugin.Laser.Config
 {
   public class LaserUserDeviceConfig : BasicReactiveObjectDisposable, ILaserUserDeviceConfig
   {
@@ -21,24 +24,24 @@ namespace ARESDevicesPlugin.Laser.Config
     public StartupStateType StartupType
     {
       get => _startupType;
-      set => this.RaiseAndSetIfChanged(ref _startupType, value);
+      set => this.RaiseAndSetIfChanged( ref _startupType, value );
     }
 
     [JsonProperty]
     public double LaserPower
     {
       get => _laserPower;
-      set => this.RaiseAndSetIfChanged(ref _laserPower, value);
+      set => this.RaiseAndSetIfChanged( ref _laserPower, value );
     }
-
+    
     public void Load()
     {
       var path = ServiceLocator.Current.GetInstance<ICurrentConfig>().User.SaveDirectory;
       var fullpath = path + "\\" + GetType().Name + ".json" + ".json";
-      if (File.Exists(fullpath))
+      if ( File.Exists( fullpath ) )
       {
-        string data = File.ReadAllText(fullpath);
-        var newData = JsonConvert.DeserializeObject<LaserUserDeviceConfig>(data);
+        string data = File.ReadAllText( fullpath );
+        var newData = JsonConvert.DeserializeObject<LaserUserDeviceConfig>( data );
         LaserPower = newData.LaserPower;
       }
     }
@@ -47,8 +50,8 @@ namespace ARESDevicesPlugin.Laser.Config
     {
       var path = ServiceLocator.Current.GetInstance<ICurrentConfig>().User.SaveDirectory;
       var fullpath = path + "\\" + GetType().Name + ".json";
-      var data = JsonConvert.SerializeObject(this, Formatting.Indented);
-      File.WriteAllText(fullpath, data);
+      var data = JsonConvert.SerializeObject( this, Formatting.Indented );
+      File.WriteAllText( fullpath, data );
     }
   }
 }
