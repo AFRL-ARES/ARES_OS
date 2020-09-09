@@ -3,7 +3,7 @@ using CommonServiceLocator;
 using System.Linq;
 using System.Windows.Controls;
 
-namespace AresFCAnalysisPlugin.Management.Impl
+namespace AresAnalysisPlugin.Management.Impl
 {
   internal class AnalyzerSetterResolver : IAnalyzerSetterResolver
   {

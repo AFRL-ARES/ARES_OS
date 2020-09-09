@@ -237,7 +237,7 @@
     <Compile Include="UI\Views\AnalysisControl.xaml.cs">
       <DependentUpon>AnalysisControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AresFCAnalysisModule.cs" />
+    <Compile Include="AresAnalysisModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Views\MaxInRangeSetter.xaml.cs">
       <DependentUpon>MaxInRangeSetter.xaml</DependentUpon>

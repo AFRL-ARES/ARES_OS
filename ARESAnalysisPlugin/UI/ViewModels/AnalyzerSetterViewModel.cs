@@ -1,7 +1,7 @@
 ﻿using ARESCore.AnalysisSupport;
 using ARESCore.DisposePatternHelpers;
 
-namespace AresFCAnalysisPlugin.UI.ViewModels
+namespace AresAnalysisPlugin.UI.ViewModels
 {
   class AnalyzerSetterViewModel : BasicReactiveObjectDisposable
   {

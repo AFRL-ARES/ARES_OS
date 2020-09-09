@@ -1,6 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Controls;
 
-namespace ARESDevicesPlugin.Laser.UI.Config
+namespace AresCNTDevicesPlugin.Laser.UI.Config
 {
   /// <summary>
   /// Interaction logic for MfcUserConfigView.xaml

@@ -1,11 +1,11 @@
-﻿using ARESCore.DeviceSupport;
+﻿using AresCNTDevicesPlugin.Laser.Config;
+using AresCNTDevicesPlugin.Laser.UI.Config;
+using AresCNTDevicesPlugin.Laser.UI.Control;
+using ARESCore.DeviceSupport;
 using ARESCore.Experiment;
 using ARESCore.PluginSupport;
 using ARESCore.Registries;
 using ARESDevicesPlugin.Data;
-using ARESDevicesPlugin.Laser.Config;
-using ARESDevicesPlugin.Laser.UI.Config;
-using ARESDevicesPlugin.Laser.UI.Control;
 using CommonServiceLocator;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -44,7 +44,7 @@ namespace ARESDevicesPlugin
 
     private void RegisterUserConfigViews()
     {
-      _containerRegistry.RegisterForNavigation<Laser.UI.Config.LaserUserConfigView, LaserUserConfigViewModel>();
+      _containerRegistry.RegisterForNavigation<LaserUserConfigView, LaserUserConfigViewModel>();
     }
 
     private void RegisterControlViews()

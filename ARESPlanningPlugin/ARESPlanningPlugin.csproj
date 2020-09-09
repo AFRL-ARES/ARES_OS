@@ -8,8 +8,8 @@
     <ProjectGuid>{E4D178F9-22F3-4C01-99B0-5B7E239BA6BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AresAdditivePlanningPlugin</RootNamespace>
-    <AssemblyName>AresAdditivePlanningPlugin</AssemblyName>
+    <RootNamespace>AresPlanningPlugin</RootNamespace>
+    <AssemblyName>AresPlanningPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -239,38 +239,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PlannerManagers\GradientDescentPlannerManager.cs" />
+    <Compile Include="ARESPlanningModule.cs" />
     <Compile Include="PlannerManagers\SimplePlannerManager.cs" />
-    <Compile Include="Planners\GradientDescent\GradientDescentPlanner.cs" />
-    <Compile Include="Planners\GradientDescent\GradientDescentPlanningParameters.cs" />
-    <Compile Include="Planners\GradientDescent\GradientDescentPlanningRequest.cs" />
-    <Compile Include="Planners\GradientDescent\Views\GradientDescentPlannerView.xaml.cs">
-      <DependentUpon>GradientDescentPlannerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Planners\GradientDescent\Views\ViewModels\GradientDescentPlannerViewModel.cs" />
-    <Compile Include="Planners\Parameters\IAdditivePlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\AdditivePlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\AdditivePlanningParameters.cs" />
-    <Compile Include="Planners\Parameters\Impl\BedTemperaturePlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\DispenserSpeedPlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\ExtrusionMultiplierPlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\NozzleDiameterPlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\PrimeDelayPlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\PrimeDistancePlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\PrimeRatePlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\RetractDelayPlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\RetractDistancePlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\RetractRatePlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\TipHeightPlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\Var1PlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\Var2PlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\Var3PlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\Var4PlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\Var5PlanningParameter.cs" />
-    <Compile Include="Planners\Parameters\Impl\Var6PlanningParameter.cs" />
     <Compile Include="Planners\Simple\SimplePlanner.cs" />
-    <Compile Include="Planners\Simple\SimplePlanningParameters.cs" />
-    <Compile Include="Planners\Simple\SimplePlanningRequest.cs" />
     <Compile Include="Planners\Simple\Views\SimplePlannerView.xaml.cs">
       <DependentUpon>SimplePlannerView.xaml</DependentUpon>
     </Compile>
@@ -293,12 +264,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="Planners\Parameters\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Planners\GradientDescent\Views\GradientDescentPlannerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Planners\Simple\Views\SimplePlannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

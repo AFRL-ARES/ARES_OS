@@ -1,7 +1,7 @@
 ﻿using ARESCore.AnalysisSupport;
 using DynamicData.Binding;
 
-namespace AresFCAnalysisPlugin.Management.Impl
+namespace AresAnalysisPlugin.Management.Impl
 {
   internal class PotentialAnalyzerRegistry : ObservableCollectionExtended<IAresAnalyzer>, IPotentialAnalyzerRegistry
   {

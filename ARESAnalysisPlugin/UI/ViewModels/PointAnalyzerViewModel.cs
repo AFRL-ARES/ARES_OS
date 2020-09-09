@@ -1,4 +1,4 @@
-﻿namespace AresFCAnalysisPlugin.UI.ViewModels
+﻿namespace AresAnalysisPlugin.UI.ViewModels
 {
   class PointAnalyzerViewModel : AnalyzerSetterViewModel
   {

@@ -223,8 +223,6 @@ namespace AresAdditiveDevicesPlugin.PythonStageController.Impl
       return string.Empty;
     }
 
- 
-
     public async Task StepX(double dist)
     {
       if (dist > 0)

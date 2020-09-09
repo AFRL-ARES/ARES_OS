@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="AresFCAnalysisPlugin.AnalysisControl"
+    x:Class="AresAnalysisPlugin.AnalysisControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"

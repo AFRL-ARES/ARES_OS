@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AresFCAnalysisPlugin.Management
+namespace AresAnalysisPlugin.Management
 {
   interface IAnalyzerSetter
   {

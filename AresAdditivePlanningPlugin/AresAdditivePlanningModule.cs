@@ -18,15 +18,11 @@ namespace AresAdditivePlanningPlugin
   [Module(ModuleName = "AresAdditivePlanningModule", OnDemand = false)]
   public class AresAdditivePlanningModule : AresModule
   {
-    private IContainerRegistry _containerRegistry;
-
     public AresAdditivePlanningModule(IRegionManager regionManager) : base(regionManager) { }
 
     public override void RegisterTypes(IContainerRegistry containerRegistry)
     {
       base.RegisterTypes(containerRegistry);
-      _containerRegistry = containerRegistry;
-
       containerRegistry.RegisterForNavigation<SimplePlannerView, SimplePlannerViewModel>();
       containerRegistry.RegisterForNavigation<GradientDescentPlannerView, GradientDescentPlannerViewModel>();
       containerRegistry.RegisterSingleton<IAresPlanner, SimplePlanner>();

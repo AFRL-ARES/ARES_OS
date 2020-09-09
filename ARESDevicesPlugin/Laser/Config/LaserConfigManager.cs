@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AresCNTDevicesPlugin.Laser.UI.Config;
 using ARESCore.Configurations.impl;
-using ARESDevicesPlugin.Laser.UI.Config;
 
-namespace ARESDevicesPlugin.Laser.Config
+namespace AresCNTDevicesPlugin.Laser.Config
 {
   public class LaserConfigManager: ConfigManager,ILaserConfigManager
   {

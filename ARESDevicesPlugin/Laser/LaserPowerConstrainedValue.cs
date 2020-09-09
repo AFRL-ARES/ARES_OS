@@ -1,8 +1,8 @@
 ﻿using ARESCore.DeviceSupport;
 
-namespace ARESDevicesPlugin.Laser
+namespace AresCNTDevicesPlugin.Laser
 {
-  public class LaserPowerConstrainedValue : ConstrainedValue<double>
+  public class LaserPowerConstrainedValue: ConstrainedValue<double>
   {
     public LaserPowerConstrainedValue()
     {

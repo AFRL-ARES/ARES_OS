@@ -5,7 +5,7 @@ using ARESCore.ErrorSupport.Impl;
 using ARESCore.Util;
 using CommonServiceLocator;
 
-namespace ARESDevicesPlugin.Laser.Commands
+namespace AresCNTDevicesPlugin.Laser.Commands
 {
    public class LaserGetPowerCommand : AresDeviceCommand<double>
    {

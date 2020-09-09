@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using AresAdditivePlanningPlugin.Planners.GradientDescent;
+﻿using AresAdditivePlanningPlugin.Planners.GradientDescent;
 using AresAdditivePlanningPlugin.Planners.GradientDescent.Views;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.Experiment;
 using ARESCore.PlanningSupport;
 using CommonServiceLocator;
 using ReactiveUI;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace AresAdditivePlanningPlugin.PlannerManagers
 {
@@ -17,9 +17,11 @@ namespace AresAdditivePlanningPlugin.PlannerManagers
     private int _numExpsToPlan;
 
 
-    public GradientDescentPlannerManager(IAresPlanner[] planners)
+    public GradientDescentPlannerManager()
     {
+      var planners = ServiceLocator.Current.GetAllInstances<IAresPlanner>().ToArray();
       Planner = planners.FirstOrDefault(planner => planner is GradientDescentPlanner);
+      PlannerTile = ServiceLocator.Current.GetInstance<GradientDescentPlannerView>();
     }
     public Task<IPlannedExperimentBatchInputs> DoPlanning()
     {
@@ -39,7 +41,7 @@ namespace AresAdditivePlanningPlugin.PlannerManagers
     }
 
     public string PlannerName { get; set; } = "Gradient Descent";
-    public UserControl PlannerTile { get; set; } = ServiceLocator.Current.GetInstance<GradientDescentPlannerView>();
+    public UserControl PlannerTile { get; set; }
     public IPlanningParameters PlanningParameters { get; set; } = new GradientDescentPlanningParameters();
 
     public int NumExpsToPlan
