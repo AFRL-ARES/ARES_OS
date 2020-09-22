@@ -23,15 +23,15 @@ namespace AresPlanningPlugin
       base.RegisterTypes(containerRegistry);
       _containerRegistry = containerRegistry;
 
-      containerRegistry.RegisterForNavigation<SimplePlannerView, Planners.Views.ViewModels.SimplePlannerViewModel>();
-      containerRegistry.RegisterSingleton<IAresPlanner, SimplePlanner>();
+ //     containerRegistry.RegisterForNavigation<SimplePlannerView, Planners.Views.ViewModels.SimplePlannerViewModel>();
+ //     containerRegistry.RegisterSingleton<IAresPlanner, SimplePlanner>();
     }
 
     public override void OnInitialized(IContainerProvider containerProvider)
     {
       base.OnInitialized(containerProvider);
-      var reg = ServiceLocator.Current.GetInstance<IAresPlannerManagerRegistry>();
-      reg.Add(ServiceLocator.Current.GetInstance<SimplePlannerManager>());
+//      var reg = ServiceLocator.Current.GetInstance<IAresPlannerManagerRegistry>();
+//      reg.Add(ServiceLocator.Current.GetInstance<SimplePlannerManager>());
     }
   }
 }
