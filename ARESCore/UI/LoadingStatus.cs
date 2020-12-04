@@ -1,10 +1,11 @@
 ﻿using ARESCore.DisposePatternHelpers;
 using MahApps.Metro.IconPacks;
 using ReactiveUI;
+using System.Windows;
 
 namespace ARESCore.UI
 {
-  internal class LoadingStatus: BasicReactiveObjectDisposable, ILoadingStatus
+  internal class LoadingStatus : BasicReactiveObjectDisposable, ILoadingStatus
   {
     private string _statusInfo;
     private PackIconMaterialKind _iconKind = PackIconMaterialKind.Cookie;
@@ -12,13 +13,13 @@ namespace ARESCore.UI
     public string StatusInfo
     {
       get => _statusInfo;
-      set => this.RaiseAndSetIfChanged(ref _statusInfo , value);
+      set => Application.Current.Dispatcher.Invoke(delegate () { this.RaiseAndSetIfChanged(ref _statusInfo, value); });
     }
 
     public PackIconMaterialKind Icon
     {
       get => _iconKind;
-      set => this.RaiseAndSetIfChanged(ref _iconKind, value);
+      set => Application.Current.Dispatcher.Invoke(delegate () { this.RaiseAndSetIfChanged(ref _iconKind, value); });
     }
   }
 }

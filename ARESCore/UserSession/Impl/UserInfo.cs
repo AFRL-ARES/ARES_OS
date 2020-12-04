@@ -15,6 +15,7 @@ namespace ARESCore.UserSession.Impl
     private string _username;
     private string _saveFileName;
     private string _saveDirectory;
+    private bool _licenseAccepted;
     private DateTime _lastLoadedDate;
 
     [JsonProperty]

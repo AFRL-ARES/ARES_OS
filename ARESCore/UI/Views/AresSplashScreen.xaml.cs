@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using MahApps.Metro.Controls;
-
-namespace ARESCore.UI.Views
+﻿namespace ARESCore.UI.Views
 {
   /// <summary>
   /// Interaction logic for SplashScreen.xaml
   /// </summary>
-  public partial class AresSplashScreen : MetroWindow
+  public partial class AresSplashScreen
   {
     public AresSplashScreen()
     {
       InitializeComponent();
-      WindowStartupLocation = WindowStartupLocation.CenterScreen;
-     // Topmost = true;
+      // Topmost = true;
     }
   }
 }

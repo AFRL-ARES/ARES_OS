@@ -38,15 +38,30 @@ namespace ARESCore.UI.ViewModels
     private void LoadProject()
     {
       var currConfig = AresKernel._kernel.Get<ICurrentConfig>();
-      currConfig.Project = SelectedProject;
-      SelectedProject.LastLoadedDate = DateTime.Now;
-      Config.SaveConfig( Config.CurrentAppConfigPath );
-      var notif = new AresNotification
+      try
       {
-        Title = "Notice",
-        Content = "Project " + SelectedProject.Description + " Selected."
-      };
-      NotificationRequest.Raise( notif );
+        currConfig.Project = SelectedProject;
+        SelectedProject.LastLoadedDate = DateTime.Now;
+        Config.SaveConfig(Config.CurrentAppConfigPath);
+        var notif = new AresNotification
+        {
+          Title = "Notice",
+          Content = "Project " + SelectedProject.Description + " Selected."
+        };
+        NotificationRequest.Raise(notif);
+      }
+      catch (Exception)
+      {
+        if (SelectedProject == null)
+        {
+          var noproj = new AresNotification 
+          { 
+            Title = "Error", 
+            Content = "No project selected!"
+          };
+          NotificationRequest.Raise(noproj);
+        }
+      }
     }
 
     private void CreateProject()

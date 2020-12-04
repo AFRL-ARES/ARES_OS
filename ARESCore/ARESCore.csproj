@@ -508,6 +508,7 @@
     <Compile Include="UI\Helpers\IClosable.cs" />
     <Compile Include="UI\IAresConsole.cs" />
     <Compile Include="UI\ViewModels\AresConsole.cs" />
+    <Compile Include="UI\ViewModels\LicenseWindowViewModel.cs" />
     <Compile Include="UI\ViewModels\IPAddressPortViewModel.cs" />
     <Compile Include="UI\ViewModels\ProjectSelectionViewModel.cs" />
     <Compile Include="UI\ViewModels\Settings\ApplicationStyleViewModel.cs" />
@@ -519,8 +520,14 @@
     <Compile Include="UI\Views\IPAddressPortView.xaml.cs">
       <DependentUpon>IPAddressPortView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Views\LicenseWindow.xaml.cs">
+      <DependentUpon>LicenseWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Views\ProjectSelectionView.xaml.cs">
       <DependentUpon>ProjectSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Views\Settings\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Views\Settings\ApplicationStyleView.xaml.cs">
       <DependentUpon>ApplicationStyleView.xaml</DependentUpon>
@@ -738,7 +745,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Views\LicenseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\Views\ProjectSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Views\Settings\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

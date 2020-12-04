@@ -1,0 +1,21 @@
+﻿<mah:MetroWindow x:Class="ARESCore.UI.Views.Settings.AboutWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:ARESCore.UI.Views"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:Settings="clr-namespace:ARESCore.UI.Views.Settings"
+                 xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:Converters="clr-namespace:ARESCore.UI.Converters"
+                 xmlns:ViewModels="clr-namespace:ARESCore.UI.ViewModels"
+                 xmlns:mvvm="http://prismlibrary.com/"
+                 mvvm:ViewModelLocator.AutoWireViewModel="True"
+                 mc:Ignorable="d"
+                 Title="About ARES" Height="450" Width="800" ShowMinButton="False" ShowMaxRestoreButton="False" Loaded="AboutWindowLoaded">
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+        <TextBlock Name="LicenseText" Padding="5" VerticalAlignment="Top" TextWrapping="Wrap">
+        </TextBlock>
+  </ScrollViewer>
+</mah:MetroWindow>

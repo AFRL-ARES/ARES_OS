@@ -13,6 +13,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -59,17 +60,19 @@ namespace ARESCore
       var dr = userSelection.ShowDialog();
       if (dr.HasValue && dr.Value)
       {
-        _splash.Show();
-
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { })).Wait();
         _shell = Container.Resolve<UI.Views.MainWindow>();
         _console = Container.Resolve<ConsoleWindow>();
         _console.Show();
+        _shell.Loading = true;
         _shell.Show();
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { })).Wait();
 
-        Application.Current.Dispatcher.InvokeAsync(delegate
-        { DoLoad(); });
+        Thread t = new Thread(() => DoLoad());
+        t.SetApartmentState(ApartmentState.STA);
+        t.IsBackground = true;
+        t.Start();
+
         return _shell;
       }
       var killer = Container.Resolve<AppKiller>();
@@ -84,7 +87,8 @@ namespace ARESCore
       AddRegionMappings();
       starter.Start();
       InitializeModules();
-      _splash.Close();
+      Application.Current.Dispatcher.BeginInvoke(() => _shell.Loading = false);
+
 
       return Task.FromResult(true);
     }

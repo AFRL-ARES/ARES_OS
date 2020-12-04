@@ -5,6 +5,7 @@ using ARESCore.Configurations;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.Experiment;
 using ARESCore.UI;
+using CommonServiceLocator;
 using DynamicData.Binding;
 using Ninject;
 
@@ -23,7 +24,7 @@ namespace ARESCore.DeviceSupport.Serial
 
       protected SerialPort SerialPort { get; set; } = new SerialPort();
 
-      public virtual bool Open(ISerialPortConfig config)
+      public virtual bool Open(ISerialPortConfig config, string deviceName)
       {
          int waits = 0;
          if (SerialPort == null)
@@ -34,39 +35,48 @@ namespace ARESCore.DeviceSupport.Serial
 
          try
          {
-            if (SerialPort.IsOpen)
-            {
-               SerialPort.Close();
-               while (SerialPort.IsOpen)
-               {
-                  if (waits++ > config.MaxWaitTries)
-                     throw new Exception();
-                  System.Threading.Thread.Sleep(25);
-               }
-            }
-
-            SerialPort.Parity = config.Parity;
-            SerialPort.PortName = config.PortName;
-            SerialPort.DataBits = config.DataBits;
-            SerialPort.StopBits = config.StopBits;
-            SerialPort.BaudRate = config.BaudRate;
-            SerialPort.ReadTimeout = config.ReadTimeout;
-            SerialPort.ReadBufferSize = config.ReadBufferSize;
-
-            SerialPort.Open();
-            while (!SerialPort.IsOpen)
-            {
+           if (SerialPort.IsOpen)
+           {
+             SerialPort.Close();
+             while (SerialPort.IsOpen)
+             {
                if (waits++ > config.MaxWaitTries)
-                  throw new Exception();
+                 throw new Exception();
                System.Threading.Thread.Sleep(25);
-            }
+             }
+           }
+
+           SerialPort.Parity = config.Parity;
+           SerialPort.PortName = config.PortName;
+           SerialPort.DataBits = config.DataBits;
+           SerialPort.StopBits = config.StopBits;
+           SerialPort.BaudRate = config.BaudRate;
+           SerialPort.ReadTimeout = config.ReadTimeout;
+           SerialPort.ReadBufferSize = config.ReadBufferSize;
+
+           while (waits < config.MaxWaitTries)
+           {
+             try
+             {
+               SerialPort.Open();
+               break;
+             }
+             catch (UnauthorizedAccessException)
+             {
+               waits++;
+               ServiceLocator.Current.GetInstance<IAresConsole>()
+                 .WriteLine("Pass " + waits + " of " + config.MaxWaitTries + " unsuccessful when trying to open " + SerialPort.PortName + " for " + deviceName);
+               System.Threading.Thread.Sleep(50);
+             }
+           }
          }
          catch (Exception e)
          {
-            AresKernel._kernel.Get<IAresConsole>().WriteLine(e.Message);
-            SerialPort = null;
-            return false;
+           AresKernel._kernel.Get<IAresConsole>().WriteLine(deviceName + " could not open COM port: " + e.Message);
+           SerialPort = null;
+           return false;
          }
+
          return true;
       }
 
@@ -118,10 +128,17 @@ namespace ARESCore.DeviceSupport.Serial
       public void Write(string dataString)
       {
          if (SerialPort == null || !SerialPort.IsOpen) return;
-         SerialPort.DiscardOutBuffer();
-         SerialPort.DiscardInBuffer();
-         SerialPort.Write(dataString);
-         SerialPort.BaseStream.Flush();
+         try
+         {
+           SerialPort.DiscardOutBuffer();
+           SerialPort.DiscardInBuffer();
+           SerialPort.Write(dataString);
+           SerialPort.BaseStream.Flush();
+         }
+         catch (Exception)
+         {
+           // maybe we're shutting down or we changed serial ports
+         }
 
       }
 
@@ -141,7 +158,15 @@ namespace ARESCore.DeviceSupport.Serial
       {
          if ((SerialPort == null) || !(SerialPort.IsOpen)) return "";
 
-         System.Threading.Thread.Sleep(waitTime);
+         try
+         {
+           System.Threading.Thread.Sleep(waitTime);
+         }
+         catch (Exception)
+         {
+           // do nothing. this probably got interrupted while we were shutting down.
+
+         }
          return SerialPort.ReadExisting();
       }
 
@@ -156,7 +181,15 @@ namespace ARESCore.DeviceSupport.Serial
          return bytes;
       }
 
-      public char[] Read(ISerialPortConfig config, int count)
+      public byte ReadByte(int waitTime = 100)
+      {
+        if ((SerialPort == null) || !(SerialPort.IsOpen)) return 0;
+
+        System.Threading.Thread.Sleep(waitTime);
+        return (byte)SerialPort.ReadByte();
+      }
+
+    public char[] Read(ISerialPortConfig config, int count)
       {
          if ((SerialPort == null) || !(SerialPort.IsOpen)) return null;
 

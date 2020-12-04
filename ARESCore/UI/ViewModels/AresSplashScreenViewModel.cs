@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ARESCore.DisposePatternHelpers;
+﻿using ARESCore.DisposePatternHelpers;
 using Ninject;
 using ReactiveUI;
 

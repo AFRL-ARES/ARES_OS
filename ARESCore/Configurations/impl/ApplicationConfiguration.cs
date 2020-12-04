@@ -121,7 +121,8 @@ namespace ARESCore.Configurations.impl
     public void RemoveUser( IUserInfo userInfo )
     {
       UserList.Remove( userInfo );
-      File.Delete( userInfo.SaveFileName );
+      if (File.Exists(userInfo.SaveFileName))
+        File.Delete( userInfo.SaveFileName );
       SaveConfig();
     }
   }
