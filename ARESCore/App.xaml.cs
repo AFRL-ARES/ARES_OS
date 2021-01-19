@@ -56,6 +56,14 @@ namespace ARESCore
         var creator = Container.Resolve<IDbCreator>();
         creator.Create();
       }
+
+      if (!ARESCore.Properties.Settings.Default.LicenseAccepted)
+      {
+        LicenseWindow lw = new LicenseWindow();
+        lw.InitializeComponent();
+        lw.ShowDialog();
+      }
+
       var userSelection = Container.Resolve<UserSessionSelection>();
       var dr = userSelection.ShowDialog();
       if (dr.HasValue && dr.Value)
@@ -120,7 +128,7 @@ namespace ARESCore
       var baseTheme = ThemeManager.GetAppTheme(baseName);
       var accent = ThemeManager.GetAccent(accentName);
       ThemeManager.ChangeAppStyle(Application.Current, accent, baseTheme);
-
+      
       base.OnStartup(e);
     }
   }

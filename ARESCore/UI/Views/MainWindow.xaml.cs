@@ -9,7 +9,6 @@ using Ninject;
 using Prism.Regions;
 using System;
 using System.Windows;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Media.Animation;
 
 namespace ARESCore.UI.Views
@@ -37,13 +36,6 @@ namespace ARESCore.UI.Views
       {
         var sb = this.Resources["Blink"] as Storyboard;
         sb.Begin();
-      }
-
-      if (!Properties.Settings.Default.LicenseAccepted)
-      {
-        LicenseWindow lw = new LicenseWindow();
-        lw.InitializeComponent();
-        lw.Show();
       }
     }
 
@@ -78,7 +70,7 @@ namespace ARESCore.UI.Views
 
     private void MainWindowClosed(object sender, EventArgs e)
     {
-      Application.Current.Shutdown();
+      Application.Current.Dispatcher.InvokeShutdown();
     }
 
     private void MainWindowLoaded(object sender, RoutedEventArgs e)

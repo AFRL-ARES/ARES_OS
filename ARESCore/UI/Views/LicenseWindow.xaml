@@ -11,16 +11,15 @@
                  xmlns:mvvm="http://prismlibrary.com/"
                  mc:Ignorable="d"
                  mvvm:ViewModelLocator.AutoWireViewModel="True"
-                 Topmost="True" WindowState="Maximized" ResizeMode="NoResize"
-                 Title="Ares License Agreement" Height="450" Width="800" ShowMinButton="False" ShowMaxRestoreButton="False">
+                 Title="Ares License Agreement" Height="650" Width="800" ShowMinButton="False" ShowMaxRestoreButton="False" IsCloseButtonEnabled="False" ResizeMode="NoResize">
   <Grid>
     <ScrollViewer Margin="0,0,0,50">
-      <TextBlock Name="LicenseTextBlock" Text ="{Binding LicenseText}" TextWrapping="Wrap">
+      <TextBlock Name="LicenseTextBlock" Text ="{Binding LicenseText}" TextWrapping="Wrap" Padding="5">
       </TextBlock>
     </ScrollViewer>
-    <Button Command="{Binding AcceptClick}" Click="CloseWindow" Content="Accept" Padding="3" Margin="0, 0, 100, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+    <Button Style="{StaticResource AccentedSquareButtonStyle}"  Command="{Binding AcceptClick}" Click="CloseWindow" Content="Accept" Padding="3" Margin="0, 0, 100, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
     </Button>
-    <Button Command="{Binding DeclineClick}" Click="CloseWindow" Content="Decline" Padding="3"  Margin="100, 0, 0, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+    <Button Style="{StaticResource AccentedSquareButtonStyle}"  Command="{Binding DeclineClick}" Click="CloseWindow" Content="Decline" Padding="3"  Margin="100, 0, 0, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
     </Button>
   </Grid>
 </mah:MetroWindow>

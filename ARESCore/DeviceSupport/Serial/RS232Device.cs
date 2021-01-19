@@ -20,12 +20,14 @@ namespace ARESCore.DeviceSupport.Serial
    /// </summary>
    public abstract class RS232Device : BasicReactiveObjectDisposable, IRs232Device
    {
-      protected RS232Device() => AresKernel._kernel.Get<ICampaign>().WhenPropertyChanged(campaign => campaign.InitiatingEStop, false).Subscribe(estopInitiated => this.HandleEStop());
+     private string _deviceName;
+     protected RS232Device() => AresKernel._kernel.Get<ICampaign>().WhenPropertyChanged(campaign => campaign.InitiatingEStop, false).Subscribe(estopInitiated => this.HandleEStop());
 
       protected SerialPort SerialPort { get; set; } = new SerialPort();
 
       public virtual bool Open(ISerialPortConfig config, string deviceName)
       {
+        _deviceName = deviceName;
          int waits = 0;
          if (SerialPort == null)
             SerialPort = new SerialPort();
@@ -165,9 +167,19 @@ namespace ARESCore.DeviceSupport.Serial
          catch (Exception)
          {
            // do nothing. this probably got interrupted while we were shutting down.
-
          }
-         return SerialPort.ReadExisting();
+
+         var data = "";
+         try
+         {
+           data = SerialPort.ReadExisting();
+         }
+         catch (TimeoutException)
+         {
+           ServiceLocator.Current.GetInstance<IAresConsole>().WriteLine("Timeout in serial port read for " + _deviceName);
+         }
+
+         return data;
       }
 
       public byte[] ReadExistingBytes(int waitTime = 100)

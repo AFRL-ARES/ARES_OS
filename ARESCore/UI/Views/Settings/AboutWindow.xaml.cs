@@ -152,7 +152,8 @@ F.Point of Contact: Any Recipient contact with Government Agency is to be direct
     private void AboutWindowLoaded(object sender, RoutedEventArgs e)
     {
       this.Icon = IconConverter.Convert(PackIconMaterialKind.Information);
-      LicenseText.Text = _readme + "\n License Agreement: \n" + _license;
+      LicenseText.Text = _license;
+      AboutText.Text = _readme;
     }
   }
 }

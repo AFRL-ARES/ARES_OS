@@ -13,9 +13,22 @@
                  mvvm:ViewModelLocator.AutoWireViewModel="True"
                  mc:Ignorable="d"
                  Title="About ARES" Height="450" Width="800" ShowMinButton="False" ShowMaxRestoreButton="False" Loaded="AboutWindowLoaded">
-
-  <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-        <TextBlock Name="LicenseText" Padding="5" VerticalAlignment="Top" TextWrapping="Wrap">
-        </TextBlock>
-  </ScrollViewer>
+  <Grid>
+    <TabControl>
+      <TabItem Header="About ARES">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+          <TextBlock Name="AboutText" Padding="5" VerticalAlignment="Top" TextWrapping="Wrap">
+          </TextBlock>
+        </ScrollViewer>
+      </TabItem>
+      <TabItem Header="License Agreement">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+          <TextBlock Name="LicenseText" Padding="5" VerticalAlignment="Top" TextWrapping="Wrap">
+          </TextBlock>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
+    
+  </Grid>
+  
 </mah:MetroWindow>
