@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ARESCore.Database.Filtering.Impl
 {
-  internal class DbFilterManager : BasicReactiveObjectDisposable, IDbFilterManager
+  internal class DbFilterManager : ReactiveSubscriber, IDbFilterManager
   {
     private readonly IDbFilter<ExperimentEntity> _expFilter;
     private readonly IDbFilter<DataEntity> _dataFilter;

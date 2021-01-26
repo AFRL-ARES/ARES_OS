@@ -18,7 +18,7 @@ namespace ARESCore.Database.ViewModels
   /// <summary>
   /// DatabaseViewer
   /// </summary>
-  public class FilterTabViewModel : BasicReactiveObjectDisposable
+  public class FilterTabViewModel : ReactiveSubscriber
   {
     private IDbFilterManager _filter;
     private IExperimentFilterOptions _experimentFilterOptions;

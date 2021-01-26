@@ -18,7 +18,7 @@ namespace ARESCore.DeviceSupport.Serial
    /// <summary>
    /// RS232DataChannel
    /// </summary>
-   public abstract class RS232Device : BasicReactiveObjectDisposable, IRs232Device
+   public abstract class RS232Device : ReactiveSubscriber, IRs232Device
    {
      private string _deviceName;
      protected RS232Device() => AresKernel._kernel.Get<ICampaign>().WhenPropertyChanged(campaign => campaign.InitiatingEStop, false).Subscribe(estopInitiated => this.HandleEStop());

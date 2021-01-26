@@ -8,7 +8,7 @@ namespace ARESCore.Database.ViewModels
   /// <summary>
   /// DatabaseViewer
   /// </summary>
-  public class DatabaseViewerViewModel : BasicReactiveObjectDisposable
+  public class DatabaseViewerViewModel : ReactiveSubscriber
   {
   }
 }

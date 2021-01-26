@@ -44,18 +44,18 @@
         </DockPanel>
         <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Text="Planning Database:" VerticalAlignment="Center" />
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-          <Button Style="{StaticResource AccentedSquareButtonStyle}" VerticalAlignment="Center" Margin="5"
+          <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}" VerticalAlignment="Center" Margin="5"
                   Content="Generate Shared Planning Database" Click="GenerateDbClick" IsEnabled="{Binding DbGenEnabled}" />
         </StackPanel>
         <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Text="Input Data Sources:" VerticalAlignment="Center" />
         <DockPanel FlowDirection="RightToLeft" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch">
-          <Button Style="{StaticResource AccentedSquareButtonStyle}" VerticalAlignment="Center" Margin="5"
+          <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}" VerticalAlignment="Center" Margin="5"
                   Content="new" Command="{Binding NewInputDataSourceCommand}" HorizontalAlignment="Right" />
           <ComboBox FlowDirection="LeftToRight" Margin="5" ItemsSource="{Binding PlannerOptions}"
                     HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedInputSource}"
                     VerticalAlignment="Center" />
         </DockPanel>
-        <Button Grid.Row="3" Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" VerticalAlignment="Center" 
+        <Button Grid.Row="3" Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" VerticalAlignment="Center" 
                 Grid.ColumnSpan="2" IsEnabled="{Binding PlanningEnabled}" Command="{Binding DoPlanningCommand}">
           <TextBlock Text="Perform Planning" />
         </Button>

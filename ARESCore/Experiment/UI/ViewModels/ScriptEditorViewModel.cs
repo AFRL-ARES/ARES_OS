@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace ARESCore.Experiment.UI.ViewModels
 {
-  public class ScriptEditorViewModel : BasicReactiveObjectDisposable
+  public class ScriptEditorViewModel : ReactiveSubscriber
   {
     private readonly IAresCommandRegistry _commandRepo;
     private string _lineNumbers;

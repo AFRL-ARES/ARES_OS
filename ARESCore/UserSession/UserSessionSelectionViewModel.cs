@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace ARESCore.UserSession
 {
-  public class UserSessionSelectionViewModel : BasicReactiveObjectDisposable
+  public class UserSessionSelectionViewModel : ReactiveSubscriber
   {
     private string _appConfig = "";
     private int _sessionSelection;

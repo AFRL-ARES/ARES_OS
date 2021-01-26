@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace ARESCore.Experiment
 {
-  public class CampaignExecutor : BasicReactiveObjectDisposable, ICampaignExecutor
+  public class CampaignExecutor : ReactiveSubscriber, ICampaignExecutor
   {
     private readonly List<CampaignRetryInfo> _campaignRetryInfos = new List<CampaignRetryInfo>();
     private readonly List<ExperimentRetryInfo> _experimentRetryInfos = new List<ExperimentRetryInfo>();

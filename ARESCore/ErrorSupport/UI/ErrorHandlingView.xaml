@@ -86,7 +86,7 @@
       </Grid.ColumnDefinitions>
       
       <UniformGrid Grid.Column="1" Rows="1">
-          <Button Style="{StaticResource AccentedSquareButtonStyle}" Margin="10"
+          <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Margin="10"
               Command="{Binding IgnoreAndContinueCommand}">
             <Button.Visibility>
               <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">
@@ -107,7 +107,7 @@
             </Viewbox>
           </Button>
 
-        <Button Style="{StaticResource AccentedSquareButtonStyle}"  Margin="10"
+        <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}"  Margin="10"
               Command="{Binding RetryCommand}">
           <Button.Visibility>
             <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">
@@ -124,7 +124,7 @@
             <TextBlock Text="Retry" Margin="3" />
           </Viewbox>
         </Button>
-        <Button Style="{StaticResource AccentedSquareButtonStyle}"  Margin="10"
+        <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}"  Margin="10"
              Command="{Binding StopCommand}">
           <Button.Visibility>
             <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">
@@ -141,7 +141,7 @@
             <TextBlock Text="Stop" Margin="3" />
           </Viewbox>
         </Button>
-        <Button Style="{StaticResource AccentedSquareButtonStyle}"  Margin="10"
+        <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}"  Margin="10"
              Command="{Binding EstopCommand}">
           <Button.Visibility>
             <MultiBinding Converter="{StaticResource SeverityToButtonVisibilityConverter}">

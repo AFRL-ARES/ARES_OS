@@ -5,7 +5,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Video
 {
-  public class Vlc : BasicReactiveObjectDisposable
+  public class Vlc : ReactiveSubscriber
   {
     public Vlc()
     {

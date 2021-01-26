@@ -3,7 +3,7 @@ using ARESCore.Starter;
 using ARESCore.UI;
 using ARESCore.UI.Views;
 using ARESCore.UserSession;
-using MahApps.Metro;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -120,15 +120,21 @@ namespace ARESCore
       var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
       var settings = configFile.AppSettings.Settings;
       string accentName = "Red";
-      string baseName = "BaseDark";
+      string baseName = "Dark";
       if (settings["Accent"] != null)
         accentName = settings["Accent"].Value;
       if (settings["Base"] != null)
         baseName = settings["Base"].Value;
-      var baseTheme = ThemeManager.GetAppTheme(baseName);
-      var accent = ThemeManager.GetAccent(accentName);
-      ThemeManager.ChangeAppStyle(Application.Current, accent, baseTheme);
-      
+      if (baseName.ToLower().StartsWith("base"))
+      {
+        ThemeManager.Current.ChangeTheme(Application.Current, "Dark.Green");
+      }
+      else
+      {
+
+        ThemeManager.Current.ChangeTheme(Application.Current, baseName + "." + accentName);
+      }
+
       base.OnStartup(e);
     }
   }

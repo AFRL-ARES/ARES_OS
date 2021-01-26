@@ -1,14 +1,12 @@
-﻿using System;
+﻿using ARESCore.DisposePatternHelpers;
+using ControlzEx.Theming;
+using ReactiveUI;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reactive;
 using System.Windows;
 using System.Windows.Media;
-using ARESCore.DisposePatternHelpers;
-using ARESCore.UserSession;
-using MahApps.Metro;
-using ReactiveUI;
 
 namespace ARESCore.UI.ViewModels.Settings
 {
@@ -16,63 +14,75 @@ namespace ARESCore.UI.ViewModels.Settings
   {
     public AccentColorMenuData()
     {
-      ChangeAccentCommand = ReactiveCommand.Create<Unit, Unit>( u =>
-      {
-        DoChangeTheme();
-        return new Unit();
-      } );
+      ChangeAccentCommand = ReactiveCommand.Create<Unit, Unit>(u =>
+     {
+       DoChangeTheme();
+       return new Unit();
+     });
 
     }
 
     public string Name { get; set; }
-    public Brush BorderColorBrush { get; set; }
     public Brush ColorBrush { get; set; }
 
     public ReactiveCommand<Unit, Unit> ChangeAccentCommand { get; set; }
 
     protected virtual void DoChangeTheme()
     {
-      var theme = ThemeManager.DetectAppStyle( Application.Current );
-      var accent = ThemeManager.GetAccent( this.Name );
-      ThemeManager.ChangeAppStyle( Application.Current, accent, theme.Item1 );
+      var theme = ThemeManager.Current.DetectTheme(Application.Current);
+      ThemeManager.Current.ChangeTheme(Application.Current, theme);
     }
   }
 
-  public class ApplicationStyleViewModel : BasicReactiveObjectDisposable
+  public class ApplicationStyleViewModel : ReactiveSubscriber
   {
     private AccentColorMenuData _accentSelection;
 
     public ApplicationStyleViewModel()
     {
       // create accent color menu items for the demo
-      this.AccentColors = ThemeManager.Accents.Select( a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush } )
-        .ToList();
-      ChangeToDarkThemeCommand = ReactiveCommand.Create<Unit, Unit>( u =>
+      var accentNames = new List<string>
       {
-        ChangeTheme("BaseDark");
-        return new Unit();
-      } );
-      ChangeToLightThemeCommand = ReactiveCommand.Create<Unit, Unit>( u =>
+        "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Teal", "Cyan", "Indigo", "Violet",
+        "Pink", "Magenta", "Crimson", "Yellow", "Brown", "Olive", "Sienna"
+      };
+      AccentColors = new List<AccentColorMenuData>();
+      foreach (var accentName in accentNames)
       {
-        ChangeTheme( "BaseLight" );
-        return new Unit();
-      } );
-      var theme = ThemeManager.DetectAppStyle( Application.Current );
-      AccentSelection = AccentColors.FirstOrDefault(a => a.Name.Equals( theme.Item2.Name ));
+        var conversion = ColorConverter.ConvertFromString(accentName);
+        if (conversion == null)
+          continue;
+        var cb = new SolidColorBrush((Color)conversion);
+        var menuItem = new AccentColorMenuData { Name = accentName, ColorBrush = cb };
+        AccentColors.Add(menuItem);
+      }
+
+      ChangeToDarkThemeCommand = ReactiveCommand.Create<Unit, Unit>(u =>
+     {
+       ChangeTheme("Dark");
+       return new Unit();
+     });
+      ChangeToLightThemeCommand = ReactiveCommand.Create<Unit, Unit>(u =>
+     {
+       ChangeTheme("Light");
+       return new Unit();
+     });
+      var theme = ThemeManager.Current.DetectTheme(Application.Current);
+      AccentSelection = AccentColors.FirstOrDefault(a => theme.Name.EndsWith(a.Name));
     }
 
     private void ChangeTheme(string baseName)
     {
-      var theme = ThemeManager.DetectAppStyle( Application.Current );
-      ThemeManager.ChangeAppStyle( Application.Current, theme.Item2, ThemeManager.GetAppTheme( baseName ) );
-      var configFile = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
+      var theme = ThemeManager.Current.DetectTheme(Application.Current);
+      ThemeManager.Current.ChangeThemeBaseColor(Application.Current, baseName);
+      var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
       var settings = configFile.AppSettings.Settings;
-      if ( settings["Base"] == null )
+      if (settings["Base"] == null)
       {
-        settings.Add( "Base", baseName );
+        settings.Add("Base", baseName);
       }
       settings["Base"].Value = baseName;
-      configFile.Save( ConfigurationSaveMode.Modified );
+      configFile.Save(ConfigurationSaveMode.Modified);
     }
 
     public List<AccentColorMenuData> AccentColors { get; set; }
@@ -85,24 +95,25 @@ namespace ARESCore.UI.ViewModels.Settings
     public AccentColorMenuData AccentSelection
     {
       get { return _accentSelection; }
-      set { this.RaiseAndSetIfChanged(ref _accentSelection, value);
-        ChangeAccent( value );
+      set
+      {
+        this.RaiseAndSetIfChanged(ref _accentSelection, value);
+        ChangeAccent(value);
       }
     }
 
-    private void ChangeAccent( AccentColorMenuData valueColorBrush )
+    private void ChangeAccent(AccentColorMenuData valueColorBrush)
     {
-      var theme = ThemeManager.DetectAppStyle( Application.Current );
-      var accent = ThemeManager.GetAccent( valueColorBrush.Name );
-      ThemeManager.ChangeAppStyle( Application.Current, accent, theme.Item1 );
-      var configFile = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
+      var theme = ThemeManager.Current.DetectTheme(Application.Current);
+      ThemeManager.Current.ChangeThemeColorScheme(Application.Current, valueColorBrush.Name);
+      var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
       var settings = configFile.AppSettings.Settings;
-      if ( settings["Accent"] == null )
+      if (settings["Accent"] == null)
       {
-        settings.Add( "Accent", valueColorBrush.Name );
+        settings.Add("Accent", valueColorBrush.Name);
       }
       settings["Accent"].Value = valueColorBrush.Name;
-      configFile.Save( ConfigurationSaveMode.Modified );
+      configFile.Save(ConfigurationSaveMode.Modified);
     }
   }
 }

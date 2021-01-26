@@ -5,7 +5,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.DeviceSupport.Usb
 {
-  public abstract class UsbDevice : BasicReactiveObjectDisposable, IUsbDevice
+  public abstract class UsbDevice : ReactiveSubscriber, IUsbDevice
   {
     public abstract USBDeviceInfo USBDeviceInfo { get; set; }
   }

@@ -41,7 +41,7 @@
         BorderThickness="1">
         <avalonedit:TextEditor
           Name="textEditor"
-          Foreground= "{DynamicResource BlackColorBrush}"
+          Foreground= "{DynamicResource MahApps.Brushes.ThemeForeground}"
           FontFamily="Consolas"
           FontSize="10pt"
           HorizontalScrollBarVisibility="Auto"

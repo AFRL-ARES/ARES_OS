@@ -6,7 +6,7 @@ using ReactiveUI;
 
 namespace ARESCore.DeviceSupport.Serial
 {
-  public class SerialTerminalViewModel : BasicReactiveObjectDisposable
+  public class SerialTerminalViewModel : ReactiveSubscriber
   {
     private ObservableCollection<double> _stopBits = new ObservableCollection<double>() { 0, 1.0, 1.5, 2.0 };
     private ObservableCollection<int> _dataBits = new ObservableCollection<int>() { 8, 7, 6, 5 };

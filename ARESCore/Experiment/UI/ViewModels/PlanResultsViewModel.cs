@@ -10,7 +10,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment.UI.ViewModels
 {
-  public class PlanResultsViewModel : BasicReactiveObjectDisposable
+  public class PlanResultsViewModel : ReactiveSubscriber
   {
     private readonly IPlanResults _planResults;
     private bool _plansVisible;

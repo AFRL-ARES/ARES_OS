@@ -5,7 +5,7 @@ namespace ARESCore.Experiment
 {
 
 
-  public interface IPlannedExperimentBatchInputs : IBasicReactiveObjectDisposable
+  public interface IPlannedExperimentBatchInputs : IReactiveSubscriber
   {
     int Count();
     bool HasInputs();

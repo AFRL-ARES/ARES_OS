@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ARESCore.Configurations
 {
-  public interface IProjectInfo: IBasicReactiveObjectDisposable
+  public interface IProjectInfo: IReactiveSubscriber
   {
     [JsonProperty]
     string Creator { get; set; }

@@ -8,7 +8,7 @@ using ARESCore.Experiment;
 
 namespace ARESCore.PlanningSupport
 {
-  public interface IPlanResults : IBasicReactiveObjectDisposable
+  public interface IPlanResults : IReactiveSubscriber
   {
     IPlannedExperimentBatchInputs Results { get; set; }
   }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ARESCore.Experiment.impl
 {
-  public class PlannedExperimentBatchInputs : BasicReactiveObjectDisposable, IPlannedExperimentBatchInputs
+  public class PlannedExperimentBatchInputs : ReactiveSubscriber, IPlannedExperimentBatchInputs
   {
     private List<IPlannedExperimentInputs> _inputs = new List<IPlannedExperimentInputs>();
 

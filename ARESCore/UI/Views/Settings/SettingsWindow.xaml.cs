@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using ARESCore.UI.Converters;
+﻿using ARESCore.UI.Converters;
 using MahApps.Metro.Controls;
 using MahApps.Metro.IconPacks;
+using System.Windows;
 
 namespace ARESCore.UI.Views.Settings
 {
@@ -20,9 +15,9 @@ namespace ARESCore.UI.Views.Settings
       InitializeComponent();
     }
 
-    private void SettingsWindowLoaded( object sender, RoutedEventArgs e )
+    private void SettingsWindowLoaded(object sender, RoutedEventArgs e)
     {
-      this.Icon = IconConverter.Convert( PackIconMaterialKind.Settings );
+      this.Icon = IconConverter.Convert(PackIconMaterialKind.ApplicationSettings);
     }
   }
 }

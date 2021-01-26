@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:oxy="http://oxyplot.org/wpf">
+  <Style TargetType="oxy:Plot">
+    <Setter Property="Margin" Value="10" />
+    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="TextColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+
+  <Style TargetType="oxy:LinearAxis">
+    <Setter Property="TicklineColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="MajorGridlineColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="MinorGridlineColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="ExtraGridlineColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="AxislineColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="TitleColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="TextColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
+    <Setter Property="TickStyle" Value="None" />
+  </Style>
+
+</ResourceDictionary>

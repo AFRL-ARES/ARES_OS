@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace ARESCore.UserSession.Impl
 {
-  internal class UserInfo: BasicReactiveObjectDisposable, IUserInfo
+  internal class UserInfo: ReactiveSubscriber, IUserInfo
   {
     
     private string _username;

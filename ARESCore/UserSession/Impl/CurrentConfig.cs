@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace ARESCore.UserSession.Impl
 {
-  internal class CurrentConfig:BasicReactiveObjectDisposable, ICurrentConfig
+  internal class CurrentConfig:ReactiveSubscriber, ICurrentConfig
   {
     private IUserInfo _user;
     private IProjectInfo _projectInfo;

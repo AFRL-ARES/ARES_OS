@@ -7,7 +7,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Experiment
 {
-  public interface IPlannedExperimentInputs : IBasicReactiveObjectDisposable
+  public interface IPlannedExperimentInputs : IReactiveSubscriber
   {
    IDictionary<string, double> Inputs { get; set; }
    bool HasInputs();

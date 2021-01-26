@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace ARESCore.UI
 {
-  internal class LoadingStatus : BasicReactiveObjectDisposable, ILoadingStatus
+  internal class LoadingStatus : ReactiveSubscriber, ILoadingStatus
   {
     private string _statusInfo;
     private PackIconMaterialKind _iconKind = PackIconMaterialKind.Cookie;

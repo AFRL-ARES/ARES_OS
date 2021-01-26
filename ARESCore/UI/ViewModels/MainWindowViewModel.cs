@@ -7,7 +7,7 @@ using System.Reactive;
 
 namespace ARESCore.UI.ViewModels
 {
-  public class MainWindowViewModel : BasicReactiveObjectDisposable
+  public class MainWindowViewModel : ReactiveSubscriber
   {
     private bool _deviceViewerOpen;
     private bool _deviceConfigOpen;

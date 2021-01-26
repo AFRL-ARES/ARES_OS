@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment.Results.impl
 {
-  public abstract class ExecutionSummary : BasicReactiveObjectDisposable, IExecutionSummary
+  public abstract class ExecutionSummary : ReactiveSubscriber, IExecutionSummary
   {
     private TimeSpan _executionDuration;
     private ExecutionStatus _status = ExecutionStatus.PENDING;

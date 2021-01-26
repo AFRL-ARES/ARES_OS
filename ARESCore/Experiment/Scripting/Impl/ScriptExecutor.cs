@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace ARESCore.Experiment.Scripting.Impl
 {
-  public class ScriptExecutor : BasicReactiveObjectDisposable, IScriptExecutor
+  public class ScriptExecutor : ReactiveSubscriber, IScriptExecutor
   {
     private readonly IAresCommandRegistry _commandRegistry;
     private readonly ICampaignExecutionSummary _campaignExecutionSummary;

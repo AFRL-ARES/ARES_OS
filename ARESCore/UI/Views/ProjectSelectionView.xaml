@@ -29,12 +29,12 @@
         <StackPanel Orientation="Vertical" Margin="5">
           <UniformGrid Rows="1">
             <TextBox Margin="5" mah:TextBoxHelper.Watermark="Enter project name" Text="{Binding NewProjectName}" />
-            <Button Margin="5" Content="Create New Project" Style="{StaticResource AccentedSquareButtonStyle}"
+            <Button Margin="5" Content="Create New Project" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"
                     Command="{Binding CreateNewProjectCommand}" IsEnabled="{Binding NewProjectDefinitionComplete}" />
           </UniformGrid>
           <TextBlock Margin="5" Text="Project Working Directory" />
           <Button Name="tbNewProjDesc" Margin="5" Content="{Binding NewProjectWorkingDirectory}"
-                  Style="{StaticResource SquareButtonStyle}" Click="NewProjectClick" />
+                  Style="{StaticResource MahApps.Styles.Button.Square}" Click="NewProjectClick" />
         </StackPanel>
       </TabItem>
       <TabItem Header="Existing Projects">
@@ -42,7 +42,7 @@
           <TextBlock Margin="5" Text="Select project to load" />
           <UniformGrid Rows="1">
             <ComboBox Margin="5" DisplayMemberPath="Description" ItemsSource="{Binding Config.ProjectList}" SelectedItem="{Binding SelectedProject}" />
-            <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Load Project" Command="{Binding LoadProjectCommand}"/>
+            <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Load Project" Command="{Binding LoadProjectCommand}"/>
           </UniformGrid>
           <TextBlock Margin="5" Text="Working directory" />
           <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">

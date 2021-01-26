@@ -7,6 +7,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.IconPacks;
 using Ninject;
 using Prism.Regions;
+using ReactiveUI;
 using System;
 using System.Windows;
 using System.Windows.Media.Animation;
@@ -37,6 +38,15 @@ namespace ARESCore.UI.Views
         var sb = this.Resources["Blink"] as Storyboard;
         sb.Begin();
       }
+
+      (DataContext as MainWindowViewModel).CurrentConfig.WhenAnyValue(v => v.Project).Subscribe(r =>
+       {
+         if (r != null)
+         {
+           var sb = this.Resources["Blink"] as Storyboard;
+           sb.Stop();
+         }
+       });
     }
 
     public bool Loading

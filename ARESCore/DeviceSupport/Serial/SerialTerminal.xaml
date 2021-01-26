@@ -44,7 +44,7 @@
           <TextBlock Margin="5" Text="Stop Bits:" />
           <ComboBox Margin="5" ItemsSource="{Binding StopBits}" SelectedItem="{Binding SelectedStopBits}" />
         </DockPanel>
-        <Button Margin="5" Content="Open Port" Style="{StaticResource AccentedSquareButtonStyle}" IsEnabled="{Binding FieldsSelected}" Command="{Binding OpenPortCommand}"/>
+        <Button Margin="5" Content="Open Port" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" IsEnabled="{Binding FieldsSelected}" Command="{Binding OpenPortCommand}"/>
       </StackPanel>
       <Grid Grid.Row="2" HorizontalAlignment="Stretch" IsEnabled="{Binding PortEnabled}">
         <Grid.ColumnDefinitions>
@@ -52,7 +52,7 @@
           <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" Margin="5" mah:TextBoxHelper.Watermark="Enter Test Command Here" Text="{Binding TextToSend}" />
-        <Button Grid.Column="1" Margin="5" Content="Send Test Command"  Style="{StaticResource AccentedSquareButtonStyle}" Command="{Binding SendTestCommand}"></Button>
+        <Button Grid.Column="1" Margin="5" Content="Send Test Command"  Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Command="{Binding SendTestCommand}"></Button>
       </Grid>
       <Grid Grid.Row="3" HorizontalAlignment="Stretch" IsEnabled="{Binding PortEnabled}">
         <Grid.ColumnDefinitions>

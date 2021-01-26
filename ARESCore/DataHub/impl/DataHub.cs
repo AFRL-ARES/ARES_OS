@@ -3,7 +3,7 @@ using ReactiveUI;
 
 namespace ARESCore.DataHub.impl
 {
-  public class DataHub : BasicReactiveObjectDisposable, IDataHub
+  public class DataHub : ReactiveSubscriber, IDataHub
   {
     private IDataHubEntry _data;
 

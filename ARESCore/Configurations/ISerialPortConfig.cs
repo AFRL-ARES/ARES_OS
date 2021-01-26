@@ -6,7 +6,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Configurations
 {
-  public interface ISerialPortConfig : IBasicReactiveObjectDisposable
+  public interface ISerialPortConfig : IReactiveSubscriber
   {
     int MaxWaitTries { get; set; }
     int DataBits { get; set; }

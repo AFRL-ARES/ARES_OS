@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace ARESCore.Configurations.impl
 {
-  public class SerialPortConfig : BasicReactiveObjectDisposable, ISerialPortConfig
+  public class SerialPortConfig : ReactiveSubscriber, ISerialPortConfig
   {
     private int _maxWaitTries = 100;
     private int _dataBits;

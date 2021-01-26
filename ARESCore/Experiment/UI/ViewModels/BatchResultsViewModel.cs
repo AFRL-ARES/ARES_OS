@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment.UI.ViewModels
 {
-  public class BatchResultsViewModel : BasicReactiveObjectDisposable
+  public class BatchResultsViewModel : ReactiveSubscriber
   {
     private ICampaignExecutionSummary _campaignExecutionSummary;
 

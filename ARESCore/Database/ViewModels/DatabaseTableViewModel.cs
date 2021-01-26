@@ -14,7 +14,7 @@ using ReactiveUI;
 
 namespace ARESCore.Database.ViewModels
 {
-  public class DatabaseTableViewModel : BasicReactiveObjectDisposable
+  public class DatabaseTableViewModel : ReactiveSubscriber
   {
     private readonly IDbFilterManager _filterManager;
     private readonly IDbColumnCreator _columnCreator;

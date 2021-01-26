@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Configurations>SampleDebug</Configurations>
+    <Platforms>x64</Platforms>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SampleDebug|x64'">
+    <OutputPath>..\ARESCore\bin\x64\SampleDebug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Ninject">
+      <Version>7.2.0.1422</Version>
+    </PackageReference>
+	<PackageReference Include="CommonServiceLocator">
+      <Version>2.0.5</Version>
+    </PackageReference>
+  </ItemGroup>
+
+   <ItemGroup>
+    <ProjectReference Include="..\ARESCore\ARESCore.csproj" />
+  </ItemGroup>
+
+</Project>

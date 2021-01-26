@@ -4,7 +4,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.DeviceSupport
 {
-  public interface ICalibrationPeak : IBasicReactiveObjectDisposable
+  public interface ICalibrationPeak : IReactiveSubscriber
   {
     Color DefaultColor { get; }
     string Name { get; set; }

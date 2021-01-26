@@ -5,7 +5,7 @@ using ARESCore.UserSession;
 
 namespace ARESCore.Configurations
 {
-  public interface IApplicationConfiguration : IBasicReactiveObjectDisposable
+  public interface IApplicationConfiguration : IReactiveSubscriber
   {
     void SetDefaults();
     void LoadConfig(string configPath);

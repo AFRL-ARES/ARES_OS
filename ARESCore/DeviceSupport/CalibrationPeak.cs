@@ -7,7 +7,7 @@ using ReactiveUI;
 namespace ARESCore.DeviceSupport
 {
   [JsonObject(MemberSerialization.OptOut)]
-  public class CalibrationPeak : BasicReactiveObjectDisposable, ICalibrationPeak
+  public class CalibrationPeak : ReactiveSubscriber, ICalibrationPeak
   {
     private string _name;
     private double _waveNumber;

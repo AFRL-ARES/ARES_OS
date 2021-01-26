@@ -6,7 +6,7 @@ using ARESCore.PluginSupport;
 
 namespace ARESCore.PlanningSupport
 {
-  public interface IAresPlannerManager : IAresPlugin, IBasicReactiveObjectDisposable
+  public interface IAresPlannerManager : IAresPlugin, IReactiveSubscriber
   {
     string PlannerName { get; set; }
     UserControl PlannerTile { get; set; }

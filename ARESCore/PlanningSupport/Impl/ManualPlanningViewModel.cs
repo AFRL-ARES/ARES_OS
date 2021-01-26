@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace ARESCore.PlanningSupport.Impl
 {
-  public class ManualPlanningViewModel : BasicReactiveObjectDisposable
+  public class ManualPlanningViewModel : ReactiveSubscriber
   {
     private readonly IDialogCoordinator _coordinator;
     private string _filePathText;

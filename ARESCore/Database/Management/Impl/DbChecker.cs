@@ -8,7 +8,7 @@ using ReactiveUI;
 namespace ARESCore.Database.Management.Impl
 {
  
-  internal class DbChecker: BasicReactiveObjectDisposable, IDBChecker
+  internal class DbChecker: ReactiveSubscriber, IDBChecker
   {
     private string _checkResults;
 

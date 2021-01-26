@@ -10,7 +10,7 @@ using ReactiveUI;
 
 namespace ARESCore.UI.ViewModels
 {
-  public class IPAddressPortViewModel : BasicReactiveObjectDisposable
+  public class IPAddressPortViewModel : ReactiveSubscriber
   {
     public IContainerProvider _container;
     private readonly IDBChecker _checker;

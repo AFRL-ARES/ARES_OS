@@ -11,7 +11,7 @@
         Title="ARES Console Window" Height="450" Width="800" Loaded="ConsoleWindowOnLoaded">
   <Grid>
     <ScrollViewer Name="ScrollViewer" ScrollChanged="ScrollViewer_ScrollChanged" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-    <avalonedit:TextEditor Name="textEditor" HorizontalScrollBarVisibility="Auto" IsReadOnly="True" FontFamily="Consolas" FontSize="10pt" Foreground="{DynamicResource LabelTextBrush}" VerticalScrollBarVisibility="Disabled" WordWrap="False" Document="{Binding Document}" />
+            <avalonedit:TextEditor Name="textEditor" HorizontalScrollBarVisibility="Auto" IsReadOnly="True" FontFamily="Consolas" FontSize="10pt" Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" VerticalScrollBarVisibility="Disabled" WordWrap="False" Document="{Binding Document}" />
     </ScrollViewer>
     <Ui:ErrorHandlingView/>
   </Grid>

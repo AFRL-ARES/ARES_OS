@@ -14,7 +14,7 @@ using ReactiveUI;
 
 namespace ARESCore.UI.ViewModels
 {
-  public class ProjectSelectionViewModel : BasicReactiveObjectDisposable
+  public class ProjectSelectionViewModel : ReactiveSubscriber
   {
     private bool _newProjectDefinitionComplete;
     private string _newProjectWorkingDirectory = "Click here to select project directory";

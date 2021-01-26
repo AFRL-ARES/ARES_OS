@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace ARESCore.UI.ViewModels
 {
-  public class AresConsole : BasicReactiveObjectDisposable, IAresConsole
+  public class AresConsole : ReactiveSubscriber, IAresConsole
   {
     private TextDocument _document;
 

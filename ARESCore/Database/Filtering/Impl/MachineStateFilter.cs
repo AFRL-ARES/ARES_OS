@@ -10,7 +10,7 @@ using Ninject;
 
 namespace ARESCore.Database.Filtering.Impl
 {
-  public class MachineStateFilter : BasicReactiveObjectDisposable, IDbFilter<MachineStateEntity>
+  public class MachineStateFilter : ReactiveSubscriber, IDbFilter<MachineStateEntity>
   {
     private readonly IAresConsole _console;
 

@@ -3,7 +3,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Experiment.Scripting
 {
-  public interface IScriptExecutor : IBasicReactiveObjectDisposable
+  public interface IScriptExecutor : IReactiveSubscriber
   {
     Task Run( string script, IPlannedExperimentInputs inputs );
 

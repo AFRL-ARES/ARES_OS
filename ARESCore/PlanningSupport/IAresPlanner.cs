@@ -6,7 +6,7 @@ using ARESCore.Experiment;
 
 namespace ARESCore.PlanningSupport
 {
-  public interface IAresPlanner : IBasicReactiveObjectDisposable
+  public interface IAresPlanner : IReactiveSubscriber
   {
     int NumExperimentsToPlan { get; set; }
     Task<IPlannedExperimentBatchInputs> DoPlanning();

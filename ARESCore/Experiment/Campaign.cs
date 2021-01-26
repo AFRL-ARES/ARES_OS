@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment
 {
-  public class Campaign : BasicReactiveObjectDisposable, ICampaign
+  public class Campaign : ReactiveSubscriber, ICampaign
   {
     private string _expScript;
     private string _interExpScript;

@@ -17,9 +17,9 @@
       <TextBlock Name="LicenseTextBlock" Text ="{Binding LicenseText}" TextWrapping="Wrap" Padding="5">
       </TextBlock>
     </ScrollViewer>
-    <Button Style="{StaticResource AccentedSquareButtonStyle}"  Command="{Binding AcceptClick}" Click="CloseWindow" Content="Accept" Padding="3" Margin="0, 0, 100, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+    <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}"  Command="{Binding AcceptClick}" Click="CloseWindow" Content="Accept" Padding="3" Margin="0, 0, 100, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
     </Button>
-    <Button Style="{StaticResource AccentedSquareButtonStyle}"  Command="{Binding DeclineClick}" Click="CloseWindow" Content="Decline" Padding="3"  Margin="100, 0, 0, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+    <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}"  Command="{Binding DeclineClick}" Click="CloseWindow" Content="Decline" Padding="3"  Margin="100, 0, 0, 12" VerticalAlignment="Bottom" HorizontalAlignment="Center">
     </Button>
   </Grid>
 </mah:MetroWindow>

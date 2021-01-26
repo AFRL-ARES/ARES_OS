@@ -3,7 +3,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Commands
 {
-  public interface IAresCommand : IBasicReactiveObjectDisposable
+  public interface IAresCommand : IReactiveSubscriber
   {
     string ScriptName { get; }
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Reactive;
-using System.Windows.Controls;
-using ARESCore.AnalysisSupport;
+﻿using ARESCore.AnalysisSupport;
 using ARESCore.Database.ViewModels;
 using ARESCore.DisposePatternHelpers;
 using ARESCore.PlanningSupport;
@@ -13,13 +6,19 @@ using ARESCore.PlanningSupport.Impl;
 using ARESCore.Registries;
 using DynamicData;
 using DynamicData.Binding;
-using NationalInstruments.Restricted;
 using Ninject;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Reactive;
+using System.Windows.Controls;
 
 namespace ARESCore.Experiment.UI.ViewModels
 {
-  public class BatchInputDataViewModel : BasicReactiveObjectDisposable
+  public class BatchInputDataViewModel : ReactiveSubscriber
   {
     private string _selectedExperimentType;
     private readonly IAresAnalyzerRegistry _registry;
@@ -65,24 +64,25 @@ namespace ARESCore.Experiment.UI.ViewModels
       var newPlanners = _planners.Where(plannerManager => !_plannableSubs.ContainsKey(plannerManager.Planner)).Select(plannerManager => plannerManager.Planner).ToArray();
       var disposablePlanners = _plannableSubs.Where(plannerSubPair => !_planners.Select(plannerManager => plannerManager.Planner).Contains(plannerSubPair.Key)).ToArray();
 
-      disposablePlanners.ForEach(plannerSubPair =>
-     {
-       _plannableSubs[plannerSubPair.Key].Dispose();
-       _plannableSubs.Remove(plannerSubPair.Key);
-       _plannerValidations.Remove(plannerSubPair.Key);
-     });
+      foreach (var plannerSubPair in disposablePlanners)
+      {
+        _plannableSubs[plannerSubPair.Key].Dispose();
+        _plannableSubs.Remove(plannerSubPair.Key);
+        _plannerValidations.Remove(plannerSubPair.Key);
+      }
 
-      newPlanners.ForEach(planner =>
-     {
-       _plannerValidations.Add(planner, planner.CanPlan);
-       var enabledWatcher = planner.WhenPropertyChanged(p => p.CanPlan)
-         .Subscribe(canPlan =>
-         {
-           _plannerValidations[canPlan.Sender] = canPlan.Value;
-           PlanningEnabled = _plannerValidations.Any() && _plannerValidations.All(plannerPlanUglyVarName => plannerPlanUglyVarName.Value);
-         });
-       _plannableSubs.Add(planner, enabledWatcher);
-     });
+      foreach (var planner in newPlanners)
+      {
+
+        _plannerValidations.Add(planner, planner.CanPlan);
+        var enabledWatcher = planner.WhenPropertyChanged(p => p.CanPlan)
+          .Subscribe(canPlan =>
+          {
+            _plannerValidations[canPlan.Sender] = canPlan.Value;
+            PlanningEnabled = _plannerValidations.Any() && _plannerValidations.All(plannerPlanUglyVarName => plannerPlanUglyVarName.Value);
+          });
+        _plannableSubs.Add(planner, enabledWatcher);
+      }
     }
 
     private Unit DoPlanning()
@@ -247,7 +247,11 @@ namespace ARESCore.Experiment.UI.ViewModels
         {
           value.IsSelected = true;
         }
-        _registry.Where(analyzer => analyzer != value).ForEach(analyzer => analyzer.IsSelected = false);
+
+        foreach (var analyzer in _registry.Where(analyzer => analyzer != value))
+        {
+          analyzer.IsSelected = false;
+        }
       }
     }
 
@@ -265,8 +269,8 @@ namespace ARESCore.Experiment.UI.ViewModels
           DbGenEnabled = false;
           return;
         }
-          PlannerOptions.Add(planner.PlannerName); // let's assume everyone else matches
-          DbGenEnabled = true;
+        PlannerOptions.Add(planner.PlannerName); // let's assume everyone else matches
+        DbGenEnabled = true;
       }
       if (PlannerOptions.Count > 0)
       {

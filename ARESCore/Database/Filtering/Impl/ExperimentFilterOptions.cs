@@ -8,7 +8,7 @@ using ReactiveUI;
 namespace ARESCore.Database.Filtering.Impl
 {
 
-  public class ExperimentFilterOptions : BasicReactiveObjectDisposable, IExperimentFilterOptions
+  public class ExperimentFilterOptions : ReactiveSubscriber, IExperimentFilterOptions
   {
     private DateTime _fromDate;
     private DateTime _toDate = DateTime.Now;

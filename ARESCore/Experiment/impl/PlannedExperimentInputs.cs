@@ -6,7 +6,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment.impl
 {
-  public class PlannedExperimentInputs : BasicReactiveObjectDisposable, IPlannedExperimentInputs
+  public class PlannedExperimentInputs : ReactiveSubscriber, IPlannedExperimentInputs
   {
     private IDictionary<string, double> _inputs;
 

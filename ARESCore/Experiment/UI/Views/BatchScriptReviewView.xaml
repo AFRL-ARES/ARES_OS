@@ -32,10 +32,10 @@
         <Grid Margin="5">
           <StackPanel Orientation="Vertical">
           <UniformGrid Rows="1">
-            <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Load from File" Click="LoadExperimentScriptClicked"/>
-            <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Save to File" Click="SaveExperimentScriptClicked"/>
+            <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Load from File" Click="LoadExperimentScriptClicked"/>
+            <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Save to File" Click="SaveExperimentScriptClicked"/>
           </UniformGrid>
-            <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Save Changes (Ctrl + S)" Command="{Binding SaveExperimentScriptChangesCommand}"/>
+            <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Save Changes (Ctrl + S)" Command="{Binding SaveExperimentScriptChangesCommand}"/>
             </StackPanel>
         </Grid>
           <Views:ScriptEditorView Grid.Row="1" Margin="5" Text="{Binding DataContext.ExperimentScript, RelativeSource={RelativeSource FindAncestor, 
@@ -54,10 +54,10 @@
           <Grid Margin="5">
             <StackPanel Orientation="Vertical">
               <UniformGrid Rows="1">
-                <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Load from File" Click="LoadInterScriptClicked"/>
-                <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Save to File" Click="SaveInterScriptClicked"/>
+                <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Load from File" Click="LoadInterScriptClicked"/>
+                <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Save to File" Click="SaveInterScriptClicked"/>
               </UniformGrid>
-              <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Save Changes (Ctrl + S)" Command="{Binding SaveInterScriptChangesCommand}"/>
+              <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Save Changes (Ctrl + S)" Command="{Binding SaveInterScriptChangesCommand}"/>
             </StackPanel>
           </Grid>
           <Views:ScriptEditorView Grid.Row="1" Margin="5" Text="{Binding DataContext.InterScript, RelativeSource={RelativeSource FindAncestor, 
@@ -76,10 +76,10 @@
           <Grid Margin="5">
             <StackPanel Orientation="Vertical">
               <UniformGrid Rows="1">
-                <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Load from File" Click="LoadCloseoutScriptClicked"/>
-                <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Save to File" Click="SaveCloseoutScriptClicked"/>
+                <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Load from File" Click="LoadCloseoutScriptClicked"/>
+                <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Save to File" Click="SaveCloseoutScriptClicked"/>
               </UniformGrid>
-              <Button Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" Content="Save Changes (Ctrl + S)" Command="{Binding SaveCloseoutScriptChangesCommand}"/>
+              <Button Margin="5" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Content="Save Changes (Ctrl + S)" Command="{Binding SaveCloseoutScriptChangesCommand}"/>
             </StackPanel>
           </Grid>
           <Views:ScriptEditorView Grid.Row="1" Margin="5" Text="{Binding DataContext.CloseoutScript, RelativeSource={RelativeSource FindAncestor, 

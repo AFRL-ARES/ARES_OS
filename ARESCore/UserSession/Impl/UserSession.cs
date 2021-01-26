@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace ARESCore.UserSession.Impl
 {
-  internal class UserSession : BasicReactiveObjectDisposable, IUserSession
+  internal class UserSession : ReactiveSubscriber, IUserSession
   {
     private string _username = "DefaultUserName";
     private string _saveDirectory;

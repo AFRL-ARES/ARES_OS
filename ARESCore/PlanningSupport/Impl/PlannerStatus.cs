@@ -7,7 +7,7 @@ using ReactiveUI;
 
 namespace ARESCore.PlanningSupport.Impl
 {
-  internal class PlannerStatus : BasicReactiveObjectDisposable, IPlannerStatus
+  internal class PlannerStatus : ReactiveSubscriber, IPlannerStatus
   {
     private string _statusText;
     private ContentControl _image;

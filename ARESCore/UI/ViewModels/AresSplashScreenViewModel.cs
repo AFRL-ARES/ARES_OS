@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace ARESCore.UI.ViewModels
 {
-  public class AresSplashScreenViewModel : BasicReactiveObjectDisposable
+  public class AresSplashScreenViewModel : ReactiveSubscriber
   {
     public AresSplashScreenViewModel()
     {

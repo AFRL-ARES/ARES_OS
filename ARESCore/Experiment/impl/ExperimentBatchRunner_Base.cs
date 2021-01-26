@@ -6,7 +6,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Experiment.impl
 {
-    public abstract class ExperimentBatchRunner_Base : BasicReactiveObjectDisposable
+    public abstract class ExperimentBatchRunner_Base : ReactiveSubscriber
     {
         private IExperimentBatch _experimentBatch;
 
