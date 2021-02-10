@@ -1,5 +1,4 @@
 ﻿using DynamicData.Binding;
-using NationalInstruments.Restricted;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,7 +56,10 @@ namespace ARESCore.Extensions
       var itemsAddedDispose = Disposable.Empty;
       var itemsRemovedDispose = Disposable.Empty;
 
-      collection.ForEach(onItemAdded);
+      foreach (var item in collection)
+      {
+        onItemAdded(item);
+      }
 
       if (onItemAdded != null)
       {
@@ -67,7 +69,11 @@ namespace ARESCore.Extensions
           {
             return;
           }
-          args.NewItems.ForEach(onItemAdded);
+
+          foreach (var newItem in args.NewItems)
+          {
+            onItemAdded(newItem as ContainedType);
+          }
         };
         collection.CollectionChanged += addedHandler;
         itemsAddedDispose = Disposable.Create(() => collection.CollectionChanged -= addedHandler);
@@ -81,7 +87,11 @@ namespace ARESCore.Extensions
           {
             return;
           }
-          args.NewItems.ForEach(onItemAdded);
+
+          foreach (var newItem in args.NewItems)
+          {
+            onItemAdded(newItem as ContainedType);
+          }
         };
         collection.CollectionChanged += removedHandler;
         itemsAddedDispose = Disposable.Create(() => collection.CollectionChanged -= removedHandler);

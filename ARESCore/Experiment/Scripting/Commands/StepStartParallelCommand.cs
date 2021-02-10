@@ -6,7 +6,6 @@ using ARESCore.Extensions;
 using ARESCore.Registries;
 using ARESCore.UserSession;
 using DynamicData.Binding;
-using NationalInstruments.Restricted;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -96,7 +95,7 @@ namespace ARESCore.Experiment.Scripting.Commands
       finally
       {
         timerObservable.Dispose();
-        if (_retryInfos.IsEmpty())
+        if (_retryInfos.Count == 0)
         {
           IsComplete = true;
         }
@@ -158,9 +157,9 @@ namespace ARESCore.Experiment.Scripting.Commands
     public override async Task Handle(ErrorResponse response)
     {
       await base.Handle(response);
-      if (_retryInfos.IsEmpty() /* && response != ErrorResponse.Stop */ ) // This check is required because we notify IsComplete even if the value doesnt change, and we only take 1 notification
+      if (_retryInfos.Count == 0 /* && response != ErrorResponse.Stop */ ) // This check is required because we notify IsComplete even if the value doesnt change, and we only take 1 notification
       {
-        IsComplete = _retryInfos.IsEmpty();
+        IsComplete = _retryInfos.Count == 0;
       }
     }
 

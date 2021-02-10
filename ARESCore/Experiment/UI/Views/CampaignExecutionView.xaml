@@ -1,17 +1,21 @@
-﻿<UserControl x:Class="ARESCore.Experiment.UI.Views.CampaignExecutionView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ViewModels="clr-namespace:ARESCore.Experiment.UI.ViewModels"
-             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:Experiment="clr-namespace:ARESCore.Experiment"
-             xmlns:Results="clr-namespace:ARESCore.Experiment.Results"
-             xmlns:Converters="clr-namespace:ARESCore.UI.Converters" 
-             xmlns:AresCore="clr-namespace:ARESCore"
-             mc:Ignorable="d"
-             DataContext="{Binding Source={StaticResource _aresKernel}, Path=CampaignExecutionViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+  x:Class="ARESCore.Experiment.UI.Views.CampaignExecutionView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:AresCore="clr-namespace:ARESCore"
+  xmlns:Converters="clr-namespace:ARESCore.UI.Converters"
+  xmlns:Experiment="clr-namespace:ARESCore.Experiment"
+  xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+  xmlns:Mvvm="http://prismlibrary.com/"
+  xmlns:Results="clr-namespace:ARESCore.Experiment.Results"
+  xmlns:ViewModels="clr-namespace:ARESCore.Experiment.UI.ViewModels"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  Mvvm:ViewModelLocator.AutoWireViewModel="True"
+  d:DataContext="{d:DesignInstance Path=CampaignExecutionViewModel}"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  mc:Ignorable="d">
 
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -25,7 +29,7 @@
       <RowDefinition Height="14*" />
     </Grid.RowDefinitions>
 
-    <Grid Margin="0,10,0,0" Grid.Row="0">
+    <Grid Grid.Row="0" Margin="0,10,0,0">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="2*" />
@@ -35,7 +39,12 @@
         <RowDefinition />
         <RowDefinition />
       </Grid.RowDefinitions>
-      <Button Grid.Row="0" Margin="10,10,10,10" Style="{DynamicResource AccentedSquareButtonStyle}" IsEnabled="{Binding Campaign.CanRun}" Command="{Binding ExecuteCampaignCommand}">
+      <Button
+        Grid.Row="0"
+        Margin="10,10,10,10"
+        Command="{Binding ExecuteCampaignCommand}"
+        IsEnabled="{Binding Campaign.CanRun}"
+        Style="{DynamicResource MahApps.Styles.Button.Square.Accent}">
         <Viewbox>
           <StackPanel Orientation="Horizontal">
             <IconPacks:PackIconMaterial Kind="Play" />
@@ -44,7 +53,11 @@
         </Viewbox>
       </Button>
 
-      <Button Grid.Row="1" Margin="10,10,10,10" Style="{DynamicResource AccentedSquareButtonStyle}" IsEnabled="{Binding Campaign.IsExecuting}">
+      <Button
+        Grid.Row="1"
+        Margin="10,10,10,10"
+        IsEnabled="{Binding Campaign.IsExecuting}"
+        Style="{DynamicResource MahApps.Styles.Button.Square.Accent}">
         <Viewbox>
           <StackPanel Orientation="Horizontal">
             <IconPacks:PackIconMaterial Kind="Pause" />
@@ -53,7 +66,11 @@
         </Viewbox>
       </Button>
 
-      <Button Grid.Row="2" Margin="10" Style="{DynamicResource AccentedSquareButtonStyle}" Command="{Binding InitializeEStopCommand}">
+      <Button
+        Grid.Row="2"
+        Margin="10"
+        Command="{Binding InitializeEStopCommand}"
+        Style="{DynamicResource MahApps.Styles.Button.Square.Accent}">
         <Viewbox>
           <StackPanel Orientation="Horizontal">
             <IconPacks:PackIconMaterial Kind="Stop" />
@@ -63,35 +80,51 @@
       </Button>
 
 
-      <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Visibility="{Binding ShouldDisplay, Converter={StaticResource BoolToVis}}">
+      <Grid
+        Grid.Row="0"
+        Grid.RowSpan="3"
+        Grid.Column="1"
+        Visibility="{Binding ShouldDisplay, Converter={StaticResource BoolToVis}}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="30,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel
+          Margin="30,0,0,0"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center">
           <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Running Experiment " FontSize="30" />
-            <TextBlock Text="{Binding CurrentExperimentExecutionSummary.ExperimentNumber}" FontSize="30" />
-            <TextBlock Text="/" FontSize="30" />
-            <TextBlock Text="{Binding Campaign.NumExperimentsToRun}" FontSize="30" />
+            <TextBlock FontSize="30" Text="Running Experiment " />
+            <TextBlock FontSize="30" Text="{Binding CurrentExperimentExecutionSummary.ExperimentNumber}" />
+            <TextBlock FontSize="30" Text="/" />
+            <TextBlock FontSize="30" Text="{Binding Campaign.NumExperimentsToRun}" />
           </StackPanel>
           <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Elapsed: " FontSize="25" />
-            <TextBlock Text="{Binding CampaignExecutionSummary.ExecutionDuration}" FontSize="25" />
+            <TextBlock FontSize="25" Text="Elapsed: " />
+            <TextBlock FontSize="25" Text="{Binding CampaignExecutionSummary.ExecutionDuration}" />
           </StackPanel>
 
           <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Estimated Remaining: " FontSize="25" />
-            <TextBlock Text="{Binding CampaignExecutionSummary.ETC}" FontSize="25" />
+            <TextBlock FontSize="25" Text="Estimated Remaining: " />
+            <TextBlock FontSize="25" Text="{Binding CampaignExecutionSummary.ETC}" />
           </StackPanel>
 
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Orientation="Horizontal" x:Name="_animationStackPanel">
+        <StackPanel
+          x:Name="_animationStackPanel"
+          Grid.Column="1"
+          Orientation="Horizontal">
           <StackPanel.Resources>
             <Storyboard x:Key="_slideStoryboard">
-              <DoubleAnimation From="0" To="{Binding ElementName=_scrollingTextCanvas, Path=Width, Converter={StaticResource NegateConverter}}" Duration="00:00:10" Storyboard.TargetName="_textSlideTransform" Storyboard.TargetProperty="X" RepeatBehavior="Forever" />
+              <DoubleAnimation
+                RepeatBehavior="Forever"
+                Storyboard.TargetName="_textSlideTransform"
+                Storyboard.TargetProperty="X"
+                From="0"
+                To="{Binding ElementName=_scrollingTextCanvas, Path=Width, Converter={StaticResource NegateConverter}}"
+                Duration="00:00:10" />
             </Storyboard>
           </StackPanel.Resources>
           <StackPanel.RenderTransform>
@@ -107,36 +140,39 @@
           </StackPanel.Triggers>
 
           <Canvas x:Name="_scrollingTextCanvas" Width="{Binding ElementName=_animationStackPanel, Path=ActualWidth}">
-            <TextBlock FontSize="25" Canvas.Left="0" x:Name="_executionText">
+            <TextBlock
+              x:Name="_executionText"
+              Canvas.Left="0"
+              FontSize="25">
               <TextBlock.Text>
                 <MultiBinding StringFormat="{}Executing Step: {0}">
                   <Binding Path="CurrentStepExecutionSummary.StepName" />
                 </MultiBinding>
               </TextBlock.Text>
             </TextBlock>
-<!--            <TextBlock FontSize="25" Canvas.Left="{Binding ElementName=_scrollingTextCanvas, Path=Width}" Text="{Binding ElementName=_executionText, Path=Text}" />-->
+            <!--            <TextBlock FontSize="25" Canvas.Left="{Binding ElementName=_scrollingTextCanvas, Path=Width}" Text="{Binding ElementName=_executionText, Path=Text}" />-->
           </Canvas>
         </StackPanel>
-        
-<!--        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25">-->
-<!--          <TextBlock.Text>-->
-<!--            <MultiBinding StringFormat="{}Executing Step: {0}">-->
-<!--              <Binding Path="CurrentStepExecutionSummary.StepName" />-->
-<!--            </MultiBinding>-->
-<!--          </TextBlock.Text>-->
-<!--          <TextBlock.RenderTransform>-->
-<!--            <TranslateTransform x:Name="fixThisCheat" />-->
-<!--          </TextBlock.RenderTransform>-->
-<!--          <TextBlock.Triggers>-->
-<!--            <EventTrigger RoutedEvent="FrameworkElement.Loaded">-->
-<!--              <BeginStoryboard>-->
-<!--                <Storyboard RepeatBehavior="Forever">-->
-<!--                  <DoubleAnimation From="{Binding RelativeSource={RelativeSource AncestorType=TextBlock, Mode=FindAncestor}, Path=ActualWidth}" To="{Binding RelativeSource={RelativeSource AncestorType=TextBlock, Mode=FindAncestor}, Path=ActualWidth, Converter={StaticResource NegateConverter}}" Storyboard.TargetName="fixThisCheat" Storyboard.TargetProperty="X" Duration="0:0:9" />-->
-<!--                </Storyboard>-->
-<!--              </BeginStoryboard>-->
-<!--            </EventTrigger>-->
-<!--          </TextBlock.Triggers>-->
-<!--        </TextBlock>-->
+
+        <!--        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25">-->
+        <!--          <TextBlock.Text>-->
+        <!--            <MultiBinding StringFormat="{}Executing Step: {0}">-->
+        <!--              <Binding Path="CurrentStepExecutionSummary.StepName" />-->
+        <!--            </MultiBinding>-->
+        <!--          </TextBlock.Text>-->
+        <!--          <TextBlock.RenderTransform>-->
+        <!--            <TranslateTransform x:Name="fixThisCheat" />-->
+        <!--          </TextBlock.RenderTransform>-->
+        <!--          <TextBlock.Triggers>-->
+        <!--            <EventTrigger RoutedEvent="FrameworkElement.Loaded">-->
+        <!--              <BeginStoryboard>-->
+        <!--                <Storyboard RepeatBehavior="Forever">-->
+        <!--                  <DoubleAnimation From="{Binding RelativeSource={RelativeSource AncestorType=TextBlock, Mode=FindAncestor}, Path=ActualWidth}" To="{Binding RelativeSource={RelativeSource AncestorType=TextBlock, Mode=FindAncestor}, Path=ActualWidth, Converter={StaticResource NegateConverter}}" Storyboard.TargetName="fixThisCheat" Storyboard.TargetProperty="X" Duration="0:0:9" />-->
+        <!--                </Storyboard>-->
+        <!--              </BeginStoryboard>-->
+        <!--            </EventTrigger>-->
+        <!--          </TextBlock.Triggers>-->
+        <!--        </TextBlock>-->
       </Grid>
     </Grid>
 
@@ -152,24 +188,44 @@
           <RowDefinition Height="Auto" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="0">
-          <TextBlock Text="Experiment " FontSize="26" />
-          <TextBlock Text="{Binding CurrentExperimentExecutionSummary.ExperimentNumber}" FontSize="26" />
+        <StackPanel
+          Grid.Row="0"
+          HorizontalAlignment="Center"
+          Orientation="Horizontal">
+          <TextBlock FontSize="26" Text="Experiment " />
+          <TextBlock FontSize="26" Text="{Binding CurrentExperimentExecutionSummary.ExperimentNumber}" />
         </StackPanel>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
           <ItemsControl ItemsSource="{Binding CurrentExperimentExecutionSummary.StepExecutionSummaries}">
             <ItemsControl.ItemTemplate>
               <DataTemplate DataType="Results:IStepExecutionSummary">
                 <StackPanel>
-                  <ToggleButton Margin="0,0,0,5" HorizontalAlignment="Stretch" Name="_currentCommandsVisibilityToggle" BorderThickness="0">
+                  <ToggleButton
+                    Name="_currentCommandsVisibilityToggle"
+                    Margin="0,0,0,5"
+                    HorizontalAlignment="Stretch"
+                    BorderThickness="0">
                     <ToggleButton.Style>
                       <Style TargetType="ToggleButton">
                         <Setter Property="Template">
                           <Setter.Value>
                             <ControlTemplate TargetType="ToggleButton">
-                              <Border BorderBrush="Transparent" BorderThickness="0" Background="Transparent" SnapsToDevicePixels="True">
-                                <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
+                              <Border
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="True">
+                                <ContentPresenter
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                  Content="{TemplateBinding Content}"
+                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Focusable="False"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                               </Border>
                             </ControlTemplate>
                           </Setter.Value>
@@ -177,11 +233,27 @@
                       </Style>
                     </ToggleButton.Style>
                     <StackPanel Orientation="Horizontal">
-                      <IconPacks:PackIconMaterial VerticalAlignment="Center" Kind="ArrowDown" BorderThickness="0" Visibility="{Binding ElementName=_currentCommandsVisibilityToggle, Path=IsChecked, Converter={StaticResource InverseBoolToVis}}" />
-                      <IconPacks:PackIconMaterial VerticalAlignment="Center" Kind="ArrowRight" BorderThickness="0" Visibility="{Binding ElementName=_currentCommandsVisibilityToggle, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
-                      <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding StepName}" FontSize="20" FontWeight="Bold" />
-                      <TextBlock Text="&#x09;" FontSize="20" />
-                      <TextBlock Text="{Binding ExecutionDuration}" FontSize="20" Opacity=".4" />
+                      <IconPacks:PackIconMaterial
+                        VerticalAlignment="Center"
+                        BorderThickness="0"
+                        Kind="ArrowDown"
+                        Visibility="{Binding ElementName=_currentCommandsVisibilityToggle, Path=IsChecked, Converter={StaticResource InverseBoolToVis}}" />
+                      <IconPacks:PackIconMaterial
+                        VerticalAlignment="Center"
+                        BorderThickness="0"
+                        Kind="ArrowRight"
+                        Visibility="{Binding ElementName=_currentCommandsVisibilityToggle, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
+                      <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="{Binding StepName}" />
+                      <TextBlock FontSize="20" Text="&#x09;" />
+                      <TextBlock
+                        FontSize="20"
+                        Opacity=".4"
+                        Text="{Binding ExecutionDuration}" />
                     </StackPanel>
                   </ToggleButton>
                   <ScrollViewer VerticalScrollBarVisibility="Hidden" Visibility="{Binding ElementName=_currentCommandsVisibilityToggle, Path=IsChecked, Converter={StaticResource InverseBoolToVis}}">
@@ -202,9 +274,21 @@
                                 </MultiBinding>
                               </TextBlock.Text>
                             </TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding Value}" FontSize="16" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="2" Text="{Binding Status}" FontSize="16" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Column="3" Text="{Binding ExecutionDuration}" FontSize="16" HorizontalAlignment="Center" />
+                            <TextBlock
+                              Grid.Column="1"
+                              HorizontalAlignment="Center"
+                              FontSize="16"
+                              Text="{Binding Value}" />
+                            <TextBlock
+                              Grid.Column="2"
+                              HorizontalAlignment="Center"
+                              FontSize="16"
+                              Text="{Binding Status}" />
+                            <TextBlock
+                              Grid.Column="3"
+                              HorizontalAlignment="Center"
+                              FontSize="16"
+                              Text="{Binding ExecutionDuration}" />
                           </Grid>
                         </DataTemplate>
                       </ItemsControl.ItemTemplate>
@@ -218,17 +302,23 @@
       </Grid>
 
 
-      <ScrollViewer Grid.Column="2" ScrollChanged="ScrollViewer_OnScrollChanged" PreviewMouseWheel="ScrollViewer_OnPreviewMouseWheel">
+      <ScrollViewer
+        Grid.Column="2"
+        PreviewMouseWheel="ScrollViewer_OnPreviewMouseWheel"
+        ScrollChanged="ScrollViewer_OnScrollChanged">
         <ItemsControl HorizontalAlignment="Stretch" ItemsSource="{Binding CampaignExecutionSummary.ExperimentExecutionSummaries}">
           <ItemsControl.ItemTemplate>
             <DataTemplate DataType="Results:IExperimentExecutionSummary">
               <Expander>
                 <Expander.Header>
                   <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Experiment " FontSize="18" />
-                    <TextBlock Text="{Binding ExperimentNumber}" FontSize="18" />
-                    <TextBlock Text="&#x09;" FontSize="18" />
-                    <TextBlock Text="{Binding ExecutionDuration}" FontSize="18" Opacity=".4" />
+                    <TextBlock FontSize="18" Text="Experiment " />
+                    <TextBlock FontSize="18" Text="{Binding ExperimentNumber}" />
+                    <TextBlock FontSize="18" Text="&#x09;" />
+                    <TextBlock
+                      FontSize="18"
+                      Opacity=".4"
+                      Text="{Binding ExecutionDuration}" />
                   </StackPanel>
                 </Expander.Header>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
@@ -237,14 +327,32 @@
                       <DataTemplate DataType="Results:IStepExecutionSummary">
                         <StackPanel>
                           <StackPanel Orientation="Horizontal">
-                            <ToggleButton HorizontalAlignment="Stretch" Name="_commandsVisibilityToggle" BorderThickness="0">
+                            <ToggleButton
+                              Name="_commandsVisibilityToggle"
+                              HorizontalAlignment="Stretch"
+                              BorderThickness="0">
                               <ToggleButton.Style>
                                 <Style TargetType="ToggleButton">
                                   <Setter Property="Template">
                                     <Setter.Value>
                                       <ControlTemplate TargetType="ToggleButton">
-                                        <Border x:Name="_toggleBorder" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" SnapsToDevicePixels="True">
-                                          <ContentPresenter x:Name="_togglePresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
+                                        <Border
+                                          x:Name="_toggleBorder"
+                                          Background="Transparent"
+                                          BorderBrush="Transparent"
+                                          BorderThickness="0"
+                                          SnapsToDevicePixels="True">
+                                          <ContentPresenter
+                                            x:Name="_togglePresenter"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                            Content="{TemplateBinding Content}"
+                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Focusable="False"
+                                            RecognizesAccessKey="True"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                                         </Border>
                                       </ControlTemplate>
@@ -253,11 +361,27 @@
                                 </Style>
                               </ToggleButton.Style>
                               <StackPanel Orientation="Horizontal">
-                                <IconPacks:PackIconMaterial VerticalAlignment="Center" Kind="ArrowDown" BorderThickness="0" Visibility="{Binding ElementName=_commandsVisibilityToggle, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
-                                <IconPacks:PackIconMaterial VerticalAlignment="Center" Kind="ArrowRight" BorderThickness="0" Visibility="{Binding ElementName=_commandsVisibilityToggle, Path=IsChecked, Converter={StaticResource InverseBoolToVis}}" />
-                                <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding StepName}" FontSize="14" FontWeight="Bold" />
-                                <TextBlock Text="&#x09;" FontSize="14" />
-                                <TextBlock Text="{Binding ExecutionDuration}" FontSize="14" Opacity=".4" />
+                                <IconPacks:PackIconMaterial
+                                  VerticalAlignment="Center"
+                                  BorderThickness="0"
+                                  Kind="ArrowDown"
+                                  Visibility="{Binding ElementName=_commandsVisibilityToggle, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
+                                <IconPacks:PackIconMaterial
+                                  VerticalAlignment="Center"
+                                  BorderThickness="0"
+                                  Kind="ArrowRight"
+                                  Visibility="{Binding ElementName=_commandsVisibilityToggle, Path=IsChecked, Converter={StaticResource InverseBoolToVis}}" />
+                                <TextBlock
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center"
+                                  FontSize="14"
+                                  FontWeight="Bold"
+                                  Text="{Binding StepName}" />
+                                <TextBlock FontSize="14" Text="&#x09;" />
+                                <TextBlock
+                                  FontSize="14"
+                                  Opacity=".4"
+                                  Text="{Binding ExecutionDuration}" />
                               </StackPanel>
                             </ToggleButton>
                           </StackPanel>
@@ -272,7 +396,7 @@
                                       <ColumnDefinition />
                                       <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
                                       <TextBlock Text="&#x09;" />
                                       <TextBlock Text="{Binding Command}" />
                                     </StackPanel>

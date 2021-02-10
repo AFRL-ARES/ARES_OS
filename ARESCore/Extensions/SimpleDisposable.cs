@@ -6,7 +6,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Extensions
 {
-  public class SimpleDisposable : BasicReactiveObjectDisposable
+  public class SimpleDisposable : ReactiveSubscriber
   {
     private readonly Stack<IDisposable> _disposable;
 

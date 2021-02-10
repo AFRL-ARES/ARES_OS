@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace ARESCore.ErrorSupport.UI
 {
-  public class ErrorHandlingViewModel : BasicReactiveObjectDisposable
+  public class ErrorHandlingViewModel : ReactiveSubscriber
   {
     private readonly IErroredObjectRepo _erroredObjectRepo;
 

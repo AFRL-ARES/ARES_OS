@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="Auto"/>
               </Grid.ColumnDefinitions>
               <Expander Margin="5" Header="{Binding DeviceName}" Content="{Binding UserConfigView}"/>
-              <Button  Grid.Column="1" Margin="5" Content="Save" Style="{StaticResource SquareButtonStyle}" Command="{Binding SaveUserConfigCommand}"/>
+              <Button  Grid.Column="1" Margin="5" Content="Save" Style="{StaticResource MahApps.Styles.Button.Square}" Command="{Binding SaveUserConfigCommand}"/>
             </Grid>
           </DataTemplate>
         </ItemsControl.ItemTemplate>

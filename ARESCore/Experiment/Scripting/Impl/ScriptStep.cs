@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment.Scripting.Impl
 {
-    public class ScriptStep : BasicReactiveObjectDisposable
+    public class ScriptStep : ReactiveSubscriber
     {
       private ObservableCollection<IAresDeviceCommand> _stepCommands = new ObservableCollection<IAresDeviceCommand>();
       private string _stepName;

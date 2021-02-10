@@ -7,9 +7,8 @@ using ReactiveUI;
 namespace ARESCore.DeviceSupport
 {
   [JsonObject(MemberSerialization.OptOut)]
-  public class CalibrationPeak : BasicReactiveObjectDisposable, ICalibrationPeak
+  public class CalibrationPeak : ReactiveSubscriber, ICalibrationPeak
   {
-    private Color _defaultColor = Colors.Red;
     private string _name;
     private double _waveNumber;
     private double _pixelNumber;
@@ -40,40 +39,36 @@ namespace ARESCore.DeviceSupport
       ColorId = colorId;
     }
 
-    public Color DefaultColor
-    {
-      get { return _defaultColor; }
-      private set { _defaultColor = value; }
-    }
+    public Color DefaultColor { get; private set; } = Colors.Red;
 
     public string Name
     {
-      get { return _name; }
-      set { this.RaiseAndSetIfChanged(ref _name, value); }
+      get => _name;
+      set => this.RaiseAndSetIfChanged(ref _name, value);
     }
 
     public double WaveNumber
     {
-      get { return _waveNumber; }
-      set { this.RaiseAndSetIfChanged(ref _waveNumber, value); }
+      get => _waveNumber;
+      set => this.RaiseAndSetIfChanged(ref _waveNumber, value);
     }
 
     public double PixelNumber
     {
-      get { return _pixelNumber; }
-      set { this.RaiseAndSetIfChanged(ref _pixelNumber, value); }
+      get => _pixelNumber;
+      set => this.RaiseAndSetIfChanged(ref _pixelNumber, value);
     }
 
     public Color ColorId
     {
-      get { return _colorId; }
-      set { this.RaiseAndSetIfChanged(ref _colorId, value); }
+      get => _colorId;
+      set => this.RaiseAndSetIfChanged(ref _colorId, value);
     }
 
     public bool DrawOnMain
     {
-      get { return _drawOnMain; }
-      set { this.RaiseAndSetIfChanged(ref _drawOnMain, value); }
+      get => _drawOnMain;
+      set => this.RaiseAndSetIfChanged(ref _drawOnMain, value);
     }
   }
 }

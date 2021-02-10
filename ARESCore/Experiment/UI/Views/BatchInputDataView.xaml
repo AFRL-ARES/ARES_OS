@@ -1,116 +1,193 @@
-﻿<UserControl x:Class="ARESCore.Experiment.UI.Views.BatchInputDataView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:local="clr-namespace:ARESCore.Experiment.UI"
-             xmlns:Mvvm="http://prismlibrary.com/"
-             xmlns:ViewModels="clr-namespace:ARESCore.Experiment.UI.ViewModels"
-             xmlns:Converters="clr-namespace:ARESCore.UI.Converters"
-             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:Views="clr-namespace:ARESCore.Database.Views"
-             xmlns:Views1="clr-namespace:ARESCore.Experiment.UI.Views"
-             Mvvm:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance ViewModels:BatchInputDataViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+  x:Class="ARESCore.Experiment.UI.Views.BatchInputDataView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Converters="clr-namespace:ARESCore.UI.Converters"
+  xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+  xmlns:Mvvm="http://prismlibrary.com/"
+  xmlns:ViewModels="clr-namespace:ARESCore.Experiment.UI.ViewModels"
+  xmlns:Views="clr-namespace:ARESCore.Database.Views"
+  xmlns:Views1="clr-namespace:ARESCore.Experiment.UI.Views"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ARESCore.Experiment.UI"
+  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=System.Runtime"
+  Mvvm:ViewModelLocator.AutoWireViewModel="True"
+  d:DataContext="{d:DesignInstance ViewModels:BatchInputDataViewModel}"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  mc:Ignorable="d">
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <TextBlock
+        Margin="5"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Center"
+        FontSize="20"
+        Text="Analyzer:" />
+      <ComboBox
+        Margin="5"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Center"
+        FontSize="20"
+        ItemsSource="{Binding ExperimentTypes}"
+        SelectedItem="{Binding SelectedExperimentType}" />
+    </StackPanel>
+    <StackPanel Grid.Row="1" Orientation="Horizontal">
+      <TextBlock
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        FontSize="20"
+        Text="Select Planner(s):" />
+      <ItemsControl
+        Margin="5"
+        VerticalAlignment="Center"
+        ItemsSource="{Binding PlannerOptions}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid IsItemsHost="True" Rows="1" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="{x:Type system:String}">
+            <Button
+              Margin="3"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Stretch"
+              Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Views1:BatchInputDataView}, Path=DataContext.NewInputDataSourceCommand}"
+              CommandParameter="{Binding .}"
+              Style="{DynamicResource MahApps.Styles.Button.Square.Accent}">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                  Margin="3"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Text="+" />
+                <TextBlock
+                  Grid.Column="1"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Text="{Binding .}"
+                  TextAlignment="Left" />
+              </Grid>
+            </Button>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </StackPanel>
+
+    <ScrollViewer
+      Grid.Row="2"
+      MinHeight="250"
+      HorizontalScrollBarVisibility="Auto"
+      VerticalScrollBarVisibility="Hidden">
+      <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="1">
+        <ListView
+          x:Name="_tilesView"
+          HorizontalAlignment="Stretch"
+          ItemsSource="{Binding PlannerTiles}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Margin="3" Orientation="Vertical">
+                <DockPanel>
+                  <Button
+                    Width="30"
+                    Height="30"
+                    Margin="-3"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ElementName=_tilesView, Path=DataContext.ShiftUpItem}"
+                    CommandParameter="{Binding}"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                    <IconPacks:PackIconMaterial
+                      Width="10"
+                      Height="10"
+                      Kind="ArrowUp" />
+                  </Button>
+                  <Button
+                    Width="30"
+                    Height="30"
+                    Margin="-3"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ElementName=_tilesView, Path=DataContext.ShiftDownItem}"
+                    CommandParameter="{Binding}"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                    <IconPacks:PackIconMaterial
+                      Width="10"
+                      Height="10"
+                      Kind="ArrowDown" />
+                  </Button>
+                  <Button
+                    Width="30"
+                    Height="30"
+                    Margin="-3"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ElementName=_tilesView, Path=DataContext.CloseItem}"
+                    CommandParameter="{Binding}"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                    <IconPacks:PackIconMaterial
+                      Width="10"
+                      Height="10"
+                      Kind="Close" />
+                  </Button>
+                </DockPanel>
+                <ContentControl
+                  MinWidth="250"
+                  MinHeight="250"
+                  Content="{Binding}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ListView>
+      </Border>
+    </ScrollViewer>
+
+    <Grid Grid.Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Button
+        Grid.Column="1"
+        Margin="5"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Command="{Binding DoPlanningCommand}"
+        IsEnabled="{Binding PlanningEnabled}"
+        Style="{StaticResource MahApps.Styles.Button.Square.Accent}">
+        <TextBlock HorizontalAlignment="Center" Text="Perform Planning" />
+      </Button>
+    </Grid>
+
+    <Grid Grid.Row="4">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition />
       </Grid.RowDefinitions>
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock Margin="5" Grid.Row="0" Grid.Column="0" Text="Experiment Type:" VerticalAlignment="Center" />
-        <DockPanel FlowDirection="RightToLeft" Grid.Row="0" Grid.Column="1">
-          <ComboBox Margin="5" FlowDirection="LeftToRight" ItemsSource="{Binding ExperimentTypes}"
-                    HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedExperimentType}"
-                    VerticalAlignment="Center" />
-        </DockPanel>
-        <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Text="Planning Database:" VerticalAlignment="Center" />
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-          <Button Style="{StaticResource AccentedSquareButtonStyle}" VerticalAlignment="Center" Margin="5"
-                  Content="Generate Shared Planning Database" Click="GenerateDbClick" IsEnabled="{Binding DbGenEnabled}" />
-        </StackPanel>
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Text="Input Data Sources:" VerticalAlignment="Center" />
-        <DockPanel FlowDirection="RightToLeft" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch">
-          <Button Style="{StaticResource AccentedSquareButtonStyle}" VerticalAlignment="Center" Margin="5"
-                  Content="new" Command="{Binding NewInputDataSourceCommand}" HorizontalAlignment="Right" />
-          <ComboBox FlowDirection="LeftToRight" Margin="5" ItemsSource="{Binding PlannerOptions}"
-                    HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedInputSource}"
-                    VerticalAlignment="Center" />
-        </DockPanel>
-        <Button Grid.Row="3" Margin="5" Style="{StaticResource AccentedSquareButtonStyle}" VerticalAlignment="Center" 
-                Grid.ColumnSpan="2" IsEnabled="{Binding PlanningEnabled}" Command="{Binding DoPlanningCommand}">
-          <TextBlock Text="Perform Planning" />
-        </Button>
-      </Grid>
-      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-        <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-          <ListView ItemsSource="{Binding PlannerTiles}" HorizontalAlignment="Stretch" x:Name="_tilesView">
-            <ListView.ItemTemplate>
-              <DataTemplate>
-                <StackPanel Orientation="Vertical">
-                  <DockPanel>
-                    <Button Margin="-3" HorizontalAlignment="Left" Width="30" Height="30" Style="{DynamicResource MetroCircleButtonStyle}" 
-                            Command="{Binding ElementName=_tilesView, Path=DataContext.ShiftUpItem}" CommandParameter="{Binding}">
-                      <IconPacks:PackIconMaterial Width="10" Height="10" Kind="ArrowUp"/>
-                    </Button>
-                    <Button Margin="-3" HorizontalAlignment="Left" Width="30" Height="30" Style="{DynamicResource MetroCircleButtonStyle}"
-                            Command="{Binding ElementName=_tilesView, Path=DataContext.ShiftDownItem}" CommandParameter="{Binding}">
-                      <IconPacks:PackIconMaterial Width="10" Height="10" Kind="ArrowDown"/>
-                    </Button>
-                    <Button Margin="-3" HorizontalAlignment="Right" Width="30" Height="30" Style="{DynamicResource MetroCircleButtonStyle}"
-                            Command="{Binding ElementName=_tilesView, Path=DataContext.CloseItem}" CommandParameter="{Binding}">
-                      <IconPacks:PackIconMaterial Width="10" Height="10" Kind="Close"/>
-                    </Button>
-                  </DockPanel>
-                  <ContentControl Content="{Binding}"/>
-                </StackPanel>
-              </DataTemplate>
-            </ListView.ItemTemplate>
-          </ListView>
-        </Border>
-      </ScrollViewer>
-    </Grid>
-    <Grid Grid.Column="1">
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition />
-      </Grid.RowDefinitions>
-      <Grid Grid.Row="0">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Planning Database" Margin="5" />
-        <Views:DatabaseTableView Grid.Row="1"/>
-      </Grid>
-      <Grid Grid.Row="1">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Potential Experiment Input Data:" Margin="5" />
-        <Border Grid.Row="1" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2">
-          <Views1:PlanResultsView/>
-        </Border>
-      </Grid>
+      <TextBlock Margin="5" Text="Potential Experiment Input Data:" />
+      <Border
+        Grid.Row="1"
+        BorderBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="2">
+        <Views1:PlanResultsView />
+      </Border>
     </Grid>
   </Grid>
 </UserControl>

@@ -6,7 +6,6 @@ using ARESCore.Extensions;
 using ARESCore.Registries;
 using ARESCore.UserSession;
 using DynamicData.Binding;
-using NationalInstruments.Restricted;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -98,7 +97,7 @@ namespace ARESCore.Experiment.Scripting.Commands
           timerObservable.Dispose();
         }
       }
-      if (_retryInfos.IsEmpty())
+      if (_retryInfos.Count == 0)
       {
         IsComplete = true;
       }
@@ -134,7 +133,7 @@ namespace ARESCore.Experiment.Scripting.Commands
       await base.Handle(response);
       if (!_retryInfos.Any())
       {
-        IsComplete = _retryInfos.IsEmpty();
+        IsComplete = _retryInfos.Count == 0;
       }
     }
 

@@ -3,7 +3,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Database.Filtering
 {
-  public interface IDbFilterManager: IBasicReactiveObjectDisposable
+  public interface IDbFilterManager: IReactiveSubscriber
   {
     void DoFilter();
 

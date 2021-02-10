@@ -50,7 +50,7 @@
                             </Grid.ColumnDefinitions>
                             <ComboBox ItemsSource="{Binding LocalUserNames}" SelectedIndex="{Binding SessionSelection}"
                         HorizontalAlignment="Stretch" Margin="5" Grid.ColumnSpan="3" />
-                            <Button Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="3" Content="Load Selected Session" HorizontalAlignment="Stretch" Margin="5"
+                            <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Grid.Column="3" Content="Load Selected Session" HorizontalAlignment="Stretch" Margin="5"
                       Command="{Binding LoadSessionCommand}" IsEnabled="{Binding UserIsSelected}" Name="loadButton"/>
                         </Grid>
                         <TextBlock Text="Working Directory" Margin="5" />
@@ -65,7 +65,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <TextBox Text="{Binding NewUserName}" HorizontalAlignment="Stretch" Margin="5" mah:TextBoxHelper.ClearTextButton="True" mah:TextBoxHelper.Watermark="Enter a new username"/>
-                            <Button Grid.Column="1" Content="Create new Session" HorizontalAlignment="Stretch" Style="{StaticResource AccentedSquareButtonStyle}"
+                            <Button Grid.Column="1" Content="Create new Session" HorizontalAlignment="Stretch" Style="{StaticResource MahApps.Styles.Button.Square.Accent}"
                       Command="{Binding CreateNewSessionCommand}" Margin="5" />
                         </Grid>
                         <TextBlock Text="Select a Working Directory" Margin="5" />
@@ -75,7 +75,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBox Text="{Binding WorkingDirectory}" Margin="5" />
-                            <Button Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="1" Content="..." Margin="5" Click="SetWorkingDirectory_OnClick" />
+                            <Button Style="{StaticResource MahApps.Styles.Button.Square.Accent}" Grid.Column="1" Content="..." Margin="5" Click="SetWorkingDirectory_OnClick" />
                         </Grid>
 
                     </StackPanel>

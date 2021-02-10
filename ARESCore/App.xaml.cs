@@ -3,7 +3,7 @@ using ARESCore.Starter;
 using ARESCore.UI;
 using ARESCore.UI.Views;
 using ARESCore.UserSession;
-using MahApps.Metro;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -13,6 +13,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -55,21 +56,31 @@ namespace ARESCore
         var creator = Container.Resolve<IDbCreator>();
         creator.Create();
       }
+
+      if (!ARESCore.Properties.Settings.Default.LicenseAccepted)
+      {
+        LicenseWindow lw = new LicenseWindow();
+        lw.InitializeComponent();
+        lw.ShowDialog();
+      }
+
       var userSelection = Container.Resolve<UserSessionSelection>();
       var dr = userSelection.ShowDialog();
       if (dr.HasValue && dr.Value)
       {
-        _splash.Show();
-
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { })).Wait();
         _shell = Container.Resolve<UI.Views.MainWindow>();
         _console = Container.Resolve<ConsoleWindow>();
         _console.Show();
+        _shell.Loading = true;
         _shell.Show();
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => { })).Wait();
 
-        Application.Current.Dispatcher.InvokeAsync(delegate
-        { DoLoad(); });
+        Thread t = new Thread(() => DoLoad());
+        t.SetApartmentState(ApartmentState.STA);
+        t.IsBackground = true;
+        t.Start();
+
         return _shell;
       }
       var killer = Container.Resolve<AppKiller>();
@@ -84,7 +95,8 @@ namespace ARESCore
       AddRegionMappings();
       starter.Start();
       InitializeModules();
-      _splash.Close();
+      Application.Current.Dispatcher.BeginInvoke(() => _shell.Loading = false);
+
 
       return Task.FromResult(true);
     }
@@ -108,14 +120,20 @@ namespace ARESCore
       var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
       var settings = configFile.AppSettings.Settings;
       string accentName = "Red";
-      string baseName = "BaseDark";
+      string baseName = "Dark";
       if (settings["Accent"] != null)
         accentName = settings["Accent"].Value;
       if (settings["Base"] != null)
         baseName = settings["Base"].Value;
-      var baseTheme = ThemeManager.GetAppTheme(baseName);
-      var accent = ThemeManager.GetAccent(accentName);
-      ThemeManager.ChangeAppStyle(Application.Current, accent, baseTheme);
+      if (baseName.ToLower().StartsWith("base"))
+      {
+        ThemeManager.Current.ChangeTheme(Application.Current, "Dark.Green");
+      }
+      else
+      {
+
+        ThemeManager.Current.ChangeTheme(Application.Current, baseName + "." + accentName);
+      }
 
       base.OnStartup(e);
     }

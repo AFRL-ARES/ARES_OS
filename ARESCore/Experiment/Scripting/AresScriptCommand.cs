@@ -5,7 +5,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment.Scripting
 {
-  public abstract class AresScriptCommand<T> : BasicReactiveObjectDisposable, IAresScriptCommand
+  public abstract class AresScriptCommand<T> : ReactiveSubscriber, IAresScriptCommand
   {
     private bool _isComplete;
 

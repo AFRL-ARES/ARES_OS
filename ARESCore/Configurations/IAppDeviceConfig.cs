@@ -5,7 +5,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Configurations
 {
-  public interface IAppDeviceConfig : IBasicReactiveObjectDisposable
+  public interface IAppDeviceConfig : IReactiveSubscriber
   {
     void Load();
     void Save();

@@ -11,7 +11,7 @@ using ReactiveUI;
 
 namespace ARESCore.Experiment.UI.ViewModels
 {
-  public class BatchScriptReviewViewModel : BasicReactiveObjectDisposable
+  public class BatchScriptReviewViewModel : ReactiveSubscriber
   {
     private ICampaign _campaign;
     private int _numEperimentsToRun;

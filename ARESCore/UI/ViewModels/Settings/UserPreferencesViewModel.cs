@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace ARESCore.UI.ViewModels.Settings
 {
-  public class UserPreferencesViewModel: BasicReactiveObjectDisposable
+  public class UserPreferencesViewModel: ReactiveSubscriber
   {
     private IConfigManagerRegistry _registry;
 

@@ -2,7 +2,7 @@
 
 namespace ARESCore.Experiment
 {
-  public interface ICampaign : IBasicReactiveObjectDisposable
+  public interface ICampaign : IReactiveSubscriber
   {
     int NumExperimentsToRun { get; set; }
     int ReplanInterval { get; set; }

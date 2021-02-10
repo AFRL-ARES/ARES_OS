@@ -5,7 +5,7 @@ using ReactiveUI;
 
 namespace ARESCore.Configurations.impl
 {
-  public abstract class ConfigManager : BasicReactiveObjectDisposable, IConfigManager
+  public abstract class ConfigManager : ReactiveSubscriber, IConfigManager
   {
     private FrameworkElement _appConfigView;
     private FrameworkElement _userConfigView;

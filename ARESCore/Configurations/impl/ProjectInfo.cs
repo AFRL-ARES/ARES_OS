@@ -6,7 +6,7 @@ using ReactiveUI;
 
 namespace ARESCore.Configurations.impl
 {
-  internal class ProjectInfo : BasicReactiveObjectDisposable, IProjectInfo
+  internal class ProjectInfo : ReactiveSubscriber, IProjectInfo
   {
     private string _creator;
     private string _description;

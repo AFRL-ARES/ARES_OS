@@ -1,8 +1,0 @@
-initTP()
-startDep('XY',1,10)
-depToPoint('Y',4.7)
-endDep('Y',0)
-noDepToPoint('Y',5)
-noDepToPoint('Z',2)
-noDepToPoint('XY',2,0)
-noDepToPoint('Z',0)

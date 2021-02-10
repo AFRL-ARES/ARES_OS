@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ARESCore.DisposePatternHelpers;
+﻿using ARESCore.DisposePatternHelpers;
 using Ninject;
 using ReactiveUI;
 
 namespace ARESCore.UI.ViewModels
 {
-  public class AresSplashScreenViewModel : BasicReactiveObjectDisposable
+  public class AresSplashScreenViewModel : ReactiveSubscriber
   {
     public AresSplashScreenViewModel()
     {

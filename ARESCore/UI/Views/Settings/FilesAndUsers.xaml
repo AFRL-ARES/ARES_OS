@@ -34,7 +34,7 @@
           <DataGridTemplateColumn Header="Delete">
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
-                <Button Content="Delete" Style="{StaticResource SquareButtonStyle}" Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource FindAncestor, 
+                <Button Content="Delete" Style="{StaticResource MahApps.Styles.Button.Square}" Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource FindAncestor, 
                     AncestorType={x:Type local:FilesAndUsers}}}" CommandParameter="{Binding}">
                   <Button.Visibility>
                     <MultiBinding Converter="{StaticResource UsersEqualToNegateVisConverter}">
@@ -67,9 +67,9 @@
               <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock VerticalAlignment="Center" Margin="5" Text="{Binding AppConfig.CurrentAppConfigPath}" />
-            <Button Margin="5" Grid.Column="1" Content="..." Style="{StaticResource SquareButtonStyle}"/>
+            <Button Margin="5" Grid.Column="1" Content="..." Style="{StaticResource MahApps.Styles.Button.Square}"/>
           </Grid>
-          <Button Margin="5" Content="Save" Style="{StaticResource AccentedSquareButtonStyle}" />
+          <Button Margin="5" Content="Save" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
         </UniformGrid>
         <UniformGrid Rows="1">
           <TextBlock Margin="5" Text="Working Directory:" />
@@ -79,9 +79,9 @@
               <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock VerticalAlignment="Center"  Margin="5" Text="{Binding CurrConfig.User.SaveDirectory}" />
-            <Button Margin="5" Grid.Column="1" Content="..."  Style="{StaticResource SquareButtonStyle}"/>
+            <Button Margin="5" Grid.Column="1" Content="..."  Style="{StaticResource MahApps.Styles.Button.Square}"/>
           </Grid>
-          <Button Margin="5" Content="Save" Style="{StaticResource AccentedSquareButtonStyle}" />
+          <Button Margin="5" Content="Save" Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
         </UniformGrid>
       </StackPanel>
     </Border>

@@ -7,7 +7,7 @@ using CommonServiceLocator;
 
 namespace ARESCore.PlanningSupport.Impl
 {
-  public class ManualPlannerManager : BasicReactiveObjectDisposable, IAresPlannerManager
+  public class ManualPlannerManager : ReactiveSubscriber, IAresPlannerManager
   {
     public string PlannerName { get; set; } = "Manual";
     public UserControl PlannerTile { get; set; } = new ManualPlanningView();

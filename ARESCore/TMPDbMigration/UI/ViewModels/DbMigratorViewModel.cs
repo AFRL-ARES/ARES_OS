@@ -6,7 +6,7 @@ using ReactiveUI;
 
 namespace ARESCore.TMPDbMigration.UI.ViewModels
 {
-  public class DbMigratorViewModel : BasicReactiveObjectDisposable
+  public class DbMigratorViewModel : ReactiveSubscriber
   {
     private ICollectionMigrator _migrator;
 

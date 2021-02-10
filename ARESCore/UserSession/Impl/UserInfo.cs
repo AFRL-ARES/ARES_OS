@@ -9,12 +9,13 @@ using ReactiveUI;
 
 namespace ARESCore.UserSession.Impl
 {
-  internal class UserInfo: BasicReactiveObjectDisposable, IUserInfo
+  internal class UserInfo: ReactiveSubscriber, IUserInfo
   {
     
     private string _username;
     private string _saveFileName;
     private string _saveDirectory;
+    private bool _licenseAccepted;
     private DateTime _lastLoadedDate;
 
     [JsonProperty]

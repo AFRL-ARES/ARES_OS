@@ -9,7 +9,7 @@ using ARESCore.Experiment.impl;
 
 namespace ARESCore.PlanningSupport.Impl
 {
-  public class ManualPlanner : BasicReactiveObjectDisposable, IAresPlanner
+  public class ManualPlanner : ReactiveSubscriber, IAresPlanner
   {
     public string PlannerName { get; set; } = "Manual";
     public UserControl PlannerTile { get; set; } = new ManualPlanningView();

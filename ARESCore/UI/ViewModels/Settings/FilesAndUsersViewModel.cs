@@ -7,7 +7,7 @@ using ReactiveUI;
 
 namespace ARESCore.UI.ViewModels.Settings
 {
-  public class FilesAndUsersViewModel : BasicReactiveObjectDisposable
+  public class FilesAndUsersViewModel : ReactiveSubscriber
   {
     private IApplicationConfiguration _appConfig;
     private  ICurrentConfig _currConfig;

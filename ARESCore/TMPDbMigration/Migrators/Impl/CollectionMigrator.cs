@@ -13,7 +13,7 @@ using ReactiveUI;
 
 namespace ARESCore.TMPDbMigration.Migrators.Impl
 {
-  public class CollectionMigrator : BasicReactiveObjectDisposable, ICollectionMigrator
+  public class CollectionMigrator : ReactiveSubscriber, ICollectionMigrator
   {
     private Dictionary<string, IMigrator> _migratorMap = new Dictionary<string, IMigrator>();
     private bool _migrating = true;

@@ -5,7 +5,7 @@ using ReactiveUI;
 
 namespace ARESCore.DeviceSupport.Usb
 {
-  public class UsbDeviceViewModel : BasicReactiveObjectDisposable
+  public class UsbDeviceViewModel : ReactiveSubscriber
   {
     private ObservableCollectionExtended<USBDeviceInfo> _devices = new ObservableCollectionExtended<USBDeviceInfo>();
 

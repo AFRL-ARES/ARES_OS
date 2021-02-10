@@ -6,7 +6,7 @@ using ARESCore.PluginSupport;
 
 namespace ARESCore.AnalysisSupport
 {
-  public interface IAresAnalyzer : IAresPlugin, IBasicReactiveObjectDisposable
+  public interface IAresAnalyzer : IAresPlugin, IReactiveSubscriber
   {
     List<string> Headers { get; set; }
 

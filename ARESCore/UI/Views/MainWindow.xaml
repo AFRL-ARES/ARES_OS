@@ -2,21 +2,17 @@
     x:Class="ARESCore.UI.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Converters="http://metro.mahapps.com/winfx/xaml/shared"
     xmlns:Converters1="clr-namespace:ARESCore.UI.Converters"
     xmlns:Regions="http://prismlibrary.com/"
     xmlns:Serial="clr-namespace:ARESCore.DeviceSupport.Serial"
-    xmlns:System="clr-namespace:System;assembly=mscorlib"
-    xmlns:Ui="clr-namespace:ARESCore.TMPDbMigration.UI"
     xmlns:Ui1="clr-namespace:ARESCore.ErrorSupport.UI"
     xmlns:Usb="clr-namespace:ARESCore.DeviceSupport.Usb"
     xmlns:ViewModels="clr-namespace:ARESCore.UI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:ARESCore.UI.Views"
     Title="ARES"
     Width="800"
     Height="450"
@@ -78,7 +74,14 @@
                         Width="20"
                         Height="20"
                         VerticalAlignment="Center"
-                        Kind="Settings" />
+                        Kind="ApplicationSettings" />
+                </Button>
+                <Button Click="AboutButtonClick">
+                    <iconPacks:PackIconMaterial
+                        Width="20"
+                        Height="20"
+                        VerticalAlignment="Center"
+                        Kind="Information" />
                 </Button>
             </StackPanel>
         </mah:WindowCommands>
@@ -101,11 +104,6 @@
         </Storyboard>
     </mah:MetroWindow.Resources>
     <Grid Name="_mainGrid" IsEnabled="{Binding CurrentConfig.Project, Converter={StaticResource Null2Bool}}">
-        <i:Interaction.Triggers>
-            <ei:DataTrigger Binding="{Binding CurrentConfig.Project, Converter={StaticResource Null2Bool}}" Value="True">
-                <ei:ControlStoryboardAction ControlStoryboardOption="Stop" Storyboard="{StaticResource Blink}" />
-            </ei:DataTrigger>
-        </i:Interaction.Triggers>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -115,7 +113,6 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
 
         <ScrollViewer
             Margin="2,0,2,0"
@@ -137,7 +134,7 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <UserControl>
-                    <Button Command="{Binding ShowDeviceConfigCommand}" Style="{StaticResource AccentedSquareButtonStyle}">
+                    <Button Command="{Binding ShowDeviceConfigCommand}" Style="{StaticResource MahApps.Styles.Button.Square.Accent}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconMaterial
                                 Width="24"
@@ -152,7 +149,7 @@
                     </Button>
                 </UserControl>
                 <UserControl>
-                    <Button Click="ShowExperimentPlannerCommand" Style="{StaticResource AccentedSquareButtonStyle}">
+                    <Button Click="ShowExperimentPlannerCommand" Style="{StaticResource MahApps.Styles.Button.Square.Accent}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconMaterial
                                 Width="24"
@@ -167,7 +164,7 @@
                     </Button>
                 </UserControl>
                 <UserControl>
-                    <Button Click="ShowDatabaseViewer" Style="{StaticResource AccentedSquareButtonStyle}">
+                    <Button Click="ShowDatabaseViewer" Style="{StaticResource MahApps.Styles.Button.Square.Accent}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconMaterial
                                 Width="24"
@@ -198,11 +195,28 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <ScrollViewer
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto">
+            <ItemsControl
+                Margin="5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Regions:RegionManager.RegionName="InsetRegion">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
 
 
         <ScrollViewer
             Grid.Row="0"
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             Grid.Column="1">
             <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2,0,2,0">
                 <ItemsControl Regions:RegionManager.RegionName="SidebarRegion">
@@ -227,6 +241,14 @@
 
         <ItemsControl Grid.Row="2" Regions:RegionManager.RegionName="StatusRegion" />
         <Ui1:ErrorHandlingView Grid.Row="0" Grid.RowSpan="3" />
+
+        <Grid
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+            Background="Black"
+            Visibility="{Binding Loading, Converter={StaticResource BoolToVis}}">
+            <views:AresSplashScreen />
+        </Grid>
     </Grid>
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl Width="1200" Regions:RegionManager.RegionName="FlyoutRegion">

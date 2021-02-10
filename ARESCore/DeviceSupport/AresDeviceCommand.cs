@@ -6,7 +6,7 @@ using Ninject;
 
 namespace ARESCore.DeviceSupport
 {
-  public abstract class  AresDeviceCommand<T> : BasicReactiveObjectDisposable, IAresDeviceCommand where T : IComparable
+  public abstract class  AresDeviceCommand<T> : ReactiveSubscriber, IAresDeviceCommand where T : IComparable
   {
     public abstract ConstrainedValue<T> Constraints { get; set; }
     public abstract T Value { get; set; }

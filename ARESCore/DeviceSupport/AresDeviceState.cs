@@ -7,7 +7,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.DeviceSupport
 {
-  public abstract class AresDeviceState:BasicReactiveObjectDisposable, IAresDeviceState
+  public abstract class AresDeviceState:ReactiveSubscriber, IAresDeviceState
   {
 
   }

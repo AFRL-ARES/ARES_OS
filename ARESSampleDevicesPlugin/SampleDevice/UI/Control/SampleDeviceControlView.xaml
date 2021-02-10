@@ -1,0 +1,87 @@
+﻿<UserControl
+  x:Class="AresSampleDevicesPlugin.SampleDevice.UI.Control.SampleDeviceControlView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Mvvm="http://prismlibrary.com/"
+  xmlns:control="clr-namespace:AresSampleDevicesPlugin.SampleDevice.UI.Control"
+  xmlns:converters="clr-namespace:ARESCore.UI.Converters;assembly=ARESCore"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="clr-namespace:AresSampleDevicesPlugin.SampleDevice.UI"
+  Mvvm:ViewModelLocator.AutoWireViewModel="True"
+  d:DataContext="{d:DesignInstance control:SampleDeviceControlViewModel}"
+  d:DesignHeight="200"
+  d:DesignWidth="400"
+  mc:Ignorable="d">
+  <UserControl.Resources>
+    <ui:BooleanToStringConverter x:Key="boolToString" />
+    <converters:NegateBooleanToVisibilityConverter x:Key="bool2Viz" />
+  </UserControl.Resources>
+  <Grid Margin="5">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.Style>
+      <Style TargetType="Grid">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding Device.Connected}" Value="True">
+            <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding Device.Connected}" Value="False">
+            <Setter Property="Background" Value="Red" />
+          </DataTrigger>
+        </Style.Triggers>
+      </Style>
+    </Grid.Style>
+
+    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+      <TextBlock FontSize="20" Text="Device Control" />
+      <TextBlock
+        FontSize="20"
+        Text=" (Disconnected)"
+        Visibility="{Binding Device.Connected, Converter={StaticResource bool2Viz}}" />
+    </StackPanel>
+
+    <DockPanel Grid.Row="1">
+      <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Margin="5" Text="DoubleValue: " />
+          <TextBlock Margin="5" Text="{Binding Device.DoubleValue}" />
+          <TextBlock Margin="5" Text=" W" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <mah:SplitButton
+            MinWidth="20"
+            MinHeight="10"
+            Margin="5"
+            ItemStringFormat="0.00"
+            ItemsSource="{Binding ValuePresets}"
+            SelectedItem="{Binding SelectedValuePreset}" />
+          <mah:NumericUpDown
+            Margin="5"
+            Interval="0.1"
+            KeyDown="NumericUpDownKeyDown"
+            Maximum="6.0"
+            Minimum="0.01"
+            StringFormat="0.00"
+            Value="{Binding RequestedValue}" />
+        </StackPanel>
+      </StackPanel>
+      <StackPanel HorizontalAlignment="Right" Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Margin="5" Text="Temperature:" />
+          <TextBlock Margin="5" Text="111 &#186;C" />
+        </StackPanel>
+        <ToggleButton
+          Width="100"
+          Height="30"
+          Margin="10"
+          Command="{Binding ToggleBoolCommand}"
+          Content="{Binding Device.BoolValue, Converter={StaticResource boolToString}}"
+          IsChecked="{Binding Device.BoolValue, Mode=OneWay}" />
+      </StackPanel>
+    </DockPanel>
+  </Grid>
+</UserControl>

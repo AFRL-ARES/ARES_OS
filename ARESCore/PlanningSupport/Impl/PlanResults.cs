@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace ARESCore.PlanningSupport.Impl
 {
-  internal class PlanResults : BasicReactiveObjectDisposable, IPlanResults
+  internal class PlanResults : ReactiveSubscriber, IPlanResults
   {
     private IPlannedExperimentBatchInputs _results;
 

@@ -10,6 +10,7 @@ using CommonServiceLocator;
 using MahApps.Metro.IconPacks;
 using Ninject;
 using System.Linq;
+using ARESCore.UI.Views;
 
 namespace ARESCore.Starter
 {

@@ -13,7 +13,7 @@ using ReactiveUI;
 
 namespace ARESCore.PlanningSupport.Impl
 {
-  public abstract class AresPlanner : BasicReactiveObjectDisposable, IAresPlanner
+  public abstract class AresPlanner : ReactiveSubscriber, IAresPlanner
   {
     private IPlannerStatus _plannerStatus;
     private int _numExperimentsToPlan;

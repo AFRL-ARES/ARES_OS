@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Reflection;
-using ARESCore.DisposePatternHelpers;
+﻿using ARESCore.DisposePatternHelpers;
 using ARESCore.UI;
 using ARESCore.UserSession;
 using ARESCore.UserSession.Impl;
@@ -11,13 +6,17 @@ using ARESCore.Util;
 using Newtonsoft.Json;
 using Ninject;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace ARESCore.Configurations.impl
 {
   /// <summary>
   /// ApplicationConfiguration
   /// </summary>
-  public class ApplicationConfiguration : BasicReactiveObjectDisposable, IApplicationConfiguration
+  public class ApplicationConfiguration : ReactiveSubscriber, IApplicationConfiguration
   {
     private string _applicationRootDirectory;
     private string _currentAppConfigPath;
@@ -26,47 +25,47 @@ namespace ARESCore.Configurations.impl
 
     public void SetDefaults()
     {
-      ApplicationRootDirectory = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
+      ApplicationRootDirectory = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
       CurrentAppConfigPath = ApplicationRootDirectory + "ARESConfig.json";
     }
 
-    public void LoadConfig( string configPath = "" )
+    public void LoadConfig(string configPath = "")
     {
-      if ( configPath.Equals( "" ) )
+      if (configPath.Equals(""))
       {
-        string rootDir = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
+        string rootDir = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
         configPath = rootDir + "ARESConfig.json";
         SetDefaults();
       }
 
-      if ( File.Exists( configPath ) )
+      if (File.Exists(configPath))
       {
         try
         {
-          string configJson = File.ReadAllText( configPath );
-          var appConfig = JsonConvert.DeserializeObject<ApplicationConfiguration>( configJson );
-          CopyFields( appConfig );
+          string configJson = File.ReadAllText(configPath);
+          var appConfig = JsonConvert.DeserializeObject<ApplicationConfiguration>(configJson);
+          CopyFields(appConfig);
           CurrentAppConfigPath = configPath;
         }
-        catch ( Exception ex )
+        catch (Exception ex)
         {
-          AresKernel._kernel.Get<IAresConsole>().WriteLine( ex.Message );
+          AresKernel._kernel.Get<IAresConsole>().WriteLine(ex.Message);
         }
       }
     }
 
-    private void CopyFields( IApplicationConfiguration appConfig )
+    private void CopyFields(IApplicationConfiguration appConfig)
     {
-      ApplicationRootDirectory = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
+      ApplicationRootDirectory = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
       this.ProjectList = appConfig.ProjectList;
       this.UserList = appConfig.UserList;
     }
 
-    public bool SaveConfig( string configPath = "" )
+    public bool SaveConfig(string configPath = "")
     {
-      if ( configPath.Equals( "" ) )
+      if (configPath.Equals(""))
       {
-        string rootDir = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
+        string rootDir = $@"{new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.Parent?.Parent?.FullName}\ConfigFiles\";
         configPath = rootDir + "ARESConfig.json";
       }
 
@@ -79,11 +78,11 @@ namespace ARESCore.Configurations.impl
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
           }
         );
-        File.WriteAllText( configPath, configJson );
+        File.WriteAllText(configPath, configJson);
       }
-      catch ( Exception ex )
+      catch (Exception ex)
       {
-        AresKernel._kernel.Get<IAresConsole>().WriteLine( ex.Message );
+        AresKernel._kernel.Get<IAresConsole>().WriteLine(ex.Message);
         return false;
       }
 
@@ -94,34 +93,35 @@ namespace ARESCore.Configurations.impl
     public string ApplicationRootDirectory
     {
       get => _applicationRootDirectory;
-      set => this.RaiseAndSetIfChanged( ref _applicationRootDirectory, value );
+      set => this.RaiseAndSetIfChanged(ref _applicationRootDirectory, value);
     }
 
     [JsonProperty]
     public string CurrentAppConfigPath
     {
       get => _currentAppConfigPath;
-      set => this.RaiseAndSetIfChanged( ref _currentAppConfigPath, value );
+      set => this.RaiseAndSetIfChanged(ref _currentAppConfigPath, value);
     }
 
-    [JsonProperty( ItemConverterType = typeof( JsonTypeConverter<UserInfo> ) )]
+    [JsonProperty(ItemConverterType = typeof(JsonTypeConverter<UserInfo>))]
     public ObservableCollection<IUserInfo> UserList
     {
       get => _userList;
-      set => this.RaiseAndSetIfChanged( ref _userList, value );
+      set => this.RaiseAndSetIfChanged(ref _userList, value);
     }
 
-    [JsonProperty( ItemConverterType = typeof( JsonTypeConverter<ProjectInfo> ) )]
+    [JsonProperty(ItemConverterType = typeof(JsonTypeConverter<ProjectInfo>))]
     public List<IProjectInfo> ProjectList
     {
       get => _projectList;
-      set => this.RaiseAndSetIfChanged( ref _projectList, value );
+      set => this.RaiseAndSetIfChanged(ref _projectList, value);
     }
 
-    public void RemoveUser( IUserInfo userInfo )
+    public void RemoveUser(IUserInfo userInfo)
     {
-      UserList.Remove( userInfo );
-      File.Delete( userInfo.SaveFileName );
+      UserList.Remove(userInfo);
+      if (File.Exists(userInfo.SaveFileName))
+        File.Delete(userInfo.SaveFileName);
       SaveConfig();
     }
   }

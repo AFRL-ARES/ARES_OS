@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace ARESCore.UserSession
 {
-  public class UserSessionSelectionViewModel : BasicReactiveObjectDisposable
+  public class UserSessionSelectionViewModel : ReactiveSubscriber
   {
     private string _appConfig = "";
     private int _sessionSelection;
@@ -20,6 +20,7 @@ namespace ARESCore.UserSession
     private string _newUserName = "";
     private bool? _dialogResult;
     private bool _userIsSelected;
+    private bool _licenseAccepted;
 
     public UserSessionSelectionViewModel()
     {
@@ -68,7 +69,7 @@ namespace ARESCore.UserSession
         return;
       }
 
-      // Make sure that a workign directory has been selected
+      // Make sure that a working directory has been selected
       if (WorkingDirectory.Length == 0)
       {
         NotificationRequest.Raise(new AresNotification { Title = "Alert!", Content = "Please select a working directory!" }, r => r.Title = "Notification");
@@ -143,6 +144,12 @@ namespace ARESCore.UserSession
     {
       get => _dialogResult;
       set => this.RaiseAndSetIfChanged(ref _dialogResult, value);
+    }
+
+    public bool LicenseAccepted
+    {
+      get => _licenseAccepted;
+      set => this.RaiseAndSetIfChanged(ref _licenseAccepted, value);
     }
 
     public ReactiveCommand<Unit, Unit> LoadSessionCommand { get; set; }

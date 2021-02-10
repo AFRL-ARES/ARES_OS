@@ -1,4 +1,0 @@
-initTP()
-startDep('XY',10,15)
-depToPoint('Y',0)
-endDep('X',0)

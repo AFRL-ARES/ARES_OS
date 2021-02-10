@@ -3,7 +3,7 @@ using ARESCore.DisposePatternHelpers;
 
 namespace ARESCore.Experiment
 {
-  public interface ICampaignExecutor : IBasicReactiveObjectDisposable
+  public interface ICampaignExecutor : IReactiveSubscriber
   {
     Task Execute();
     bool IsComplete { get; set; }

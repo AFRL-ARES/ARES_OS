@@ -1,0 +1,157 @@
+﻿<UserControl
+    x:Class="AresSamplePlanningPlugin.Planners.Simple.Views.SimplePlannerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Mvvm="http://prismlibrary.com/"
+    xmlns:converters="clr-namespace:ARESCore.UI.Converters;assembly=ARESCore"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:impl="clr-namespace:AresSamplePlanningPlugin.Planners.Parameters.Impl"
+    xmlns:local="clr-namespace:AresSamplePlanningPlugin.Planners.Simple.Views"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewModels="clr-namespace:AresSamplePlanningPlugin.Planners.Simple.Views.ViewModels"
+    Mvvm:ViewModelLocator.AutoWireViewModel="True"
+    d:DataContext="{d:DesignInstance viewModels:SimplePlannerViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:NegateBooleanToVisibilityConverter x:Key="NegateBoolToVis" />
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="20"
+                FontWeight="ExtraBold"
+                Text="Simple Planner" />
+            <Separator />
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="Target: " />
+                <mah:NumericUpDown
+                    Margin="5"
+                    Maximum="1"
+                    Minimum="0"
+                    NumericInputMode="Decimal"
+                    Value="{Binding Planner.TargetResult}" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Available Parameters" />
+            <ItemsControl ItemsSource="{Binding Planner.Parameters}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True" Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="impl:SamplePlanningParameter">
+                        <Button
+                            Margin="0,3"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SimplePlannerView}, Mode=FindAncestor}, Path=DataContext.TogglePlannedCommand}"
+                            CommandParameter="{Binding}"
+                            Style="{DynamicResource SquareButtonStyle}"
+                            Visibility="{Binding IsPlanned, Converter={StaticResource NegateBoolToVis}}">
+                            <TextBlock Text="{Binding ScriptLabel}" />
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Separator />
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Planned Parameters" />
+            <ItemsControl ItemsSource="{Binding Planner.Parameters}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True" Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="impl:SamplePlanningParameter">
+                        <Border
+                            Margin="0,3"
+                            BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                            BorderThickness="2"
+                            Visibility="{Binding IsPlanned, Converter={StaticResource BoolToVis}}">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="4*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle
+                                    Grid.ColumnSpan="3"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{DynamicResource WhiteColorBrush}" />
+                                <Button
+                                    MinWidth="30"
+                                    Margin="0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    BorderThickness="0,0,1,0"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SimplePlannerView}, Mode=FindAncestor}, Path=DataContext.TogglePlannedCommand}"
+                                    CommandParameter="{Binding}"
+                                    Style="{DynamicResource SquareButtonStyle}">
+                                    <TextBlock
+                                        Margin="0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="X" />
+                                </Button>
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding ScriptLabel}" />
+                                <mah:NumericUpDown
+                                    Grid.Column="2"
+                                    MinWidth="80"
+                                    MaxWidth="120"
+                                    HorizontalAlignment="Right"
+                                    HorizontalContentAlignment="Center"
+                                    BorderThickness="1,0,0,0"
+                                    Maximum="{Binding Max}"
+                                    Minimum="{Binding Min}"
+                                    NumericInputMode="Decimal"
+                                    Value="{Binding Value}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+</UserControl>
+
+
+
+
+
+
+

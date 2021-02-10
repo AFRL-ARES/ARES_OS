@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace ARESCore.AnalysisSupport
 {
-  public class CustomExperimentAnalysis : BasicReactiveObjectDisposable, IAresAnalyzer
+  public class CustomExperimentAnalysis : ReactiveSubscriber, IAresAnalyzer
   {
     private bool _isSelected;
     public List<string> Headers { get; set; } = new List<string>();

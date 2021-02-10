@@ -7,7 +7,7 @@ namespace ARESCore.DeviceSupport.Serial
 {
   public interface IRs232Device
   {
-    bool Open(ISerialPortConfig config);
+    bool Open(ISerialPortConfig config, string DeviceName);
     bool Close( ISerialPortConfig config );
     void Write( IAresDeviceCommand command );
     void Write( byte[] buffer );

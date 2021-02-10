@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ARESCore.UI.Views"
-    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="http://prismlibrary.com/"
     Title="Database Connection Config"
@@ -35,7 +35,7 @@
                 HorizontalAlignment="Left"
                 Command="{Binding SaveCommand}"
                 Content="Save Settings"
-                Style="{StaticResource MetroCircleButtonStyle}" />
+                Style="{StaticResource MahApps.Styles.Button.Circle}" />
             <Button
                 Width="60"
                 Height="40"
@@ -43,7 +43,7 @@
                 HorizontalAlignment="Right"
                 Click="OkClicked"
                 Content="Ok"
-                Style="{StaticResource MetroCircleButtonStyle}" />
+                Style="{StaticResource MahApps.Styles.Button.Circle}" />
         </StackPanel>
     </StackPanel>
 </mah:MetroWindow>

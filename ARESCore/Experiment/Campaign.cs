@@ -1,15 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using ARESCore.DisposePatternHelpers;
+﻿using ARESCore.DisposePatternHelpers;
 using ARESCore.Experiment.Scripting;
 using ARESCore.PlanningSupport;
-using DynamicData.Binding;
 using ReactiveUI;
+using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace ARESCore.Experiment
 {
-  public class Campaign : BasicReactiveObjectDisposable, ICampaign
+  public class Campaign : ReactiveSubscriber, ICampaign
   {
     private string _expScript;
     private string _interExpScript;
@@ -33,7 +32,7 @@ namespace ARESCore.Experiment
       _scriptExecutor = scriptExecutor;
       _selectedPlanners = selectedPlanners;
       _selectedPlanners.PropertyChanged += SelectedPlannersChanged;
-      planResults.WhenPropertyChanged(pResults => pResults.Results).Subscribe(pResults => PlanResultsChanged(pResults.Sender));
+      planResults.WhenAnyValue(pResults => pResults.Results).Subscribe(plans => PlanResultsChanged(planResults));
 
     }
 
