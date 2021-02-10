@@ -14,7 +14,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
 namespace ARESCore.Experiment.UI.ViewModels
 {
@@ -52,8 +54,15 @@ namespace ARESCore.Experiment.UI.ViewModels
       _planners.CollectionChanged += PlannerSelectionChanged;
 
 
-      NewInputDataSourceCommand = ReactiveCommand.Create<Unit, Unit>(u => CreateSelectedTile());
-      DoPlanningCommand = ReactiveCommand.Create<Unit, Unit>(u => DoPlanning());
+      NewInputDataSourceCommand = ReactiveCommand.Create<string, Unit>(u =>
+                                                                       {
+                                                                         SelectedInputSource = PlannerOptions.First
+                                                                           (source => source.Equals(u));
+                                                                                 CreateSelectedTile();
+                                                                                 return new Unit();
+                                                                               }
+                                                                              );
+      DoPlanningCommand = ReactiveCommand.CreateFromTask(DoPlanning);
       ShiftUpItem = ReactiveCommand.Create<ContentControl, Unit>(c => ShiftUp(c));
       ShiftDownItem = ReactiveCommand.Create<ContentControl, Unit>(c => ShiftDown(c));
       CloseItem = ReactiveCommand.Create<ContentControl, Unit>(c => Close(c));
@@ -85,15 +94,14 @@ namespace ARESCore.Experiment.UI.ViewModels
       }
     }
 
-    private Unit DoPlanning()
+    private async Task DoPlanning()
     {
       for (int i = _planners.Count - 1; i >= 0; i--)
       {
         _planners[i].NumExpsToPlan = 1;
-        var plans = _planners[i].DoPlanning();
-        AresKernel._kernel.Get<IPlanResults>().Results = plans?.Result;
+        var plans = await _planners[i].DoPlanning();
+        AresKernel._kernel.Get<IPlanResults>().Results = plans;
       }
-      return new Unit();
     }
 
     private Unit ShiftUp(ContentControl contentControl)
@@ -162,7 +170,7 @@ namespace ARESCore.Experiment.UI.ViewModels
       return new Unit();
     }
 
-    private Unit CreateSelectedTile()
+    private Unit CreateSelectedTile( )
     {
       var planReg = AresKernel._kernel.Get<IAresPlannerManagerRegistry>();
       var planner = planReg.FirstOrDefault(p => p.PlannerName.Equals(SelectedInputSource));
@@ -227,7 +235,7 @@ namespace ARESCore.Experiment.UI.ViewModels
 
     public ObservableCollection<UserControl> PlannerTiles { get; set; } = new ObservableCollection<UserControl>();
 
-    public ReactiveCommand<Unit, Unit> NewInputDataSourceCommand { get; set; }
+    public ReactiveCommand<string, Unit> NewInputDataSourceCommand { get; set; }
 
     public ReactiveCommand<Unit, Unit> DoPlanningCommand { get; set; }
 

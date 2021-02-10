@@ -7,7 +7,6 @@ using ARESCore.Extensions;
 using ARESCore.Registries;
 using ARESCore.UI;
 using Castle.Core.Internal;
-using DynamicData.Binding;
 using Ninject;
 using ReactiveUI;
 using System;
@@ -46,7 +45,7 @@ namespace ARESCore.Experiment.Scripting.Impl
         {
           var startidx = templines[i].IndexOf("VAL_");
           var substr = templines[i].Substring(startidx).Split(' ')[0];
-          double targval = inputs.Inputs[substr];
+          double targval = inputs.Inputs.First(param => param.Name.Equals(substr)).Value;
           lines[i] = templines[i].Replace(substr, targval.ToString());
         }
       }
@@ -120,7 +119,12 @@ namespace ARESCore.Experiment.Scripting.Impl
       var shouldContinue = false;
       var stepErrorSub = command.Subscribe(c => c.Error, c => OnFail(command, subList, stepExecutionSummary));
       // The CompletionUpdated function is actually required for getting the reference to the boolean. Booo
-      command.WhenPropertyChanged(c => c.IsComplete, false).Take(1).Subscribe(completion => CompletionUpdated(ref shouldContinue, completion.Value));
+      command.WhenAnyValue(c => c.IsComplete).Subscribe(completion =>
+      {
+        if (!completion)
+          return;
+        CompletionUpdated(ref shouldContinue, true);
+      });
       try
       {
         await command.Execute(subList.ToArray());
@@ -163,7 +167,7 @@ namespace ARESCore.Experiment.Scripting.Impl
         {
           var startidx = lines[i].IndexOf("VAL_");
           var substr = lines[i].Substring(startidx).Split(' ')[0];
-          bool found = inputs != null && inputs.Inputs.TryGetValue(substr, out _);
+          bool found = inputs != null && inputs.Inputs.Any(param => param.Name.Equals(substr));
           if (!found)
           {
             AresKernel._kernel.Get<IAresConsole>().WriteLine("Script Validation failed. " + substr + " is not provided in the plan.");

@@ -11,6 +11,7 @@ using ReactiveUI;
 using System;
 using System.Windows;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace ARESCore.UI.Views
 {
@@ -80,7 +81,7 @@ namespace ARESCore.UI.Views
 
     private void MainWindowClosed(object sender, EventArgs e)
     {
-      Application.Current.Dispatcher.InvokeShutdown();
+      Dispatcher.CurrentDispatcher.InvokeShutdown();
     }
 
     private void MainWindowLoaded(object sender, RoutedEventArgs e)

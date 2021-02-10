@@ -22,10 +22,12 @@ namespace ARESCore.Experiment.impl
       var experimentInputs = _inputs[expInd - 1];
 
       // If the description does not match return
-      if (!experimentInputs.Inputs.ContainsKey(desc))
+      var param = experimentInputs.Inputs
+                                  .FirstOrDefault(param => param.Name.Equals(desc));
+      if (param == null)
         throw new Exception("Column description " + desc + " does not exist!");
 
-      return (experimentInputs.Inputs[desc]);
+      return param.Value;
     }
 
 
@@ -81,7 +83,22 @@ namespace ARESCore.Experiment.impl
       }
     }
 
-
+    public void SetExperimentBatchInputs(IEnumerable<IEnumerable<ExperimentParameter>> experimentParameters)
+    {
+      var dataDesc = experimentParameters.FirstOrDefault()
+                                         ?.Select(expParam => expParam.Name)
+                                         .ToList();
+      var data = experimentParameters.Select(expParams => expParams.Select(expParam => expParam.Value).ToList()).ToList();
+      SetExperimentBatchInputs(dataDesc, data);
+    }
+    public void SetExperimentBatchInputs(IEnumerable<IPlannedExperimentInputs> plannedExpInputs)
+    {
+      var dataDesc = plannedExpInputs.FirstOrDefault()
+                                         ?.Inputs?.Select(expParam => expParam.Name)
+                                         .ToList();
+      var data = plannedExpInputs.Select(plannedExpInput => plannedExpInput.Inputs?.Select(expParam => expParam.Value).ToList()).ToList();
+      SetExperimentBatchInputs(dataDesc, data);
+    }
 
     public List<IPlannedExperimentInputs> PlannedInputs
     {
@@ -163,8 +180,8 @@ namespace ARESCore.Experiment.impl
         var input = new PlannedExperimentInputs();
         for (var index = 0; index < descs.Count; index++)
         {
-          var desc = descs[index];
-          input.Inputs[desc] = data[i][index];
+          input.Inputs[i]
+               .Value = data[i][index];
         }
         PlannedInputs.Add(input);
       }

@@ -216,11 +216,11 @@ namespace AresSamplePlanningPlugin.Planners.GradientDescent
     private SamplePlanningParameters GenerateParameters(IPlannedExperimentInputs experimentInputs)
     {
       var additiveParameters = new SamplePlanningParameters();
-      experimentInputs.Inputs.Keys.ForEach(varName =>
+      experimentInputs.Inputs.Select(param => param.Name).ForEach(varName =>
       {
         additiveParameters.First(parameter =>
             parameter.ScriptLabel.Equals(varName, StringComparison.CurrentCultureIgnoreCase)).Value =
-          experimentInputs.Inputs[varName];
+          experimentInputs.Inputs.First(param => param.Name.Equals(varName)).Value;
         var uiParam = Parameters.First().First(parameter => parameter.ScriptLabel.Equals(varName, StringComparison.CurrentCultureIgnoreCase));
         var refParam = additiveParameters.First(parameter =>
           parameter.ScriptLabel.Equals(varName, StringComparison.CurrentCultureIgnoreCase));

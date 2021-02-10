@@ -8,32 +8,26 @@ namespace ARESCore.Experiment.impl
 {
   public class PlannedExperimentInputs : ReactiveSubscriber, IPlannedExperimentInputs
   {
-    private IDictionary<string, double> _inputs;
+    private IList<ExperimentParameter> _inputs = new List<ExperimentParameter>();
 
     public PlannedExperimentInputs()
     {
-      _inputs = new Dictionary<string, double>();
     }
-    public PlannedExperimentInputs( List<string> variableStrings, List<double> inputs)
-    {
-      _inputs = new Dictionary<string, double>();
 
+    public PlannedExperimentInputs(List<string> variableStrings, List<double> inputs)
+    {
       SetInputs(variableStrings, inputs);
     }
 
-    public IDictionary<string, double> Inputs
+    public IList<ExperimentParameter> Inputs
     {
       get => _inputs;
       set => this.RaiseAndSetIfChanged(ref _inputs, value);
     }
 
-    public bool HasInputs()
-    {
-      return (_inputs != null && Inputs.Any());
-    }
-
     public void SetInputs(List<string> variableStrings, List<double> inputs)
     {
+      Inputs.Clear();
       if (variableStrings == null || variableStrings.Count == 0)
         throw new Exception("Inputs descriptions cannot be null or empty!");
       if (inputs == null || inputs.Count == 0)
@@ -44,10 +38,11 @@ namespace ARESCore.Experiment.impl
         throw new Exception("Cannot have NaN or an Infinity inputs value!");
 
       for (var index = 0; index < inputs.Count; index++)
-        {
-            Inputs[variableStrings[index]] = inputs[index]; 
-        }
-      
+      {
+        var expParam = new ExperimentParameter {Value = inputs[index], Name = variableStrings[index]};
+        Inputs.Add(expParam);
+
+      }
     }
 
   }

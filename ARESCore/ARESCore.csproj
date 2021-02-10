@@ -4,9 +4,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <XamlDebuggingInformation>True</XamlDebuggingInformation>
     <Platforms>x64</Platforms>
     <StartupObject>ARESCore.App</StartupObject>
-    <Configurations>AdditiveDebug;CoreDebug;CNTDebug;SampleDebug;FCDebug</Configurations>
+    <Configurations>AdditiveDebug;CoreDebug;CNTDebug;SampleDebug;FCDebug;FcSim</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='FcSim|x64'">
+    <DefineConstants>TRACE;SIMULATION</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

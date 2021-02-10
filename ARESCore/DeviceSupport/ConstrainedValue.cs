@@ -1,8 +1,9 @@
 ﻿using System;
+using ReactiveUI;
 
 namespace ARESCore.DeviceSupport
 {
-  public class ConstrainedValue<T> where T : IComparable
+  public class ConstrainedValue<T> : ReactiveObject where T : IComparable
   {
     public T MaxValue { get; set; }
 

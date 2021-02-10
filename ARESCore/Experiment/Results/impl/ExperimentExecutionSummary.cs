@@ -1,4 +1,5 @@
-﻿using DynamicData.Binding;
+﻿using ARESCore.Experiment.impl;
+using DynamicData.Binding;
 using ReactiveUI;
 
 namespace ARESCore.Experiment.Results.impl
@@ -9,11 +10,18 @@ namespace ARESCore.Experiment.Results.impl
     private ObservableCollectionExtended<IStepExecutionSummary> _stepExecutionSummaries = new ObservableCollectionExtended<IStepExecutionSummary>();
     private double _result;
     private object _resultBase;
+    private ExperimentParameter[] _parameters;
 
     public int ExperimentNumber
     {
       get => _experimentNumber;
       set => this.RaiseAndSetIfChanged(ref _experimentNumber, value);
+    }
+
+    public ExperimentParameter[] Parameters
+    {
+      get => _parameters;
+      set => this.RaiseAndSetIfChanged(ref _parameters, value);
     }
 
     public double Result

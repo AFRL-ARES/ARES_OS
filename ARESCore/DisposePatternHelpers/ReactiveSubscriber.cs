@@ -21,7 +21,7 @@ namespace ARESCore.DisposePatternHelpers
 
     private readonly DisposableDebugger _debugger = new DisposableDebugger();
 
-    ~BasicReactiveObjectDisposable()
+    ~ReactiveSubscriber()
     {
       _debugger.OnExit();
     }

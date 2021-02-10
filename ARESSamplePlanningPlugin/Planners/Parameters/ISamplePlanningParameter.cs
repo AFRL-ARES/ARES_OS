@@ -4,5 +4,6 @@
   {
     double Value { get; set; }
     bool IsPlanned { get; set; }
+    string ScriptLabel { get; }
   }
 }

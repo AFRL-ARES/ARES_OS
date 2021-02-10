@@ -28,7 +28,7 @@ namespace ARESCore.Experiment.UI.ViewModels
       if (_planResults.Results == null)
         return;
       var replacedstrs = new List<string>();
-      _planResults.Results.PlannedInputs.FirstOrDefault()?.Inputs?.Keys
+      _planResults.Results.PlannedInputs.FirstOrDefault()?.Inputs.Select(param => param.Name)
         .ForEach(input => replacedstrs.Add(input.Replace("_", "__")));
       PlannerColumns.AddRange(replacedstrs);
       Application.Current.Dispatcher.BeginInvoke(new Action(() =>
@@ -36,7 +36,7 @@ namespace ARESCore.Experiment.UI.ViewModels
       RowEntries.Clear();
       for (var index = 0; index < _planResults.Results.PlannedInputs.Count; index++)
       {
-        var row = _planResults.Results.PlannedInputs[index].Inputs.Values;
+        var row = _planResults.Results.PlannedInputs[index].Inputs.Select(param => param.Value);
         var obrow = new ObservableCollection<double>();
         obrow.AddRange(row);
         RowEntries.Add(obrow);

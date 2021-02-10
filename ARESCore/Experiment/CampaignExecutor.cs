@@ -176,7 +176,7 @@ namespace ARESCore.Experiment
           return;
         }
         var expNumber = experimentIdx + 1;
-        if (expNumber <= selectedPlanner.Planner.RequiredNumberOfSeedExperiments)
+        if (expNumber <= selectedPlanner.Planner.RequiredNumberOfSeedExperiments || _campaign.ReplanInterval == 0)
         {
           batchExpNum = experimentIdx;
         }

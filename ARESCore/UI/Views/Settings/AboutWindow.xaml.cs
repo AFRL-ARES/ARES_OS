@@ -29,22 +29,6 @@ namespace ARESCore.UI.Views.Settings
   /// </summary>
   public partial class AboutWindow : MetroWindow
   {
-    public string _readme = @" ARES_OS
-    Is an autonomous research software to create systems to perform experimentation in rapid, closed-loop iteration.
-      The solution consist of 4 projects, ARESCore, AresDevicePlugin, AresAnalysisPlugin, AresPlanningPlugin.The Plugins are customized to the
-    research resources while ARESCore provides the structured interface and closed loop testing capabilities.
-
-      Included within the repository is the Device, Analysis, and Planning plugins for the Additive research system. The Additive research system uses a 3D printer
-    as the device.
-
-## Software Requirements
-      postgreSQL, the ARES_OS program is defaulted to a password = 'a'.
-
-## Developer Setup
-      If you are going to change/edit the software, we HIGHLY recommend using the IDE “Visual Studio”, versions 2019 or later.It can be done using the community edition.You can open the solution and be able to build and run from there.It does utilize NuGet packages for all its third party needs.
-
-    ";
-
     public string _license = @"USAF OPEN SOURCE AGREEMENT VERSION 1.0
 
 THIS OPEN SOURCE AGREEMENT(""AGREEMENT"") DEFINES THE RIGHTS OF USE, REPRODUCTION, DISTRIBUTION, MODIFICATION AND REDISTRIBUTION OF CERTAIN COMPUTER SOFTWARE ORIGINALLY RELEASED BY THE GOVERNMENT OF THE UNITED STATES OF AMERICA, AS REPRESENTED BY THE GOVERNMENT AGENCY LISTED BELOW(""GOVERNMENT AGENCY"").  THE GOVERNMENT OF THE UNITED STATES OF AMERICA, AS REPRESENTED BY GOVERNMENT AGENCY, IS AN INTENDED THIRD-PARTY BENEFICIARY OF ALL SUBSEQUENT DISTRIBUTIONS OR REDISTRIBUTIONS OF THE SUBJECT SOFTWARE.ANYONE WHO USES, REPRODUCES, DISTRIBUTES, MODIFIES OR REDISTRIBUTES THE SUBJECT SOFTWARE, AS DEFINED HEREIN, OR ANY PART THEREOF, IS, BY THAT ACTION, ACCEPTING IN FULL THE RESPONSIBILITIES AND OBLIGATIONS CONTAINED IN THIS AGREEMENT.
@@ -153,7 +137,12 @@ F.Point of Contact: Any Recipient contact with Government Agency is to be direct
     {
       this.Icon = IconConverter.Convert(PackIconMaterialKind.Information);
       LicenseText.Text = _license;
-      AboutText.Text = _readme;
+      AboutText.Inlines.Add(new Run("ARES OS") {FontSize = 20, FontWeight = FontWeights.Bold});
+      AboutText.Inlines.Add("\n" + @"Is an autonomous research software to create systems to perform experimentation in rapid, closed-loop iteration. The solution consist of 4 projects, ARESCore, AresSampleDevicesPlugin, AresSampleAnalysisPlugin, AresSamplePlanningPlugin. The Plugins are customized to the research resources while ARESCore provides the structured interface and closed loop testing capabilities." + "\n" + "Included within the repository is the Device, Analysis, and Planning plugins for the Additive research system. The Additive research system uses a 3D printer as the device." + "\n\n");
+      AboutText.Inlines.Add(new Run("Software Requirements" + "\n") {FontSize = 17, FontWeight = FontWeights.Bold});
+      AboutText.Inlines.Add("postgreSQL, the ARES_OS program is defaulted to a password = 'a'." + "\n\n");
+      AboutText.Inlines.Add(new Run("Developer Setup" + "\n") { FontSize = 17, FontWeight = FontWeights.Bold });
+      AboutText.Inlines.Add(@"If you are going to change/edit the software, we HIGHLY recommend using the IDE “Visual Studio”, versions 2019 or later. It can be done using the community edition. You can open the solution and be able to build and run from there. It does utilize NuGet packages for all its third party needs.");
     }
   }
 }

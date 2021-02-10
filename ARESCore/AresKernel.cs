@@ -6,6 +6,9 @@ using Ninject.Extensions.Conventions;
 using Ninject.Extensions.Conventions.Syntax;
 using System.IO;
 using System.Reflection;
+using ARESCore.Experiment.UI.Views;
+using Ninject.Syntax;
+using Prism.Ninject;
 
 namespace ARESCore
 {
@@ -28,6 +31,8 @@ namespace ARESCore
       _kernel.Load(new ARESCoreModule(), new DbMigrationModule() // TODO FIXME delete dbmigration 
         );
       _kernel.Bind(BindAll);
+      _kernel.RegisterTypeForNavigation<CampaignExecutionView, CampaignExecutionViewModel>();
+      _kernel.RegisterTypeForNavigation<BatchResultsView, BatchResultsViewModel>();
     }
 
     public CampaignExecutionViewModel CampaignExecutionViewModel => _kernel.Get<CampaignExecutionViewModel>();

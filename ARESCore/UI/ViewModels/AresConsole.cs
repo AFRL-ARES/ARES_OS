@@ -4,6 +4,7 @@ using ReactiveUI;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace ARESCore.UI.ViewModels
 {
@@ -13,18 +14,18 @@ namespace ARESCore.UI.ViewModels
 
     public AresConsole()
     {
-      Application.Current.Dispatcher.BeginInvoke(new Action(() => Document = new TextDocument()));
+      Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => Document = new TextDocument()));
     }
 
     private Task DoCleanup()
     {
-      var len = Application.Current.Dispatcher.Invoke(() => Document.Text.Length);
+      var len = Dispatcher.CurrentDispatcher.Invoke(() => Document.Text.Length);
       if (len < MaxLength)
         return Task.CompletedTask;
       // clean it up so we don't start on a random character but a newline
       try
       {
-        var newText = Application.Current.Dispatcher.Invoke(() => Document.Text.Substring(len - MaxLength));
+        var newText = Dispatcher.CurrentDispatcher.Invoke(() => Document.Text.Substring(len - MaxLength));
         int truncateIdx = -1;
         for (int i = 0; i < newText.Length; i++)
         {
@@ -35,7 +36,7 @@ namespace ARESCore.UI.ViewModels
           }
         }
         newText = newText.Substring(truncateIdx);
-        Application.Current.Dispatcher.Invoke(() =>
+        Dispatcher.CurrentDispatcher.Invoke(() =>
         {
           Document.Text = newText;
           Document.UndoStack.ClearAll();
@@ -64,7 +65,7 @@ namespace ARESCore.UI.ViewModels
     {
       try
       {
-        Application.Current.Dispatcher.BeginInvoke((Action)(() => Document.Text += text));
+        Dispatcher.CurrentDispatcher.BeginInvoke((Action)(() => Document.Text += text));
         DoCleanup();
       }
       catch (Exception)
