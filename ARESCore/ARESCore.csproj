@@ -7,11 +7,7 @@
     <XamlDebuggingInformation>True</XamlDebuggingInformation>
     <Platforms>x64</Platforms>
     <StartupObject>ARESCore.App</StartupObject>
-    <Configurations>AdditiveDebug;CoreDebug;CNTDebug;SampleDebug;FCDebug;FcSim</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='FcSim|x64'">
-    <DefineConstants>TRACE;SIMULATION</DefineConstants>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
