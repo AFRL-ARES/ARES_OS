@@ -1,14 +1,19 @@
-# ARES_OS
-Is an autonomous research software to create systems to perform experimentation in rapid, closed-loop iteration. 
-The solution consist of 4 projects, ARESCore, AresDevicePlugin, AresAnalysisPlugin, AresPlanningPlugin. The Plugins are customized to the 
-research resources while ARESCore provides the structured interface and closed loop testing capabilities.
+# ARES OS&trade;
 
-Included within the repository is the Device, Analysis, and Planning plugins for the Additive research system. The Additive research system uses a 3D printer 
-as the device.
+ARES OS&trade; is research software to streamline the creation of systems for closed-loop, autonomous experimentation. 
+The solution provided in this repository consists of 4 projects, ARESCore, AresSampleDevicePlugin, AresSampleAnalysisPlugin, and AresSamplePlanningPlugin. The Plugins are customized to the research resources while ARESCore provides the structured interface and closed loop testing capabilities.
+
+The Devices plugin generally registers and controls devices and device commands. For example, a device may be a valve with 2 settings (on and off). The devices plugin would define the connection, control UI, and commands for this valve.
+
+The Analysis plugin registers analyzers, which are the way in wich experiments are quantified. For example, a visual analysis technique may perform image processing to measure the quality of an experiment.
+
+The planning plugin provides access to planners, which determine experiment parameters. 
 
 ## Software Requirements
-postgreSQL, the ARES_OS program is defaulted to a password = 'a'.
+PostgreSQL must be installed, with an administrator password of 'a'. You can install multiple instances of PostGreSQL, but note the port so you can select it the first time you start ARES OS&trade;.
 
 ## Developer Setup
 If you are going to change/edit the software, we HIGHLY recommend using the IDE “Visual Studio”, versions 2019 or later. It can be done using the community edition. You can open the solution and be able to build and run from there. It does utilize NuGet packages for all its third party needs. 
 
+## License
+This software is governed by the AFRL open source license, which requires registration. See the full terms on the license page.
