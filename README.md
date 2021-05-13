@@ -13,7 +13,7 @@ The planning plugin provides access to planners, which determine experiment para
 PostgreSQL must be installed, with an administrator password of 'a'. You can install multiple instances of PostGreSQL, but note the port so you can select it the first time you start ARES OS&trade;.
 
 ## Developer Setup
-If you are going to change/edit the software, we HIGHLY recommend using the IDE “Visual Studio”, versions 2019 or later. It can be done using the community edition. You can open the solution and be able to build and run from there. It does utilize NuGet packages for all its third party needs. 
+If you are going to change/edit the software, we HIGHLY recommend using the IDE “Visual Studio”, versions 2019 or later. It can be done using the community edition. You can open the solution and be able to build and run from there. NuGet packages are used by this software, so we recommend being connected to a mechanism that can collect the packages (such as the internet). 
 
 ## License
 This software is governed by the AFRL open source license, which requires registration. See the full terms on the license page.
