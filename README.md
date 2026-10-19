@@ -1,3 +1,7 @@
+# **ARES OS 2.0 is Available**
+
+This repository is the codebase for ARES OS 1.0, our original ARES system. We have since migrated to ARES OS 2.0 as our new open source self-driving lab software. You can find that repository at https://github.com/AFRL-ARES/ARES or you can visit our documentation page at https://afrl-ares.github.io/ to learn more about our ARES OS 2.0 ecosystem. This repository is archived and no further changes will be made to this codebase. 
+
 # ARES OS&trade;
 
 ARES OS&trade; is research software to streamline the creation of systems for closed-loop, autonomous experimentation. 
